@@ -1,3 +1,41 @@
+# Docker/Docker Compose development implementation of Vote Parser using Laravel 9 with Vite, React 17, React Router, React Bootstrap, and Chartjs
+- Vite is used to compile React 17 for paging and routing in Javascript
+- Docker Compose is used to set up containers for application services within a shared network.  Utility containers are also set up to run Composer, Artisan, and NPM commands
+- Composer and NPM are used for package management
+
+# Utility Commands
+- docker-compose run --rm composer [command like install, update, etc]
+- docker-compose run --rm npm [command]
+- docker-compose run --rm artisan [command]
+
+# Sample Utlity Commands
+- docker-compose run --rm composer create-project laravel/laravel project-name
+- docker-compose run --rm composer install
+- docker-compose run --rm composer update
+- docker-compose run --rm composer dump-autoload
+- docker-compose run --rm composer require laravel/breeze --dev
+- docker-compose run --rm artisan config:cache
+- docker-compose run --rm artisan optimize
+- docker-compose run --rm artisan serve 
+- docker-compose run --rm artisan route:list
+- docker-compose run --rm npm install 
+- docker-compose run --rm npm install @myorg/privatepackage
+- docker-compose run --rm npm run build
+-docker-compose run --rm --service-ports npm run dev 
+
+# Commands needed to start development version
+- docker-compose run --rm composer install (or update)
+- docker-compose run --rm npm install (or update)
+- docker-compose run --rm laravel-migrate-seed
+- docker-compose up --build nginx -d
+- docker-compose run --rm artisan key:generate
+- docker-compose run --rm artisan optimize
+- docker-compose run --rm --publish 5173:5173 npm run dev -- --host
+- Then hopefully, app is available at http://localhost:8000
+
+
+
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
