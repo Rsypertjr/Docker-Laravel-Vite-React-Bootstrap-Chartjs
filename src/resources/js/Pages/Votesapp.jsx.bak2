@@ -1,0 +1,7 @@
+export default function Votesapp() {
+    return (
+        <>
+            <div>THis will be Votes App!</div>
+        </>
+    );
+}
