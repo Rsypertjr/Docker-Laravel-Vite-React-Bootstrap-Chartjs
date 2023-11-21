@@ -10,7 +10,6 @@ import {Container, Row, Col } from 'react-bootstrap';
 
 
 
-
 const NavUnlisted = styled.ul`
   text-decoration: none;
 `;
@@ -159,6 +158,7 @@ export default class VotesApp extends React.Component {
 
  getStateData(state){
     //let stateUrl = 'http://'+window.location.host+'/vote-rows/'+ state;
+    let currentState = state;
     let stateUrl ='https://static01.nyt.com/elections-assets/2020/data/api/2020-11-03/race-page/'+ state.toLowerCase().replace(/\-/,'') + '/president.json';
     fetch(stateUrl).then((res) => res.json())
     .then((json) => {
@@ -193,6 +193,53 @@ export default class VotesApp extends React.Component {
 
 
       let chartData = this.getChartsData(this.state.parse_resolution);
+      const token = document.querySelector('head').querySelector('meta[name="csrf-token"]').content;
+      console.log("Token",token);
+      fetch('http://localhost:8000/api/create_election_data_mongo/', {
+        method: 'POST',
+        body: JSON.stringify({
+            guid : currentState.toString(),
+            race : 'Presidential',
+            year : '2020',
+            dateHeadersStore : chartData.dateHeadersStore,
+            dateDataBidenStore : chartData.dateDataBidenStore,
+            dateDataBidenAddStore : chartData.dateDataBidenAddStore, 
+            dateDataBidenAddDiffStore : chartData.dateDataBidenAddDiffStore,
+            dateDataTrumpStore : chartData.dateDataTrumpStore,
+            dateDataTrumpAddStore : chartData.dateDataTrumpAddStore,
+            dateDataTrumpAddDiffStore : chartData.dateDataTrumpAddDiffStore,
+            dateDataTotalStore : chartData.dateDataTotalStore,
+            dateDataOtherStore : chartData.dateDataOtherStore,
+            dateDataOtherAddStore : chartData.dateDataOtherAddStore,
+            dateDataTotalAddStore : chartData.dateDataTotalAddStore,
+            perRemainingTrumpStore : chartData.perRemainingTrumpStore,
+            perRemainingBidenStore : chartData.perRemainingBidenStore,
+            bidenSlices : chartData.bidenSlices,
+            trumpSlices : chartData.trumpSlices,
+            otherSlices : chartData.otherSlices,
+            totalSlices : chartData.totalSlices,
+            pieHeaders : chartData.pieHeaders,
+            voteBins : chartData.voteBins,
+            bin_headers : chartData.bin_headers,
+            bin_biden : chartData.bin_biden,
+            bin_trump : chartData.bin_trump,
+            numPages : chartData.numPages,
+            chartArray : chartData.chartArray
+
+        }),
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            "X-CSRF-TOKEN": token
+        }
+        }).then(function(response){ 
+            return response.json()
+        }).then(function(data){
+            console.log(data);
+           
+        }).catch(error => console.error('Error:', error));  
+
+
 
       this.setState({
         chartData: chartData,
