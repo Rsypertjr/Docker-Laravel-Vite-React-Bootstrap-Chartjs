@@ -57,8 +57,7 @@ Route::get('/create_eloquent_mongo/', function (Request $request) {
 
 
 Route::post('/create_election_data_mongo/', function (Request $request) {
-    $check = StateElectionDataMongoDB::where('guid', $request->input('guid'))->get();
-    if(count($check) === 0) {
+   
         $success = StateElectionDataMongoDB::create([
             'guid' => $request->input('guid'),
             'race' => $request->input('race'),
@@ -86,14 +85,19 @@ Route::post('/create_election_data_mongo/', function (Request $request) {
             'bin_biden' => $request->input('bin_biden'),
             'bin_trump' => $request->input('bin_trump'),
             'numPages' => $request->input('numPages'),
-            'chartArray' => $request->input('chartArray')
+            'chartArray' => $request->input('chartArray'),
+            'theVotes' => $request->input('theVotes')
         ]);    
         return $success;
-    }
-    else 
-        return $check;
-    
+ 
 });
+
+
+Route::get('/check_election_data_mongo/{state}/', function(Request $request, string $state) {
+    $check = StateElectionDataMongoDB::where('guid', $state)->get();
+    return $check;
+});
+
 
 Route::get('/find_eloquent/', function (Request $request) {
     $customer = CustomerMongoDB::where('guid', 'cust_0000')->get();

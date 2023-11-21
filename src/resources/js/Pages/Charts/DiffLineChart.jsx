@@ -165,7 +165,8 @@ export default function DiffLineChart(props) {
             <div className="container h-10 d-flex justify-content-center mb-4">
                 <h4>Difference Line Chart</h4>
             </div>
-            <AnalyticsBar handleClick={handleClick} {...props} theResolutions={props.theResolutions} selectResolution={props.selectResolution} />
+            <AnalyticsBar handleClick={handleClick} {...props} theResolutions={props.theResolutions} selectResolution={props.selectResolution} 
+               selectAnalytics={e => props.selectAnalytics(e, props.chartData)} />
             <div className="container h-10 d-flex justify-content-center">
                 <h4>Incremental Gain/Loss of Votes</h4>
             </div>

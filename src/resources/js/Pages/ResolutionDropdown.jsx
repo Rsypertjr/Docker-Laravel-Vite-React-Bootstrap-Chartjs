@@ -32,8 +32,9 @@ export default function ResolutionDropdown(props){
     const[chArray, setCHArray] = useState(props.chartData.chartArray);
 
     const selectedOption = (e) => {
+        setSelectOption(e.toString());
         if(props.analytics !== 'analytics') {
-            setSelectOption(e.toString());
+            
             if(getTitle(e) == "Available" || parseInt(e) < parseInt(props.parse_resolution) ){
     
                 props.selectResolution(e);
@@ -46,7 +47,7 @@ export default function ResolutionDropdown(props){
             }
         }
         else {
-            setSelectOption("0");
+            props.selectAnalytics(e);
             setAnalyticsType(e.toString());
 
         }

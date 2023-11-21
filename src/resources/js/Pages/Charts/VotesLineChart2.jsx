@@ -148,7 +148,8 @@ export default function VotesLineChart2(props) {
                 <h4>Total Votes Line Chart</h4>
             </Container>
            
-            <AnalyticsBar handleClick={handleClick} {...props} theResolutions={props.theResolutions} selectResolution={props.selectResolution} />
+            <AnalyticsBar handleClick={handleClick} {...props} theResolutions={props.theResolutions} selectResolution={props.selectResolution} 
+                selectAnalytics={e => props.selectAnalytics(e, props.chartData)}/>
          
             <Container className="h-10 d-flex justify-content-center">
                 <h4>Incremental Total Votes</h4>

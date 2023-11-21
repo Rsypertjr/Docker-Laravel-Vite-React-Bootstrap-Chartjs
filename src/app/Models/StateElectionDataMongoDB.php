@@ -22,5 +22,5 @@ class StateElectionDataMongoDB extends Model
         'dateDataTrumpStore', 'dateDataTrumpAddStore', 'dateDataTrumpAddDiffStore', 'dateDataTotalStore','dateDataOtherStore',
         'dateDataOtherAddStore', 'dateDataTotalAddStore','perRemainingTrumpStore', 'perRemainingBidenStore', 'bidenSlices',
         'trumpSlices', 'otherSlices', 'totalSlices', 'pieHeaders', 'voteBins', 'bin_headers', 'bin_biden', 'bin_trump',
-        'numPages', 'chartArray'];
+        'numPages', 'chartArray','theVotes'];
 }
