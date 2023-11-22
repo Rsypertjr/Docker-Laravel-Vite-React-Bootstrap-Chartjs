@@ -46,6 +46,8 @@ export default class VotesApp extends React.Component {
       this.resetCharts = this.resetCharts.bind(this);
       this.storeVoteDataInMongo = this.storeVoteDataInMongo.bind(this);
       this.checkForVotes = this.checkForVotes.bind(this);
+      this.doAnalytics = this.doAnalytics.bind(this);
+      this.analyticEngine = this.analyticEngine.bind(this);
 
       this.state = {
           theVotes: [],
@@ -800,12 +802,199 @@ async checkForVotes(state){
 
   }
 
-  selectAnalytics(e,chartData) {
+  selectAnalytics(e,chartData,chartOrigin) {
 
-    console.log("Analytics selected:",e.toString());
+    console.log("Analytics selected:",e);
+    let analyticsType = e.toString();
     console.log("Chartdata for Analytics:", chartData);
+    console.log("Chart Type:", chartOrigin);
+    let tempData = {};
+    let AnalyzedData = null;
+    switch(chartOrigin){
+        case 'PerLineChart':
+            tempData.dateHeadersStore = chartData.dateHeadersStore;
+            tempData.Biden = chartData.perRemainingBidenStore;
+            tempData.Trump = chartData.perRemainingTrumpStore;
+            tempData.Other = [];
+            tempData.Total = [];
+            
+            AnalyzedData = this.doAnalytics(analyticsType,tempData);
+            console.log("Analyzed Data 2", AnalyzedData);
+            if(AnalyzedData != null) {
+                chartData.dateHeadersStore = AnalyzedData.Date;
+                chartData.perRemainingBidenStore = AnalyzedData.Biden;
+                chartData.perRemainingTrumpStore = AnalyzedData.Trump
+                this.setState({
+                    chartData: chartData
+                });
+            }            
+            break;
+        case 'SpikesLineChart':
+            tempData.dateHeadersStore = chartData.dateHeadersStore;
+            tempData.Biden = chartData.dateDataBidenAddStore;
+            tempData.Trump = chartData.dateDataTrumpAddStore;
+            tempData.Other = chartData.dateDataOtherAddStore;
+            tempData.Total = chartData.dateDataTotalAddStore;
+            
+            AnalyzedData = this.doAnalytics(analyticsType,tempData);
+            if(AnalyzedData != null) {
+                chartData.dateHeadersStore = AnalyzedData.Date;
+                chartData.dateDataBidenAddStore = AnalyzedData.Biden;
+                chartData.dateDataTrumpAddStore = AnalyzedData.Trump;
+                chartData.dateDataOtherAddStore = AnalyzedData.Other;
+                chartData.dateDataTotalAddStore = AnalyzedData.Total;
+                this.setState({
+                    chartData: chartData
+                });
+            }            
+            break;
+
+        case 'DiffLineChart':
+            tempData.dateHeadersStore = chartData.dateHeadersStore;
+            tempData.Biden = chartData.dateDataBidenAddDiffStore;
+            tempData.Trump = chartData.dateDataTrumpAddDiffStore;
+            tempData.Other = [];
+            tempData.Total = [];
+            
+            AnalyzedData = this.doAnalytics(analyticsType,tempData);
+            if(AnalyzedData != null) {
+                chartData.dateHeadersStore = AnalyzedData.Date;
+                chartData.dateDataBidenAddDiffStore = AnalyzedData.Biden;
+                chartData.dateDataTrumpAddDiffStore = AnalyzedData.Trump;
+                chartData.dateDataOtherAddDiffStore = AnalyzedData.Other;
+                chartData.dateDataTotalAddDiffStore = AnalyzedData.Total;
+                this.setState({
+                    chartData: chartData
+                });
+            }            
+            break;
+        default:
+
+    }
 
   }
+
+  doAnalytics(analyticsType, tempData){
+    let AnalyzedData = null;
+    switch(analyticsType) {
+        case 'High to Low':
+            AnalyzedData = this.analyticEngine(tempData,'hilo'); 
+            break;  
+        case 'Largest Difference':
+            AnalyzedData = this.analyticEngine(tempData,'ldiff'); 
+            break; 
+        default:
+            let renewChartData = this.getChartsData(this.state.parse_resolution);    
+            this.setState({
+                chartData: renewChartData
+            });  
+            break;          
+    }      
+   
+    return AnalyzedData;                
+  }
+
+
+
+  analyticEngine(data,type){
+    let tempBiden = [];
+    data.Biden.map(lev1 => lev1.map(lev2 => {tempBiden.push(lev2)}));
+    console.log("Temp Biden",tempBiden);
+
+    let tempTrump = [];
+    data.Trump.map(lev1 => lev1.map(lev2 => {tempTrump.push(lev2)}));
+    console.log("Temp Trump",tempTrump);
+
+    let tempOther = [];
+    data.Other.map(lev1 => lev1.map(lev2 => {tempOther.push(lev2)}));
+    console.log("Temp Other",tempOther);
+
+    let tempTotal = [];
+    data.Total.map(lev1 => lev1.map(lev2 => {tempTotal.push(lev2)}));
+    console.log("Temp Total",tempTotal);
+
+
+    let tempDate = [];
+    data.dateHeadersStore.map(lev1 => lev1.map(lev2 => {tempDate.push(lev2)}));
+    console.log("Temp Date",tempDate);
+
+    let tempCombined = [];
+    tempBiden.forEach(function(item, index){
+        tempCombined.push({"Trump":tempTrump[index],"Biden":tempBiden[index],"Other":tempOther[index],"Total":tempTotal,"Date":tempDate[index]});
+    });
+
+    console.log("Temp Combined",tempCombined);
+    let sortResult;
+    if(type==='hilo'){
+        let Hi_low_sort = tempCombined.sort((a, b) => ( (a.Trump > a.Biden)  &&  ( a.Trump > (b.Trump && b.Biden) ) ||
+                                                          (a.Trump < a.Biden)  &&  ( a.Biden > (b.Trump && b.Biden) ) 
+                                                        )  ? -1 : 1);
+        console.log("Hi to Low Sort", Hi_low_sort);
+        sortResult = Hi_low_sort;
+    }
+    else if(type==='ldiff'){
+        let Ldiff_sort = tempCombined.sort((a, b) => ( (a.Trump > a.Biden) && ((a.Trump - a.Biden) > (b.Trump - b.Biden)) ||
+                                                          (a.Biden > a.Trump) && ((a.Biden - a.Trump) > (b.Biden - b.Trump))  
+                                                        )  ? -1 : 1);
+        console.log("Largest Difference", Ldiff_sort);
+        sortResult = Ldiff_sort;
+    }
+    
+    let reconChart = [];
+    let arr = [];
+    sortResult.forEach(function(item, index) {
+       arr.push(item);
+       
+       if(arr.length === 10) {
+        reconChart.push(arr);
+        arr = [];
+       }
+    });
+
+    console.log("Reconstituted Chart:", reconChart);
+
+    let returnData = {
+        Trump:[],
+        Biden:[],
+        Other:[],
+        Date:[]
+    };
+    let analyzedTrump = reconChart.map(lev1 => lev1.map(lev2 => {
+      return lev2.Trump;
+    }));
+    console.log("Analyzed Trump Data", analyzedTrump);
+
+    let analyzedBiden = reconChart.map(lev1 => lev1.map(lev2 => {
+        return lev2.Biden;
+      }));
+    console.log("Analyzed Biden Data", analyzedBiden);
+
+    let analyzedOther = reconChart.map(lev1 => lev1.map(lev2 => {
+        return lev2.Other;
+      }));
+    console.log("Analyzed Other Data", analyzedOther);
+
+    let analyzedTotal = reconChart.map(lev1 => lev1.map(lev2 => {
+        return lev2.Total;
+      }));
+    console.log("Analyzed Total Data", analyzedTotal);
+
+    let analyzedDate = reconChart.map(lev1 => lev1.map(lev2 => {
+        return lev2.Date;
+      }));
+    console.log("Analyzed Date Data", analyzedDate);
+    return {
+        "Trump":analyzedTrump,
+        "Biden":analyzedBiden,
+        "Other":analyzedOther,
+        "Total":analyzedTotal,
+        "Date":analyzedDate
+    }
+  }
+
+
+
+
 
   resetCharts(e){
        this.selectResolution(1);

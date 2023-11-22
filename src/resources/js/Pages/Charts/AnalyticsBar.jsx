@@ -81,7 +81,8 @@ export default function AnalyticsBar(props) {
                     }
                     { true &&
                         <Col className="justify-content-center" >
-                            <ResolutionDropdown {...props} analytics={'analytics'} theResolutions={props.theResolutions} selectAnalytics={props.selectAnalytics}/>
+                            <ResolutionDropdown {...props} analytics={'analytics'} theResolutions={props.theResolutions} selectAnalytics={props.selectAnalytics}
+                            chartData={props.chartData}/>
                         </Col>
                     }                    
                     

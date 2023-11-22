@@ -14,11 +14,10 @@ const resolution_values = [
 ];
 
 const analytic_values = [
-    ['1','type one'],
-    ['2','type two'],
-    ['3','type three'],
-    ['4','type four'],
-    ['5','type five'],
+    ['1','High to Low'],
+    ['2','Largest Difference'],
+    ['3','No Analytics'],
+    ['4','No Analytics']
 ];
 
 export default function ResolutionDropdown(props){
@@ -31,13 +30,56 @@ export default function ResolutionDropdown(props){
     const[defaultResolution, setDefaultResolution] = useState(props.theResolutions[0].toString());
     const[chArray, setCHArray] = useState(props.chartData.chartArray);
 
+    const selectedAnalytic = (e) => {
+        
+        let text = e.target.text;
+        console.log("Selected Text:", text);
+        let index = resolution_values.filter(values => {
+            return values[1] === text;
+        }).map(item => {return item[0].toString();});
+        console.log("Selected Index:", index);
+
+        setSelectOption(index);
+        if(props.analytics !== 'analytics') {
+            
+            if(getTitle(index) == "Available" || parseInt(index) < parseInt(props.parse_resolution) ){
+    
+                props.selectResolution(index);
+                //alert(resolution);
+            }
+            else {
+                alert("Resolution " + index.toString() + " is not Available!");
+                setSelectOption("1");
+                props.selectResolution("1");
+            }
+        }
+        else {
+            let selection = index;
+            let textholder = analytic_values.filter(values => {
+                return values[0] === selection;
+            }).map(item => {return item[1].toString();});
+            console.log('Text Holder', textholder);
+
+            props.selectAnalytics(textholder, props.chartData, props.chartType);
+            setAnalyticsType(textholder);
+
+        }
+        
+
+    }
+
     const selectedOption = (e) => {
+        
+        
+        console.log("Selected Text:", e);
+       
+
         setSelectOption(e.toString());
         if(props.analytics !== 'analytics') {
             
-            if(getTitle(e) == "Available" || parseInt(e) < parseInt(props.parse_resolution) ){
+            if(getTitle(e.toString()) == "Available" || parseInt(e.toString()) < parseInt(props.parse_resolution) ){
     
-                props.selectResolution(e);
+                props.selectResolution(e.toString());
                 //alert(resolution);
             }
             else {
@@ -47,8 +89,14 @@ export default function ResolutionDropdown(props){
             }
         }
         else {
-            props.selectAnalytics(e);
-            setAnalyticsType(e.toString());
+            let selection = e.toString();
+            let textholder = analytic_values.filter(values => {
+                return values[0] === selection;
+            }).map(item => {return item[1].toString();});
+            console.log('Text Holder', textholder);
+
+            props.selectAnalytics(textholder, props.chartData, props.chartType);
+            setAnalyticsType(textholder);
 
         }
         
@@ -57,20 +105,30 @@ export default function ResolutionDropdown(props){
 
     const Select = ({ values, onValueChange, selected}) => {
         return (
-            <select
-                onChange={({ target: { value }}) => onValueChange(value)}
-                value=""                
-            >
-                <option value={parseInt(selectOption)}>{firstSelectOption}</option>
-                {values.map(([value, text]) => (
-                    <option key={value} selected={selected === value} value={value}>
-                        {text}
-                    </option>
-                ))}
-            </select>
+            <Container>
+                <Row>
+                    <h4 className="d-flex justify-content-center">{firstSelectOption}</h4>
+                </Row>
+                <Row>
+                    <select
+                        onChange={({ target: { value }}) => onValueChange(value)}
+                    >
+                        <option value={parseInt(selectOption)}></option>
+                        {values.map(([value, text]) => (
+                            <option key={value} selected={selected === value} value={value}>
+                                {text}
+                            </option>
+                        ))}
+                    </select>
+                </Row>
+                
+            </Container>
+           
         );
     };
 
+
+   
     
 
     const getTitle = useCallback((res) => {
@@ -112,13 +170,16 @@ export default function ResolutionDropdown(props){
                                         onValueChange={selectedOption}
                                         className="w-100"
                                     />
+                                   
                                 </Col>
+
+                                
                             </Row>
                             
                             <Row className="w-100 mt-2">
                                 <Col className="col-12 d-flex justify-content-center">                        
                                     {typeof(props.analytics) === "undefined" && <p>Resolution (data point multiplier) is {selectOption} </p>}  
-                                    {props.analytics === 'analytics' && <p>Analytics Type {analyticsType} is chosen </p>}
+                                    {props.analytics === 'analytics' && <p>Analytics Type is<br></br><font color="blue">{analyticsType}</font></p>}
                                 </Col>
                             </Row>
 

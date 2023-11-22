@@ -86,11 +86,11 @@ export default function SpikesLineChart(props) {
 
         let chartData =   props.chartData;
         //alert(JSON.stringify(chartData));
-        let date_headers =    chartData.dateHeadersStore.map((item) => item);
-        let datedata_biden_add = chartData.dateDataBidenAddStore.map((item) => item);
-        let datedata_trump_add= chartData.dateDataTrumpAddStore.map((item) => item);
-        let datedata_other_add = chartData.dateDataOtherAddStore.map((item) => item);
-        let datedata_total_add = chartData.dateDataTotalAddStore.map((item) => item);
+        let date_headers =    chartData.dateHeadersStore;
+        let datedata_biden_add = chartData.dateDataBidenAddStore;
+        let datedata_trump_add= chartData.dateDataTrumpAddStore;
+        let datedata_other_add = chartData.dateDataOtherAddStore;
+        let datedata_total_add = chartData.dateDataTotalAddStore;
         let datasets = [];
         let labels = date_headers[selected_index-1];
 
@@ -165,7 +165,7 @@ export default function SpikesLineChart(props) {
             </Container>
            
             <AnalyticsBar handleClick={handleClick} {...props} theResolutions={props.theResolutions} selectResolution={props.selectResolution} 
-                selectAnalytics={e => props.selectAnalytics(e, props.chartData)}/>
+                selectAnalytics={props.selectAnalytics} chartData={props.chartData} chartType={'SpikesLineChart'}/>
          
             <Container className="h-10 d-flex justify-content-center">
                 <h4>Incremental Vote Spike</h4>

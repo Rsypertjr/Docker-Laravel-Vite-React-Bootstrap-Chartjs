@@ -81,10 +81,10 @@ export default function BarChart(props) {
         let bdColors =  ['black'];
 
         let chartData =   props.chartData;
-        let date_headers =    chartData.dateHeadersStore.map((item) => item);
-        let datedata_biden = chartData.dateDataBidenStore.map((item) => item);
-        let datedata_other = chartData.dateDataOtherStore.map((item) => item);
-        let datedata_trump = chartData.dateDataTrumpStore.map((item) => item);
+        let date_headers =    chartData.dateHeadersStore;
+        let datedata_biden = chartData.dateDataBidenStore;
+        let datedata_other = chartData.dateDataOtherStore;
+        let datedata_trump = chartData.dateDataTrumpStore;
 
         let datasets = [];
         let labels = date_headers[selected_index-1];

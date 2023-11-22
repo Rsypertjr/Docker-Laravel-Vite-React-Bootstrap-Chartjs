@@ -85,9 +85,9 @@ export default function PerLineChart(props) {
 
         let chartData =   props.chartData;
         //alert(JSON.stringify(chartData));
-        let date_headers =    chartData.dateHeadersStore.map((item) => item);
-        let perremainingbiden_store = chartData.perRemainingBidenStore.map((item) => item);
-        let perremainingtrump_store = chartData.perRemainingTrumpStore.map((item) => item);
+        let date_headers =    chartData.dateHeadersStore;
+        let perremainingbiden_store = chartData.perRemainingBidenStore;
+        let perremainingtrump_store = chartData.perRemainingTrumpStore;
         let datasets = [];
         let labels = date_headers[selected_index-1];
 
@@ -139,7 +139,7 @@ export default function PerLineChart(props) {
                 <h4>Percentage of Remaining Votes Chart</h4>
             </Container>            
             <AnalyticsBar handleClick={handleClick} {...props} theResolutions={props.theResolutions} selectResolution={props.selectResolution}
-                selectAnalytics={e => props.selectAnalytics(e, props.chartData)} />
+                selectAnalytics={props.selectAnalytics} chartData={props.chartData} chartType={'PerLineChart'}/>
             <Container className="h-10 d-flex justify-content-center">
                 <h4>% of Remaining Votes</h4>
             </Container>

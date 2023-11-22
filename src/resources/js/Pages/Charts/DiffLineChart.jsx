@@ -108,9 +108,9 @@ export default function DiffLineChart(props) {
         let bdColors =  ['black'];
 
         let chartData =   props.chartData;
-        let date_headers =    chartData.dateHeadersStore.map((item) => item);
-        let datedata_biden_diff_add = chartData.dateDataBidenAddDiffStore.map((item) => item);
-        let datedata_trump_diff_add = chartData.dateDataTrumpAddDiffStore.map((item) => item);
+        let date_headers =    chartData.dateHeadersStore;
+        let datedata_biden_diff_add = chartData.dateDataBidenAddDiffStore;
+        let datedata_trump_diff_add = chartData.dateDataTrumpAddDiffStore;
         let datasets = [];
         let labels = date_headers[selected_index-1];
 
@@ -166,7 +166,7 @@ export default function DiffLineChart(props) {
                 <h4>Difference Line Chart</h4>
             </div>
             <AnalyticsBar handleClick={handleClick} {...props} theResolutions={props.theResolutions} selectResolution={props.selectResolution} 
-               selectAnalytics={e => props.selectAnalytics(e, props.chartData)} />
+                selectAnalytics={props.selectAnalytics} chartData={props.chartData} chartType={'DiffLineChart'} />
             <div className="container h-10 d-flex justify-content-center">
                 <h4>Incremental Gain/Loss of Votes</h4>
             </div>
