@@ -153,7 +153,7 @@ export default function PieChart(props) {
             </Container>
            
             <AnalyticsBar handleClick={handleClick} {...props} theResolutions={props.theResolutions} selectResolution={props.selectResolution} 
-              selectAnalytics={e => props.selectAnalytics(e, props.chartData)}/>
+              selectAnalytics={props.selectAnalytics} chartData={props.chartData} chartType={'PieChart'}/>
          
             <Container className="h-10 d-flex justify-content-center">
                 <h4>{title}</h4>

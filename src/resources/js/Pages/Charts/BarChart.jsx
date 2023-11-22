@@ -81,7 +81,7 @@ export default function BarChart(props) {
         let bdColors =  ['black'];
 
         let chartData =   props.chartData;
-        let date_headers =    chartData.dateHeadersStore;
+        let date_headers = chartData.dateHeadersStore;
         let datedata_biden = chartData.dateDataBidenStore;
         let datedata_other = chartData.dateDataOtherStore;
         let datedata_trump = chartData.dateDataTrumpStore;
@@ -148,7 +148,7 @@ export default function BarChart(props) {
             </Container>
             
             <AnalyticsBar handleClick={handleClick} {...props} theResolutions={props.theResolutions} selectResolution={props.selectResolution}
-               selectAnalytics={e => props.selectAnalytics(e, props.chartData)}  />
+               selectAnalytics={props.selectAnalytics} chartData={props.chartData} chartType={'BarChart'} />
          
             <Container className="h-10 d-flex justify-content-center">
                 <h4>Incremental Total Votes</h4>

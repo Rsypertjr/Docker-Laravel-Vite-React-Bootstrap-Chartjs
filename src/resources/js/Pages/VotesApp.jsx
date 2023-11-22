@@ -427,9 +427,14 @@ async checkForVotes(state){
         return time_diff;
   }
 
-  getChartsData(parse_interval){
+  getChartsData(parse_interval,voteRows=null){
+    let vote_rows;
 
-    let vote_rows = this.state.theVotes;
+    if(voteRows === null )
+        vote_rows  = this.state.theVotes;
+    else
+        vote_rows = voteRows;
+
     var vote_bins = [];
     var dateheaders = [];
     var datedatabiden = [];
@@ -726,7 +731,8 @@ async checkForVotes(state){
       "bin_biden": bin_biden,
       "bin_trump": bin_trump,
       "numPages": numPages,
-      "chartArray": chartArray
+      "chartArray": chartArray,
+      "theVotes":this.state.theVotes
     }
 
     return dataLoad;
@@ -803,7 +809,10 @@ async checkForVotes(state){
   }
 
   selectAnalytics(e,chartData,chartOrigin) {
-
+    let renewChartData = this.getChartsData(this.state.theVotes,this.state.parse_resolution); 
+    this.setState({
+        chartData: renewChartData
+    });
     console.log("Analytics selected:",e);
     let analyticsType = e.toString();
     console.log("Chartdata for Analytics:", chartData);
@@ -817,6 +826,7 @@ async checkForVotes(state){
             tempData.Trump = chartData.perRemainingTrumpStore;
             tempData.Other = [];
             tempData.Total = [];
+            tempData.theVotes = chartData.theVotes;
             
             AnalyzedData = this.doAnalytics(analyticsType,tempData);
             console.log("Analyzed Data 2", AnalyzedData);
@@ -824,6 +834,7 @@ async checkForVotes(state){
                 chartData.dateHeadersStore = AnalyzedData.Date;
                 chartData.perRemainingBidenStore = AnalyzedData.Biden;
                 chartData.perRemainingTrumpStore = AnalyzedData.Trump
+                chartData.theVotes = AnalyzedData.theVotes;
                 this.setState({
                     chartData: chartData
                 });
@@ -835,6 +846,7 @@ async checkForVotes(state){
             tempData.Trump = chartData.dateDataTrumpAddStore;
             tempData.Other = chartData.dateDataOtherAddStore;
             tempData.Total = chartData.dateDataTotalAddStore;
+            tempData.theVotes = chartData.theVotes;
             
             AnalyzedData = this.doAnalytics(analyticsType,tempData);
             if(AnalyzedData != null) {
@@ -843,6 +855,7 @@ async checkForVotes(state){
                 chartData.dateDataTrumpAddStore = AnalyzedData.Trump;
                 chartData.dateDataOtherAddStore = AnalyzedData.Other;
                 chartData.dateDataTotalAddStore = AnalyzedData.Total;
+                chartData.theVotes = AnalyzedData.theVotes;
                 this.setState({
                     chartData: chartData
                 });
@@ -855,6 +868,7 @@ async checkForVotes(state){
             tempData.Trump = chartData.dateDataTrumpAddDiffStore;
             tempData.Other = [];
             tempData.Total = [];
+            tempData.theVotes = chartData.theVotes;
             
             AnalyzedData = this.doAnalytics(analyticsType,tempData);
             if(AnalyzedData != null) {
@@ -863,11 +877,99 @@ async checkForVotes(state){
                 chartData.dateDataTrumpAddDiffStore = AnalyzedData.Trump;
                 chartData.dateDataOtherAddDiffStore = AnalyzedData.Other;
                 chartData.dateDataTotalAddDiffStore = AnalyzedData.Total;
+                chartData.theVotes = AnalyzedData.theVotes;
                 this.setState({
                     chartData: chartData
                 });
             }            
             break;
+
+            case 'VotesLineChart2':
+                tempData.dateHeadersStore = chartData.dateHeadersStore;
+                tempData.Biden = chartData.dateDataBidenStore;
+                tempData.Trump = chartData.dateDataTrumpStore;
+                tempData.Other = [];
+                tempData.Total = [];
+                tempData.theVotes = chartData.theVotes;
+                
+                AnalyzedData = this.doAnalytics(analyticsType,tempData);
+                if(AnalyzedData != null) {
+                    chartData.dateHeadersStore = AnalyzedData.Date;
+                    chartData.dateDataBidenStore = AnalyzedData.Biden;
+                    chartData.dateDataTrumpStore = AnalyzedData.Trump;
+                    chartData.dateDataOtherStore = AnalyzedData.Other;
+                    chartData.dateDataTotalStore = AnalyzedData.Total;
+                    chartData.theVotes = AnalyzedData.theVotes;
+                    this.setState({
+                        chartData: chartData
+                    });
+                }            
+                break;
+
+            case 'BarChart':
+                tempData.dateHeadersStore = chartData.dateHeadersStore;
+                tempData.Biden = chartData.dateDataBidenStore;
+                tempData.Trump = chartData.dateDataTrumpStore;
+                tempData.Other = chartData.dateDataOtherStore;
+                tempData.Total = [];
+                tempData.theVotes = chartData.theVotes;
+                
+                AnalyzedData = this.doAnalytics(analyticsType,tempData);
+                if(AnalyzedData != null) {
+                    chartData.dateHeadersStore = AnalyzedData.Date;
+                    chartData.dateDataBidenStore = AnalyzedData.Biden;
+                    chartData.dateDataTrumpStore = AnalyzedData.Trump;
+                    chartData.dateDataOtherStore = AnalyzedData.Other;
+                    chartData.dateDataTotalStore = AnalyzedData.Total;
+                    chartData.theVotes = AnalyzedData.theVotes;
+                    this.setState({
+                        chartData: chartData
+                    });
+                }            
+                break;
+    
+            case 'BinStackedChart':
+                tempData.dateHeadersStore = chartData.dateHeadersStore;
+                tempData.Biden = chartData.dateDataBidenStore;
+                tempData.Trump = chartData.dateDataTrumpStore;
+                tempData.Other = chartData.dateDataOtherStore;
+                tempData.Total = [];
+                tempData.theVotes = chartData.theVotes;
+                
+                AnalyzedData = this.doAnalytics(analyticsType,tempData);
+                if(AnalyzedData != null) {
+                    chartData.dateHeadersStore = AnalyzedData.Date;
+                    chartData.dateDataBidenStore = AnalyzedData.Biden;
+                    chartData.dateDataTrumpStore = AnalyzedData.Trump;
+                    chartData.dateDataOtherStore = AnalyzedData.Other;
+                    chartData.dateDataTotalStore = AnalyzedData.Total;
+                    chartData.theVotes = AnalyzedData.theVotes;
+                    this.setState({
+                        chartData: chartData
+                    });
+                }            
+                break;
+
+            case 'PieChart':
+                tempData.dateHeadersStore = [];
+                tempData.Biden = [];
+                tempData.Trump = [];
+                tempData.Other = [];
+                tempData.Total = [];
+                tempData.theVotes = chartData.theVotes;
+                
+                AnalyzedData = this.doAnalytics(analyticsType,tempData);
+                if(AnalyzedData != null) {
+                   
+                    chartData.theVotes = AnalyzedData.theVotes;
+                    
+                    let newChartData = this.getChartsData(chartData.theVotes,this.state.parse_resolution); 
+                    this.setState({
+                        chartData: newChartData
+                    });
+                }            
+                break;
+
         default:
 
     }
@@ -920,7 +1022,8 @@ async checkForVotes(state){
 
     let tempCombined = [];
     tempBiden.forEach(function(item, index){
-        tempCombined.push({"Trump":tempTrump[index],"Biden":tempBiden[index],"Other":tempOther[index],"Total":tempTotal,"Date":tempDate[index]});
+        tempCombined.push({"Trump":tempTrump[index],"Biden":tempBiden[index],"Other":tempOther[index],"Total":tempTotal,"Date":tempDate[index],
+                "Votes":data.theVotes[index]});
     });
 
     console.log("Temp Combined",tempCombined);
@@ -933,8 +1036,7 @@ async checkForVotes(state){
         sortResult = Hi_low_sort;
     }
     else if(type==='ldiff'){
-        let Ldiff_sort = tempCombined.sort((a, b) => ( (a.Trump > a.Biden) && ((a.Trump - a.Biden) > (b.Trump - b.Biden)) ||
-                                                          (a.Biden > a.Trump) && ((a.Biden - a.Trump) > (b.Biden - b.Trump))  
+        let Ldiff_sort = tempCombined.sort((a, b) => ( Math.abs(a.Trump - a.Biden) > Math.abs(b.Trump-b.Biden)  
                                                         )  ? -1 : 1);
         console.log("Largest Difference", Ldiff_sort);
         sortResult = Ldiff_sort;
@@ -983,12 +1085,19 @@ async checkForVotes(state){
         return lev2.Date;
       }));
     console.log("Analyzed Date Data", analyzedDate);
+
+    let analyzedVotes = sortResult.map(lev1 =>  {
+        return lev1.Votes;
+      });
+    console.log("Analyzed Votes Data", analyzedVotes);
+
     return {
         "Trump":analyzedTrump,
         "Biden":analyzedBiden,
         "Other":analyzedOther,
         "Total":analyzedTotal,
-        "Date":analyzedDate
+        "Date":analyzedDate,
+        "theVotes":analyzedVotes
     }
   }
 

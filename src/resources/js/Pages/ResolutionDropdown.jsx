@@ -23,6 +23,7 @@ const analytic_values = [
 export default function ResolutionDropdown(props){
     const[selectOption, setSelectOption ] = useState("0");
     const[selectOptions, setSelectOptions ] = useState(resolution_values);
+    const[selectionMade, setSelectionMade ] = useState("Please Select Here");
     const[firstSelectOption, setFirstSelectOption] = useState('Select Chart Resolution');
     const[analyticsType, setAnalyticsType] = useState("none");
     const[isAvail, setIsAvail] = useState(true);
@@ -33,6 +34,7 @@ export default function ResolutionDropdown(props){
     const selectedAnalytic = (e) => {
         
         let text = e.target.text;
+        setSelectionMade(text);
         console.log("Selected Text:", text);
         let index = resolution_values.filter(values => {
             return values[1] === text;
@@ -59,7 +61,7 @@ export default function ResolutionDropdown(props){
                 return values[0] === selection;
             }).map(item => {return item[1].toString();});
             console.log('Text Holder', textholder);
-
+            setSelectionMade(textholder);
             props.selectAnalytics(textholder, props.chartData, props.chartType);
             setAnalyticsType(textholder);
 
@@ -107,13 +109,13 @@ export default function ResolutionDropdown(props){
         return (
             <Container>
                 <Row>
-                    <h4 className="d-flex justify-content-center">{firstSelectOption}</h4>
+                    <h4 className="d-flex justify-content-center rounded p-1" style={{backgroundColor:"lightblue"}}>{firstSelectOption}</h4>
                 </Row>
                 <Row>
                     <select
                         onChange={({ target: { value }}) => onValueChange(value)}
                     >
-                        <option value={parseInt(selectOption)}></option>
+                        <option value={parseInt(selectOption)} >{ selectionMade }</option>
                         {values.map(([value, text]) => (
                             <option key={value} selected={selected === value} value={value}>
                                 {text}
@@ -179,7 +181,7 @@ export default function ResolutionDropdown(props){
                             <Row className="w-100 mt-2">
                                 <Col className="col-12 d-flex justify-content-center">                        
                                     {typeof(props.analytics) === "undefined" && <p>Resolution (data point multiplier) is {selectOption} </p>}  
-                                    {props.analytics === 'analytics' && <p>Analytics Type is<br></br><font color="blue">{analyticsType}</font></p>}
+                                    {props.analytics === 'analytics' && <p>Analytics Type is <font color="blue">{analyticsType}</font></p>}
                                 </Col>
                             </Row>
 

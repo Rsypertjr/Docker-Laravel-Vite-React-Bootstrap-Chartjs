@@ -168,7 +168,7 @@ export default function BinStackedChart(props) {
             </Container>
            
             <AnalyticsBar handleClick={handleClick} {...props} theResolutions={props.theResolutions} selectResolution={props.selectResolution} 
-               selectAnalytics={e => props.selectAnalytics(e, props.chartData)}/>
+                selectAnalytics={props.selectAnalytics} chartData={props.chartData} chartType={'BinStackedChart'}/>
          
             <Container className="h-10 d-flex justify-content-center">
                 <h4>Incremental Stacked Total Votes</h4>
