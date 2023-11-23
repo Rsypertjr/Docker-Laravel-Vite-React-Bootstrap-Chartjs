@@ -48,6 +48,9 @@ export default class VotesApp extends React.Component {
       this.checkForVotes = this.checkForVotes.bind(this);
       this.doAnalytics = this.doAnalytics.bind(this);
       this.analyticEngine = this.analyticEngine.bind(this);
+      this.selectAnalytics = this.selectAnalytics.bind(this);
+      this.selectChartForAnalytics = this.selectChartForAnalytics.bind(this);
+
 
       this.state = {
           theVotes: [],
@@ -70,13 +73,13 @@ export default class VotesApp extends React.Component {
           options: states,
           defaultOption:states[0],
           chartData:{},
+          originalChartData:{},
           graphType:'table',
           goto_Linechart: false,
           parse_resolution: 1,
           noOfChartPages:0,
           theChartArray:[],
-          theResolutions: resolutions,
-          chooseSelectedOption:false
+          theResolutions: resolutions
       };
 
 
@@ -271,6 +274,7 @@ export default class VotesApp extends React.Component {
     
                 this.setState({
                     chartData: chartData,
+                    originalChartData: chartData,
                     noOfChartPages : chartData.numPages,
                     theChartArray: chartData.chartArray
                 });
@@ -308,6 +312,7 @@ export default class VotesApp extends React.Component {
                 thePageSize: pageSize,
                 defaultOption: this.state.theState,
                 chartData: json[0],
+                originalChartData: json[0],
                 noOfChartPages : json[0].numPages,
                 theChartArray: json[0].chartArray
             });
@@ -804,257 +809,262 @@ async checkForVotes(state){
 
   selectResolution(e){
      
-      let chartData = this.getChartsData(parseInt(e));
-      console.log("When Selecting Resolution Is Analytics On:", this.state.analyticsIsOn);
-      if(!this.state.analyticsIsOn){
-        this.setState({
-            parse_resolution:parseInt(e),
-            chartData:  chartData,
-            pageNo: 1,
-            noOfChartPages : chartData.numPages,
-            theChartArray: chartData.chartArray
-           });
-      }
-      else if(this.state.analyticsIsOn){
-    
-        let chartData = this.getChartsData(parseInt(e));
-        this.setState({
-            parse_resolution:parseInt(e),
-            chartData:  chartData,
-            pageNo: 1,
-            noOfChartPages : chartData.numPages,
-            theChartArray: chartData.chartArray
-           });
-      }
-      
-
+    let chartData = this.getChartsData(parseInt(e));
+ 
+    this.setState({
+        parse_resolution:parseInt(e),
+        chartData:  chartData,
+        pageNo: 1,
+        noOfChartPages : chartData.numPages,
+        theChartArray: chartData.chartArray
+        });
   }
 
-  selectAnalytics(e,chartData,chartOrigin) {
+  selectAnalytics(e,chartData,chartOrigin) {  
    
-   
-    let renewChartData = this.getChartsData(this.state.parse_resolution,this.state.theVotes); 
-    this.setState({
-        chartData: renewChartData
-    });
     console.log("Analytics selected:",e);
+    console.log("Original Chart Data: ", this.state.originalChartData);
     let analyticsType = e.toString();
+    /*let renewChartData = this.getChartsData(this.state.parse_resolution,this.state.theVotes); 
+        this.setState({
+            theVotes: this.state.originalChartData.theVotes,
+            parse_resolution:1
+        });
+    */
+  
     if(analyticsType === 'No Analytics'){
         console.log("Wanting No Analytics:", analyticsType);
-        console.log("The Original Votes: ",this.state.theOriginalVotes);
-
-        //let chartData = this.getChartsData(parseInt(e),this.state.theOriginalVotes);
-        
+        let renewChartData = this.getChartsData(this.state.parse_resolution,this.state.originalChartData.theVotes); 
         this.setState({
             analyticsIsOn: false,
-            chooseSelectedOption: false,
-            theVotes: this.state.theOriginalVotes
-
+            chartData: renewChartData,
+            theVotes: renewChartData.theVotes,
+            parse_resolution: 1
         });
+      
     }
-    else {
-        
-        console.log("Chartdata for Analytics:", chartData);
-        console.log("Chart Type:", chartOrigin);
-        let tempData = {};
-        let AnalyzedData = null;
-        switch(chartOrigin){
-            case 'PerLineChart':
-            
-                tempData.dateHeadersStore = chartData.dateHeadersStore;
-                tempData.Biden = chartData.perRemainingBidenStore;
-                tempData.Trump = chartData.perRemainingTrumpStore;
-                tempData.Other = [];
-                tempData.Total = [];
-                tempData.theVotes = chartData.theVotes;
-                
-                AnalyzedData = this.doAnalytics(analyticsType,tempData);
-                console.log("Analyzed Data 2", AnalyzedData);
-                if(AnalyzedData != null) {
-                    chartData.dateHeadersStore = AnalyzedData.Date;
-                    chartData.perRemainingBidenStore = AnalyzedData.Biden;
-                    chartData.perRemainingTrumpStore = AnalyzedData.Trump
-                    chartData.theVotes = AnalyzedData.theVotes;
-
-                    this.setState({
-                        chartData: chartData,
-                        theVotes: chartData.theVotes
-                    });
-                }            
-                break;
-            case 'SpikesLineChart':
-                
-                tempData.dateHeadersStore = chartData.dateHeadersStore;
-                tempData.Biden = chartData.dateDataBidenAddStore;
-                tempData.Trump = chartData.dateDataTrumpAddStore;
-                tempData.Other = chartData.dateDataOtherAddStore;
-                tempData.Total = chartData.dateDataTotalAddStore;
-                tempData.theVotes = chartData.theVotes;
-                
-                AnalyzedData = this.doAnalytics(analyticsType,tempData);
-                if(AnalyzedData != null) {
-                    chartData.dateHeadersStore = AnalyzedData.Date;
-                    chartData.dateDataBidenAddStore = AnalyzedData.Biden;
-                    chartData.dateDataTrumpAddStore = AnalyzedData.Trump;
-                    chartData.dateDataOtherAddStore = AnalyzedData.Other;
-                    chartData.dateDataTotalAddStore = AnalyzedData.Total;
-                    chartData.theVotes = AnalyzedData.theVotes;
-
-                    this.setState({
-                        chartData: chartData,                    
-                        theVotes: chartData.theVotes
-                    });
-                }            
-                break;
-
-            case 'DiffLineChart':
-            
-                tempData.dateHeadersStore = chartData.dateHeadersStore;
-                tempData.Biden = chartData.dateDataBidenAddDiffStore;
-                tempData.Trump = chartData.dateDataTrumpAddDiffStore;
-                tempData.Other = [];
-                tempData.Total = [];
-                tempData.theVotes = chartData.theVotes;
-                
-                AnalyzedData = this.doAnalytics(analyticsType,tempData);
-                if(AnalyzedData != null) {
-                    chartData.dateHeadersStore = AnalyzedData.Date;
-                    chartData.dateDataBidenAddDiffStore = AnalyzedData.Biden;
-                    chartData.dateDataTrumpAddDiffStore = AnalyzedData.Trump;
-                    chartData.dateDataOtherAddDiffStore = AnalyzedData.Other;
-                    chartData.dateDataTotalAddDiffStore = AnalyzedData.Total;
-                    chartData.theVotes = AnalyzedData.theVotes;
-
-                    this.setState({
-                        chartData: chartData,                    
-                        theVotes: chartData.theVotes
-                    });
-                }            
-                break;
-
-            case 'VotesLineChart2':
-            
-                tempData.dateHeadersStore = chartData.dateHeadersStore;
-                tempData.Biden = chartData.dateDataBidenStore;
-                tempData.Trump = chartData.dateDataTrumpStore;
-                tempData.Other = [];
-                tempData.Total = [];
-                tempData.theVotes = chartData.theVotes;
-                
-                AnalyzedData = this.doAnalytics(analyticsType,tempData);
-                if(AnalyzedData != null) {
-                    chartData.dateHeadersStore = AnalyzedData.Date;
-                    chartData.dateDataBidenStore = AnalyzedData.Biden;
-                    chartData.dateDataTrumpStore = AnalyzedData.Trump;
-                    chartData.dateDataOtherStore = AnalyzedData.Other;
-                    chartData.dateDataTotalStore = AnalyzedData.Total;
-                    chartData.theVotes = AnalyzedData.theVotes;
-                
-                    this.setState({
-                        chartData: chartData,                    
-                        theVotes: chartData.theVotes
-                    });
-                }            
-                break;
-
-            case 'BarChart':
-                
-                tempData.dateHeadersStore = chartData.dateHeadersStore;
-                tempData.Biden = chartData.dateDataBidenStore;
-                tempData.Trump = chartData.dateDataTrumpStore;
-                tempData.Other = chartData.dateDataOtherStore;
-                tempData.Total = [];
-                tempData.theVotes = chartData.theVotes;
-                
-                AnalyzedData = this.doAnalytics(analyticsType,tempData);
-                if(AnalyzedData != null) {
-                    chartData.dateHeadersStore = AnalyzedData.Date;
-                    chartData.dateDataBidenStore = AnalyzedData.Biden;
-                    chartData.dateDataTrumpStore = AnalyzedData.Trump;
-                    chartData.dateDataOtherStore = AnalyzedData.Other;
-                    chartData.dateDataTotalStore = AnalyzedData.Total;
-                    chartData.theVotes = AnalyzedData.theVotes;
-
-                    this.setState({
-                        chartData: chartData,                    
-                        theVotes: chartData.theVotes
-                    });
-                }            
-                break;
-        
-            case 'BinStackedChart':
-            
-                tempData.dateHeadersStore = chartData.dateHeadersStore;
-                tempData.Biden = chartData.dateDataBidenStore;
-                tempData.Trump = chartData.dateDataTrumpStore;
-                tempData.Other = chartData.dateDataOtherStore;
-                tempData.Total = [];
-                tempData.theVotes = chartData.theVotes;
-                
-                AnalyzedData = this.doAnalytics(analyticsType,tempData);
-                if(AnalyzedData != null) {
-                    chartData.dateHeadersStore = AnalyzedData.Date;
-                    chartData.dateDataBidenStore = AnalyzedData.Biden;
-                    chartData.dateDataTrumpStore = AnalyzedData.Trump;
-                    chartData.dateDataOtherStore = AnalyzedData.Other;
-                    chartData.dateDataTotalStore = AnalyzedData.Total;
-                    chartData.theVotes = AnalyzedData.theVotes;
-
-                    this.setState({
-                        chartData: chartData,                    
-                        theVotes: chartData.theVotes
-                    });
-                }            
-                break;
-
-            case 'PieChart':
-                tempData.dateHeadersStore = [];
-                tempData.Biden = [];
-                tempData.Trump = [];
-                tempData.Other = [];
-                tempData.Total = [];
-                tempData.theVotes = chartData.theVotes;
-                
-                AnalyzedData = this.doAnalytics(analyticsType,tempData);
-                if(AnalyzedData != null) {
-                    
-                    chartData.theVotes = AnalyzedData.theVotes;
-                    
-                    let newChartData = this.getChartsData(chartData.theVotes,this.state.parse_resolution); 
-                    this.setState({
-                        chartData: newChartData,
-                        analyticsChartData: chartData
-                    });
-                }            
-                break;
-
-
-            default:
-            
-
-        }
+   
+    else if(analyticsType !== 'No Analytics'){
+        console.log("Analytics Type:",analyticsType);
+        console.log("prior Analytics: ", this.state.priorAnalytics);       
+      
+        this.selectChartForAnalytics(analyticsType,chartOrigin,chartData);
     }
     
     
 
   }
+
+
+  selectChartForAnalytics(analyticsType,chartOrigin,chart_Data){
+    console.log("Chart Type:", chartOrigin);
+    let tempData = {};
+    let AnalyzedData = null;
+    
+    let chartData = this.getChartsData(this.state.parse_resolution,this.state.originalChartData.theVotes);     
+    console.log("Chartdata for Analytics:", chartData); 
+
+    switch(chartOrigin){
+       
+        case 'PerLineChart':
+        
+            tempData.dateHeadersStore = chartData.dateHeadersStore;
+            tempData.Biden = chartData.perRemainingBidenStore;
+            tempData.Trump = chartData.perRemainingTrumpStore;
+            tempData.Other = [];
+            tempData.Total = [];
+            tempData.theVotes = chartData.theVotes;
+            
+            AnalyzedData = this.doAnalytics(analyticsType,tempData);
+            console.log("Analyzed Data 2", AnalyzedData);
+            if(AnalyzedData != null) {
+                chartData.dateHeadersStore = AnalyzedData.Date;
+                chartData.perRemainingBidenStore = AnalyzedData.Biden;
+                chartData.perRemainingTrumpStore = AnalyzedData.Trump
+                chartData.theVotes = AnalyzedData.theVotes;
+
+                this.setState({
+                    chartData: chartData,
+                    theVotes: chartData.theVotes,
+                    parse_resolution: 1
+                });
+            }            
+            break;
+        case 'SpikesLineChart':
+            
+            tempData.dateHeadersStore = chartData.dateHeadersStore;
+            tempData.Biden = chartData.dateDataBidenAddStore;
+            tempData.Trump = chartData.dateDataTrumpAddStore;
+            tempData.Other = chartData.dateDataOtherAddStore;
+            tempData.Total = chartData.dateDataTotalAddStore;
+            tempData.theVotes = chartData.theVotes;
+            
+            AnalyzedData = this.doAnalytics(analyticsType,tempData);
+            if(AnalyzedData != null) {
+                chartData.dateHeadersStore = AnalyzedData.Date;
+                chartData.dateDataBidenAddStore = AnalyzedData.Biden;
+                chartData.dateDataTrumpAddStore = AnalyzedData.Trump;
+                chartData.dateDataOtherAddStore = AnalyzedData.Other;
+                chartData.dateDataTotalAddStore = AnalyzedData.Total;
+                chartData.theVotes = AnalyzedData.theVotes;
+
+                this.setState({
+                    chartData: chartData,                    
+                    theVotes: chartData.theVotes,
+                    parse_resolution: 1
+                });
+            }            
+            break;
+
+        case 'DiffLineChart':
+        
+            tempData.dateHeadersStore = chartData.dateHeadersStore;
+            tempData.Biden = chartData.dateDataBidenAddDiffStore;
+            tempData.Trump = chartData.dateDataTrumpAddDiffStore;
+            tempData.Other = [];
+            tempData.Total = [];
+            tempData.theVotes = chartData.theVotes;
+            
+            AnalyzedData = this.doAnalytics(analyticsType,tempData);
+            if(AnalyzedData != null) {
+                chartData.dateHeadersStore = AnalyzedData.Date;
+                chartData.dateDataBidenAddDiffStore = AnalyzedData.Biden;
+                chartData.dateDataTrumpAddDiffStore = AnalyzedData.Trump;
+                chartData.dateDataOtherAddDiffStore = AnalyzedData.Other;
+                chartData.dateDataTotalAddDiffStore = AnalyzedData.Total;
+                chartData.theVotes = AnalyzedData.theVotes;
+
+                this.setState({
+                    chartData: chartData,                    
+                    theVotes: chartData.theVotes,
+                    parse_resolution: 1
+                });
+            }            
+            break;
+
+        case 'VotesLineChart2':
+        
+            tempData.dateHeadersStore = chartData.dateHeadersStore;
+            tempData.Biden = chartData.dateDataBidenStore;
+            tempData.Trump = chartData.dateDataTrumpStore;
+            tempData.Other = [];
+            tempData.Total = [];
+            tempData.theVotes = chartData.theVotes;
+            
+            AnalyzedData = this.doAnalytics(analyticsType,tempData);
+            if(AnalyzedData != null) {
+                chartData.dateHeadersStore = AnalyzedData.Date;
+                chartData.dateDataBidenStore = AnalyzedData.Biden;
+                chartData.dateDataTrumpStore = AnalyzedData.Trump;
+                chartData.dateDataOtherStore = AnalyzedData.Other;
+                chartData.dateDataTotalStore = AnalyzedData.Total;
+                chartData.theVotes = AnalyzedData.theVotes;
+            
+                this.setState({
+                    chartData: chartData,                    
+                    theVotes: chartData.theVotes,
+                    parse_resolution: 1
+                });
+            }            
+            break;
+
+        case 'BarChart':
+            
+            tempData.dateHeadersStore = chartData.dateHeadersStore;
+            tempData.Biden = chartData.dateDataBidenStore;
+            tempData.Trump = chartData.dateDataTrumpStore;
+            tempData.Other = chartData.dateDataOtherStore;
+            tempData.Total = [];
+            tempData.theVotes = chartData.theVotes;
+            
+            AnalyzedData = this.doAnalytics(analyticsType,tempData);
+            if(AnalyzedData != null) {
+                chartData.dateHeadersStore = AnalyzedData.Date;
+                chartData.dateDataBidenStore = AnalyzedData.Biden;
+                chartData.dateDataTrumpStore = AnalyzedData.Trump;
+                chartData.dateDataOtherStore = AnalyzedData.Other;
+                chartData.dateDataTotalStore = AnalyzedData.Total;
+                chartData.theVotes = AnalyzedData.theVotes;
+
+                this.setState({
+                    chartData: chartData,                    
+                    theVotes: chartData.theVotes,
+                    parse_resolution: 1
+                });
+            }            
+            break;
+    
+        case 'BinStackedChart':
+        
+            tempData.dateHeadersStore = chartData.dateHeadersStore;
+            tempData.Biden = chartData.dateDataBidenStore;
+            tempData.Trump = chartData.dateDataTrumpStore;
+            tempData.Other = chartData.dateDataOtherStore;
+            tempData.Total = [];
+            tempData.theVotes = chartData.theVotes;
+            
+            AnalyzedData = this.doAnalytics(analyticsType,tempData);
+            if(AnalyzedData != null) {
+                chartData.dateHeadersStore = AnalyzedData.Date;
+                chartData.dateDataBidenStore = AnalyzedData.Biden;
+                chartData.dateDataTrumpStore = AnalyzedData.Trump;
+                chartData.dateDataOtherStore = AnalyzedData.Other;
+                chartData.dateDataTotalStore = AnalyzedData.Total;
+                chartData.theVotes = AnalyzedData.theVotes;
+
+                this.setState({
+                    chartData: chartData,                    
+                    theVotes: chartData.theVotes,
+                    parse_resolution: 1
+                });
+            }            
+            break;
+
+        case 'PieChart':
+            tempData.dateHeadersStore = [];
+            tempData.Biden = [];
+            tempData.Trump = [];
+            tempData.Other = [];
+            tempData.Total = [];
+            tempData.theVotes = chartData.theVotes;
+            
+            AnalyzedData = this.doAnalytics(analyticsType,tempData);
+            if(AnalyzedData != null) {
+                
+                chartData.theVotes = AnalyzedData.theVotes;
+                
+                let newChartData = this.getChartsData(chartData.theVotes,this.state.parse_resolution); 
+                this.setState({
+                    chartData: newChartData,
+                    analyticsChartData: chartData,
+                    parse_resolution: 1
+                });
+            }            
+            break;
+
+
+        default:
+        
+
+    }
+  }
+
 
   doAnalytics(analyticsType, tempData){
     let AnalyzedData = null;
-    
+   
+   
     switch(analyticsType) {
         case 'High to Low':
             this.setState({
-                analyticsIsOn: true,
-                chooseSelectedOption: this.state.chooseSelectedOption ? false : true
+                analyticsIsOn: true
             });  
             AnalyzedData = this.analyticEngine(tempData,'hilo'); 
 
             break;  
         case 'Largest Difference':
             this.setState({
-                analyticsIsOn: true,
-                chooseSelectedOption: this.state.chooseSelectedOption ? false : true
+                analyticsIsOn: true
             });  
             AnalyzedData = this.analyticEngine(tempData,'ldiff'); 
             break; 

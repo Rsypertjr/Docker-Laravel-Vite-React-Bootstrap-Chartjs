@@ -102,25 +102,26 @@ export default function ResolutionDropdown(props){
     });
 
     useEffect(() => {
-
         $('[data-toggle="tooltip"]').tooltip();
        // setResolution(props.parse_resolution);
+
         if(props.analytics !== null && props.analytics === 'analytics'){
             setSelectOptions(analytic_values);
             setFirstSelectOption('Select Analyics Type');
             setSelectOption("1");
         }
-       
+      
 
     },[]);
 
     useEffect(() => {
-
-        if(!props.chooseSelectedOption)
-            setSelectOption("1")
+   
+            console.log("Parse Resolution:", props.parse_resolution);
+            setSelectOption(props.parse_resolution);
+        
        
 
-    },[props.chooseSelectedOption]);
+    },[props.parse_resolution]);
 
 
 
