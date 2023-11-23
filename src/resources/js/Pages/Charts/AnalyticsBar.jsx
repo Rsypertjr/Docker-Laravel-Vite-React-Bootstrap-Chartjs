@@ -70,17 +70,17 @@ export default function AnalyticsBar(props) {
                
                 <Row className="mb-3 p-2" style={{backgroundColor:"beige",fontSize:"0.8em", height:auto}}>
                     { false && 
-                        <Col className="justify-content-center">
+                        <Col className="col-6 d-flex justify-content-center">
                             <Button variant="outline-success" onClick={props.handleClick} className="viewerClose">Close Chart</Button>{' '}
                         </Col>
                     }
                     { true && 
-                        <Col className="justify-content-center" style={{position:"relative"}}>
+                        <Col className="col-6 d-flex justify-content-center" style={{position:"relative"}}>
                             <ResolutionDropdown {...props} theResolutions={props.theResolutions} selectResolution={props.selectResolution}/>
                         </Col>
                     }
                     { true &&
-                        <Col className="justify-content-center" >
+                        <Col className="col-6 d-flex justify-content-center" >
                             <ResolutionDropdown {...props} analytics={'analytics'} theResolutions={props.theResolutions} selectAnalytics={props.selectAnalytics}
                             chartData={props.chartData}/>
                         </Col>

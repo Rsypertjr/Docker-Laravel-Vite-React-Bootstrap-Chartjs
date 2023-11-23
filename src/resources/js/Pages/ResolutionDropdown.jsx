@@ -21,7 +21,7 @@ const analytic_values = [
 ];
 
 export default function ResolutionDropdown(props){
-    const[selectOption, setSelectOption ] = useState("0");
+    const[selectOption, setSelectOption ] = useState("1");
     const[selectOptions, setSelectOptions ] = useState(resolution_values);
     const[selectionMade, setSelectionMade ] = useState("Please Select Here");
     const[firstSelectOption, setFirstSelectOption] = useState('Select Chart Resolution');
@@ -31,51 +31,12 @@ export default function ResolutionDropdown(props){
     const[defaultResolution, setDefaultResolution] = useState(props.theResolutions[0].toString());
     const[chArray, setCHArray] = useState(props.chartData.chartArray);
 
-    const selectedAnalytic = (e) => {
-        
-        let text = e.target.text;
-        setSelectionMade(text);
-        console.log("Selected Text:", text);
-        let index = resolution_values.filter(values => {
-            return values[1] === text;
-        }).map(item => {return item[0].toString();});
-        console.log("Selected Index:", index);
-
-        setSelectOption(index);
-        if(props.analytics !== 'analytics') {
-            
-            if(getTitle(index) == "Available" || parseInt(index) < parseInt(props.parse_resolution) ){
-    
-                props.selectResolution(index);
-                //alert(resolution);
-            }
-            else {
-                alert("Resolution " + index.toString() + " is not Available!");
-                setSelectOption("1");
-                props.selectResolution("1");
-            }
-        }
-        else {
-            let selection = index;
-            let textholder = analytic_values.filter(values => {
-                return values[0] === selection;
-            }).map(item => {return item[1].toString();});
-            console.log('Text Holder', textholder);
-            setSelectionMade(textholder);
-            props.selectAnalytics(textholder, props.chartData, props.chartType);
-            setAnalyticsType(textholder);
-
-        }
-        
-
-    }
-
+   
     const selectedOption = (e) => {
         
         
         console.log("Selected Text:", e);
        
-
         setSelectOption(e.toString());
         if(props.analytics !== 'analytics') {
             
@@ -105,7 +66,7 @@ export default function ResolutionDropdown(props){
 
     }
 
-    const Select = ({ values, onValueChange, selected}) => {
+    const Select = ({ values, onValueChange, selected_option}) => {
         return (
             <Container>
                 <Row>
@@ -117,7 +78,7 @@ export default function ResolutionDropdown(props){
                     >
                         <option value={parseInt(selectOption)} >{ selectionMade }</option>
                         {values.map(([value, text]) => (
-                            <option key={value} selected={selected === value} value={value}>
+                            <option key={value} selected={selected_option === value} value={value}>
                                 {text}
                             </option>
                         ))}
@@ -130,8 +91,6 @@ export default function ResolutionDropdown(props){
     };
 
 
-   
-    
 
     const getTitle = useCallback((res) => {
             let test = (parseInt(props.pageNo)-1)*10*parseInt(res)+parseInt(res);
@@ -149,46 +108,67 @@ export default function ResolutionDropdown(props){
         if(props.analytics !== null && props.analytics === 'analytics'){
             setSelectOptions(analytic_values);
             setFirstSelectOption('Select Analyics Type');
-            setSelectOption("0");
+            setSelectOption("1");
         }
+       
 
     },[]);
 
+    useEffect(() => {
+
+        if(!props.chooseSelectedOption)
+            setSelectOption("1")
+       
+
+    },[props.chooseSelectedOption]);
+
+
+
+
+    
     return(
 
             <Container className='resolution'>
                 <Row>
-                    <Col className="col-2" ></Col>
-                    
-                    
-                   
-                    <Col className="col-8 d-flex justify-content-center" style={{fontSize:"1.5em"}}>                      
+               
+                    <Col className="col-12 d-flex justify-content-center" style={{fontSize:"1.5em"}}>                      
                         <Container >
-                            <Row className="w-100">
+                            <Row className="w-100 mb-2">
                                 <Col className="col-12 d-flex justify-content-center">
                                     <Select
                                         values={selectOptions}
                                         selected={selectOption}
                                         onValueChange={selectedOption}
                                         className="w-100"
-                                    />
-                                   
+                                    />                                   
                                 </Col>
-
-                                
                             </Row>
                             
-                            <Row className="w-100 mt-2">
-                                <Col className="col-12 d-flex justify-content-center">                        
-                                    {typeof(props.analytics) === "undefined" && <p>Resolution (data point multiplier) is {selectOption} </p>}  
-                                    {props.analytics === 'analytics' && <p>Analytics Type is <font color="blue">{analyticsType}</font></p>}
+                            {typeof(props.analytics) === "undefined" && <Row className="rounded" style={{backgroundColor:"lightgray"}}>
+                                <Col className="col-12 p-1 d-flex justify-content-center align-middle">                        
+                                    <p>Resolution (data point multiplier) is {selectOption} </p>
                                 </Col>
-                            </Row>
-
+                            </Row>}
+                            {props.analytics === 'analytics' && <Row className="rounded" style={{backgroundColor:"lightgray"}}>
+                                <Col className="col-12 p-1 d-flex justify-content-center align-middle">  
+                                     <p>Analytics Type is <font color="blue">{analyticsType}</font></p>
+                                </Col>
+                            </Row>}     
+                            {analyticsType[0].toString() === 'No Analytics' &&
+                            <Row className="rounded" style={{backgroundColor:"lightgray"}}>
+                                <Col className="col-12 p-1 d-flex justify-content-center align-middle">                   
+                                    <p>Select a Resolution to Return to Normal Chart</p>  
+                                </Col>
+                            </Row>}                      
+                            { props.analyticsIsOn && <Row className="rounded" style={{backgroundColor:"lightgray"}}>
+                                <Col className="col-12 p-1 d-flex justify-content-center align-middle">                   
+                                    <p>Analytics is Now On!</p>  
+                                </Col>
+                            </Row>}
+                
                         </Container>
                         
                     </Col>
-                    <Col className="col-2"></Col>
                 </Row>
 
             </Container>
