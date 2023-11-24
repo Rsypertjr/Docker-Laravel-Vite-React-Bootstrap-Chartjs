@@ -1115,7 +1115,7 @@ async checkForVotes(state){
 
     let tempCombined = [];
     tempBiden.forEach(function(item, index){
-        tempCombined.push({"Trump":tempTrump[index],"Biden":tempBiden[index],"Other":tempOther[index],"Total":tempTotal,"Date":tempDate[index],
+        tempCombined.push({"Trump":tempTrump[index],"Biden":tempBiden[index],"Other":tempOther[index],"Total":tempTotal[index],"Date":tempDate[index],
                 "Votes":data.theVotes[index]});
     });
 
