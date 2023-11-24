@@ -16,8 +16,9 @@ const resolution_values = [
 const analytic_values = [
     ['1','High to Low'],
     ['2','Largest Difference'],
-    ['3','No Analytics'],
-    ['4','No Analytics']
+    ['3','Trump More Votes'],
+    ['4','Biden More Votes'],
+    ['5','No Analytics']
 ];
 
 export default function ResolutionDropdown(props){
@@ -155,12 +156,7 @@ export default function ResolutionDropdown(props){
                                      <p>Analytics Type is <font color="blue">{analyticsType}</font></p>
                                 </Col>
                             </Row>}     
-                            {analyticsType[0].toString() === 'No Analytics' &&
-                            <Row className="rounded" style={{backgroundColor:"lightgray"}}>
-                                <Col className="col-12 p-1 d-flex justify-content-center align-middle">                   
-                                    <p>Select a Resolution to Return to Normal Chart</p>  
-                                </Col>
-                            </Row>}                      
+                                                
                             { props.analyticsIsOn && <Row className="rounded" style={{backgroundColor:"lightgray"}}>
                                 <Col className="col-12 p-1 d-flex justify-content-center align-middle">                   
                                     <p>Analytics is Now On!</p>  

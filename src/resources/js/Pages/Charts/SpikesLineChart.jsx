@@ -159,24 +159,32 @@ export default function SpikesLineChart(props) {
 
     return (
 
-        <div className="chart-viewer">
-            <Container className="h-10 d-flex justify-content-center mb-4">
+        <Container className="chart-viewer">
+            <Row>
+                <Col className="w-100 d-flex justify-content-center">
+                    <h3>{props.selectedState}</h3>
+                </Col>
+            </Row>
+            <Row>
+                <Col className="w-100 d-flex justify-content-center">
                 <h4>Vote Spikes Line Chart</h4>
-            </Container>
-           
+                </Col>
+            </Row>
             <AnalyticsBar handleClick={handleClick} {...props} theResolutions={props.theResolutions} selectResolution={props.selectResolution} 
                 selectAnalytics={props.selectAnalytics} chartData={props.chartData} chartType={'SpikesLineChart'}/>
          
-            <Container className="h-10 d-flex justify-content-center">
-                <h4>Incremental Vote Spike</h4>
-            </Container>
-            <Container className="smaller justify-content-center">
+            <Row>
+                <Col className="w-100 d-flex justify-content-center">
+                    <h4>Incremental Vote Spike</h4>
+                </Col>               
+            </Row>
+            <Row className="d-flex justify-content-center">
                 <div><canvas id="myChart"></canvas></div>
-            </Container>
-            <Container className="h-100 d-flex justify-content-center">
+            </Row>
+            <Row className="h-100 p-1 mt-3 d-flex justify-content-center">
                 <ChartPager {...props} getPageNumber={props.getPageNumber} type={'line'} leftArrow={props.leftArrow} rightArrow={props.rightArrow}/>
-            </Container>
-        </div>
+            </Row>
+        </Container>
 
     );
 

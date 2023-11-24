@@ -65,6 +65,7 @@ export default class VotesApp extends React.Component {
           isPageEmpty:false,
           thePagingArray: [],
           thePageSize:0,
+          selectedState:states[0],
           pageNo:1,
           raceId: '',
           raceSlug: '',
@@ -262,6 +263,7 @@ export default class VotesApp extends React.Component {
                         theNumberOfPages: numPages,
                         thePagingArray: pagingArray,
                         thePageSize: pageSize,
+                        selectedState: currentState,
                         defaultOption: this.state.theState
                     });
     
@@ -834,7 +836,7 @@ async checkForVotes(state){
   
     if(analyticsType === 'No Analytics'){
         console.log("Wanting No Analytics:", analyticsType);
-        let renewChartData = this.getChartsData(this.state.parse_resolution,this.state.originalChartData.theVotes); 
+        let renewChartData = this.getChartsData(1,this.state.originalChartData.theVotes); 
         this.setState({
             analyticsIsOn: false,
             chartData: renewChartData,
@@ -1068,6 +1070,18 @@ async checkForVotes(state){
             });  
             AnalyzedData = this.analyticEngine(tempData,'ldiff'); 
             break; 
+        case 'Trump More Votes':
+            this.setState({
+                analyticsIsOn: true
+            });  
+            AnalyzedData = this.analyticEngine(tempData,'Trump_plus'); 
+            break; 
+        case 'Biden More Votes':
+            this.setState({
+                analyticsIsOn: true
+            });  
+            AnalyzedData = this.analyticEngine(tempData,'Biden_plus'); 
+            break; 
         
         default:      
     }      
@@ -1115,10 +1129,19 @@ async checkForVotes(state){
         sortResult = Hi_low_sort;
     }
     else if(type==='ldiff'){
-        let Ldiff_sort = tempCombined.sort((a, b) => ( Math.abs(a.Trump - a.Biden) > Math.abs(b.Trump-b.Biden)  
-                                                        )  ? -1 : 1);
+        let Ldiff_sort = tempCombined.sort((a, b) => ( Math.abs(a.Trump - a.Biden) > Math.abs(b.Trump-b.Biden) )  ? -1 : 1);
         console.log("Largest Difference", Ldiff_sort);
         sortResult = Ldiff_sort;
+    }
+    else if(type==='Trump_plus'){
+        let Trump_plus_sort = tempCombined.sort((a, b) => ( (a.Trump > a.Biden) > (b.Trump > b.Biden) )  ? -1 : 1);
+        console.log("Trump Plus Votes", Trump_plus_sort);
+        sortResult = Trump_plus_sort;
+    }
+    else if(type==='Biden_plus'){
+        let Biden_plus_sort = tempCombined.sort((a, b) => ( (a.Biden > a.Trump) > (b.Biden > b.Trump) )  ? -1 : 1);
+        console.log("Largest Difference", Biden_plus_sort);
+        sortResult = Biden_plus_sort;
     }
     
     let reconChart = [];

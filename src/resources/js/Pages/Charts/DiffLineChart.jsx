@@ -161,22 +161,32 @@ export default function DiffLineChart(props) {
 
 
     return (
-        <div className="chart-viewer">
-            <div className="container h-10 d-flex justify-content-center mb-4">
-                <h4>Difference Line Chart</h4>
-            </div>
+        <Container className="chart-viewer">
+           
+            <Row>
+                <Col className="w-100 d-flex justify-content-center">
+                    <h3>{props.selectedState}</h3>
+                </Col>
+            </Row>
+            <Row>
+                <Col className="w-100 d-flex justify-content-center">
+                    <h4>Difference Line Chart</h4>
+                </Col>
+            </Row>
             <AnalyticsBar handleClick={handleClick} {...props} theResolutions={props.theResolutions} selectResolution={props.selectResolution} 
                 selectAnalytics={props.selectAnalytics} chartData={props.chartData} chartType={'DiffLineChart'} />
-            <div className="container h-10 d-flex justify-content-center">
-                <h4>Incremental Gain/Loss of Votes</h4>
-            </div>
-            <div className="container smaller justify-content-center">
+            <Row>
+                <Col className="w-100 d-flex justify-content-center">
+                    <h4>Increase/Decrease of Incremental Amount of Votes</h4>
+                </Col>
+            </Row>
+            <Row className="d-flex justify-content-center">
                 <div><canvas id="myChart"></canvas></div>
-            </div>
-            <div className="container h-100 d-flex justify-content-center">
+            </Row>
+            <Row className="h-100 p-1 mt-3 d-flex justify-content-center">
                 <ChartPager {...props} getPageNumber={props.getPageNumber} type={'line'} leftArrow={props.leftArrow} rightArrow={props.rightArrow}/>
-            </div>
-        </div>
+            </Row>
+        </Container>
     );
 
 }

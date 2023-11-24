@@ -147,24 +147,32 @@ export default function PieChart(props) {
 
 
     return (
-        <div className="chart-viewer">
-            <Container className="h-10 d-flex justify-content-center mb-4">
-                <h6>Votes Pie Chart</h6>
-            </Container>
-           
+        <Container className="chart-viewer">
+            <Row>
+                <Col className="w-100 d-flex justify-content-center">
+                    <h3>{props.selectedState}</h3>
+                </Col>
+            </Row>
+            <Row>
+                <Col className="w-100 d-flex justify-content-center">
+                    <h4>Votes Pie Chart</h4>
+                </Col>
+            </Row>
             <AnalyticsBar handleClick={handleClick} {...props} theResolutions={props.theResolutions} selectResolution={props.selectResolution} 
               selectAnalytics={props.selectAnalytics} chartData={props.chartData} chartType={'PieChart'}/>
          
-            <Container className="h-10 d-flex justify-content-center">
-                <h4>{title}</h4>
-            </Container>
-            <Container className="justify-content-center">
+            <Row>
+                <Col className="w-100 d-flex justify-content-center">
+                  <h4>{title}</h4>
+                </Col>               
+            </Row>
+            <Row className="d-flex justify-content-center">
                 <div><canvas id="myChart" className="pie-chart" width="400px" height="400px" left="300px"></canvas></div>
-            </Container>
-            <Container className="h-100 d-flex justify-content-center pie-pager">
+            </Row>
+            <Row className="h-100 p-1 mt-3 d-flex justify-content-center">
                 <ChartPager {...props} getPageNumber={props.getPageNumber} type={'line'} leftArrow={props.leftArrow} rightArrow={props.rightArrow}/>
-            </Container>
-        </div>
+            </Row>
+        </Container>
     );
 
 }

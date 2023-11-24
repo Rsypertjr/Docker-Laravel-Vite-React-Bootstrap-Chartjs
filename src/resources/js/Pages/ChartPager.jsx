@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import {Container, Row, Col } from 'react-bootstrap';
 
 export default function ChartPager(props){
     const [pg, setPG] = useState(0);
@@ -55,7 +56,7 @@ export default function ChartPager(props){
 
 
     return(
-            <div>
+            <Col className="col-12 d-flex justify-content-center">
                 <input className="page-arrow" type="button" value="<" onClick={leftArrow} readOnly/>
                 {
 
@@ -67,7 +68,7 @@ export default function ChartPager(props){
 
                 }
                 <input className="page-arrow" type="button" value=">" onClick={rightArrow} readOnly/>
-            </div>
+            </Col>
         );
 }
 
