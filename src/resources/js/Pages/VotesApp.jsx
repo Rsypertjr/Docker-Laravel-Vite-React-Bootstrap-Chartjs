@@ -315,6 +315,7 @@ export default class VotesApp extends React.Component {
                 defaultOption: this.state.theState,
                 chartData: json[0],
                 originalChartData: json[0],
+                selectedState: currentState,
                 noOfChartPages : json[0].numPages,
                 theChartArray: json[0].chartArray
             });
