@@ -175,7 +175,7 @@ export default function SpikesLineChart(props) {
          
             <Row>
                 <Col className="w-100 d-flex justify-content-center">
-                    <h4>Incremental Vote Spike</h4>
+                    <h4>Incremental Vote Spike (+/- from previous time) </h4>
                 </Col>               
             </Row>
             <Row className="d-flex justify-content-center">
