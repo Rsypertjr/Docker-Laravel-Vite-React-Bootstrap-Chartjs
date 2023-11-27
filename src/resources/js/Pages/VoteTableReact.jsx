@@ -11,6 +11,21 @@ function AHeader(props){
     return  <th scope="col">{ props.header }</th>
 }
 
+function CloseButton(props){
+
+    useEffect(() => {
+        $('.chart-viewer').addClass('upslide');
+      
+    },[]);
+
+
+    return (
+        <Row className="h-10 m-4 d-flex justify-content-center">
+            <Button variant="outline-success" onClick={props.handleCloseChart} className="viewerClose">Close Chart</Button>{' '}
+        </Row>  
+    );
+}
+
 function OuterTable(props){
     const headers = ["Index","Biden %","Biden Votes","Trump %","Trump Votes","Other Votes","Time Stamps","Votes", "Votes Added","Trump Added","Biden Added","% of Remaining Biden","% of Remaining Trump"];
     //const headers = ['X','Y','Z']
@@ -41,13 +56,7 @@ function OuterTable(props){
 
 export default function VoteTableReact(props)  {
 
-        const handleClick = () => {
-            $('.chart-viewer').removeClass('upslide').addClass('downslide').addClass('hidden');
-            $('.viewerClose').css('display','none');
-            props.resetCharts();
-        }
-
-
+       
         useEffect(() => {
 
             $('.page').css('background-color','rgb(239, 239, 239').css('border-color','rgb(255, 255, 255').css('border-width','3px');
@@ -56,11 +65,9 @@ export default function VoteTableReact(props)  {
         });
 
         return (
-        <Container className="w-100 mt-3 chart-viewer">
+        <Container className="w-100 chart-viewer">
             
-            <Row className="h-10 d-flex justify-content-center">
-                <Button variant="outline-success" onClick={handleClick} className="viewerClose">Close Chart</Button>{' '}
-            </Row>
+            
             <Row className="mt-1">
                 <Col className="w-100 d-flex justify-content-center">
                     <h3>{props.selectedState}</h3>
@@ -70,7 +77,8 @@ export default function VoteTableReact(props)  {
                 <Col className="w-100 d-flex justify-content-center">
                     <h4>2020 Presidential Election Votes</h4>
                 </Col>
-            </Row>      
+            </Row>   
+           <CloseButton handleCloseChart={props.handleCloseChart}/>
             <Row>
                 <Col style={{zoom:"80%"}}>
                     <OuterTable>

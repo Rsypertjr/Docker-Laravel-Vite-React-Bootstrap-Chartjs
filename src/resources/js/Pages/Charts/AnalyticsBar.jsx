@@ -65,27 +65,17 @@ export default function AnalyticsBar(props) {
     return(
             <Container>
                 <Row className="mb-4" >
-                    <Button variant="outline-success" onClick={props.handleClick} className="viewerClose">Close Chart</Button>{' '}
+                    <Button variant="outline-success" onClick={props.handleCloseChart} className="viewerClose">Close Chart</Button>{' '}
                 </Row>
                
                 <Row className="mb-3 p-2" style={{backgroundColor:"beige",fontSize:"0.8em", height:auto}}>
-                    { false && 
-                        <Col className="col-6 d-flex justify-content-center">
-                            <Button variant="outline-success" onClick={props.handleClick} className="viewerClose">Close Chart</Button>{' '}
-                        </Col>
-                    }
-                    { true && 
-                        <Col className="col-6 d-flex justify-content-center" style={{position:"relative"}}>
-                            <ResolutionDropdown {...props} theResolutions={props.theResolutions} selectResolution={props.selectResolution}/>
-                        </Col>
-                    }
-                    { true &&
-                        <Col className="col-6 d-flex justify-content-center" >
-                            <ResolutionDropdown {...props} analytics={'analytics'} theResolutions={props.theResolutions} selectAnalytics={props.selectAnalytics}
-                            chartData={props.chartData}/>
-                        </Col>
-                    }                    
-                    
+                    <Col className="col-6 d-flex justify-content-center" style={{position:"relative"}}>
+                        <ResolutionDropdown {...props} theResolutions={props.theResolutions} selectResolution={props.selectResolution}/>
+                    </Col>
+                    <Col className="col-6 d-flex justify-content-center" >
+                        <ResolutionDropdown {...props} analytics={'analytics'} theResolutions={props.theResolutions} selectAnalytics={props.selectAnalytics}
+                        chartData={props.chartData}/>
+                    </Col> 
                 </Row>
             </Container>
     );

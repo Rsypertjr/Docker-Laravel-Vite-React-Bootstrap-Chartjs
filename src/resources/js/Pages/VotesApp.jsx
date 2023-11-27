@@ -42,7 +42,6 @@ export default class VotesApp extends React.Component {
       this.rightArrow = this.rightArrow.bind(this);
       this.selectResolution = this.selectResolution.bind(this);
       this.selectAnalytics = this.selectAnalytics.bind(this);
-      this.getTimeDiff = this.getTimeDiff.bind(this);
       this.resetCharts = this.resetCharts.bind(this);
       this.storeVoteDataInMongo = this.storeVoteDataInMongo.bind(this);
       this.checkForVotes = this.checkForVotes.bind(this);
@@ -84,8 +83,8 @@ export default class VotesApp extends React.Component {
       };
 
 
-      let state = this.state.defaultOption;
-      this.getStateData(state);
+    let state = this.state.defaultOption;
+    this.getStateData(state);
   }
 
 
@@ -96,10 +95,6 @@ export default class VotesApp extends React.Component {
          pageNo: num
 
      });
-
-
-
-
   }
 
 
@@ -132,15 +127,7 @@ export default class VotesApp extends React.Component {
                   pageNo: newNum2
               });
           }
-          /*
-        else if(type != 'table' && parseInt(num) > this.state.chartData.dateHeadersStore.length ){
-              //let newNum2 = (parseInt(this.state.thePageSetNumber) - 1)*this.state.thePageSize;
-              this.setState({
-                  thePageSetNumber: parseInt(this.state.thePageSetNumber),
-                  pageNo: parseInt(num) - 1
-              });
-          }
-          */
+       
           else;
       }
       $('.page').css('background-color','rgb(239, 239, 239').css('border-color','rgb(255, 255, 255').css('border-width','3px');
@@ -223,8 +210,8 @@ export default class VotesApp extends React.Component {
 
 
  getStateData(state){
-
-
+  
+    $('.viewerClose').click();
     let currentState = state;
     let stateUrl ='https://static01.nyt.com/elections-assets/2020/data/api/2020-11-03/race-page/'+ state.toLowerCase().replace(/\-/,'') + '/president.json';
     
@@ -342,104 +329,7 @@ async checkForVotes(state){
     return result;
   }
 
-  getTimeDiff(dateHeadersStore,pageNo){
-
-
-      let newDateHeaderStore = [];
-      let dhStore = dateHeadersStore.sort();
-      dhStore[pageNo-1].forEach((atime) => {
-        /*
-        const regex = /(\d\d\d\d)(-)/;
-        const found = atime.match(regex);
-        let year = parseInt(found[1]);
-        // Parse Month
-        const regex2 = /(-)(\d\d)(-)/;
-        const found2 = atime.match(regex2);
-        let month = parseInt(found2[2]);
-
-        // Parse Day
-        const regex3 = /(-)(\d\d)(T)/;
-        const found3 = atime.match(regex3);
-        let day = parseInt(found3[2]);
-
-        // Parse Hour
-        const regex4 = /(T)(\d\d)(:)/;
-        const found4 = atime.match(regex4);
-        let hours = parseInt(found4[2]);
-
-        // Parse Minutes
-        const regex5 = /(:)(\d\d)(:)/;
-        const found5 = atime.match(regex5);
-        let minutes = parseInt(found5[2]);
-
-        // Parse Seconds
-        const regex6 = /(:)(\d\d)([Z])/;
-        const found6 = atime.match(regex6);
-        let seconds = 0;
-        if(found6 != null)
-            seconds = parseInt(found6[2]);
-        let d = new Date(year,month,day,hours,minutes,seconds);
-        newDateHeaderStore.push(d.getTime());
-        */
-        let d = atime.replace(/T|Z/," ");
-        var date = new Date(d);
-        newDateHeaderStore.push(date);
-      });
-
-      newDateHeaderStore.sort();
-
-      //alert(JSON.stringify(newDateHeaderStore));
-      let timeDiff_accum = 0;
-      let count = 1;
-
-      for(var i=0;i<newDateHeaderStore.length-1;i++)
-      {
-
-            let diff = newDateHeaderStore[i+1] - newDateHeaderStore[i];
-                count++;
-                timeDiff_accum += diff;
-      }
-      // timeDiff_accum = (newDateHeaderStore[newDateHeaderStore.length-1]-newDateHeaderStore[0])/(newDateHeaderStore.length*1000)
-
-     // let minutes_diff = 0;
-      //let hours_diff = 0;
-     // count++;
-      //hours_diff = Math.floor(timeDiff_accum/(3600*1000*count));
-    //  minutes_diff = timeDiff_accum/(60*1000*count) -  hours_diff*60;
-
-     // let seconds_diff = 0;
-
-     // if(hours_diff >= 1){
-    //    minutes_diff = minutes_diff - hours_diff*60;
-
-    //  }
-   //   else
-   //     hours_diff = 0;
-
-   //   if(minutes_diff < 1){
-   ////       seconds_diff = minutes_diff*60;
-   //       minutes_diff = 0;
-  //    }
-        let s = timeDiff_accum/count;
-        function pad(n, z) {
-            z = z || 2;
-            return ('00' + n).slice(-z);
-        }
-
-        var ms = s % 1000;
-        s = (s - ms) / 1000;
-        var secs = s % 60;
-        s = (s - secs) / 60;
-        var mins = s % 60;
-        var hrs = (s - mins) / 60;
-
-       //return pad(hrs) + ':' + pad(mins) + ':' + pad(secs) + '.' + pad(ms, 3);
-
-
-        let time_diff = "Average Time Interval: " +  hrs.toFixed(2) + " hours, and " + mins.toFixed(2) + " minutes, " + secs + " seconds.";
-
-        return time_diff;
-  }
+ 
 
   getChartsData(parse_interval,voteRows=null){
     let vote_rows;
@@ -800,14 +690,10 @@ async checkForVotes(state){
 
     this.setState({
         theState: e.value,
-        //theCurrentPage: currentPages[ this.state.pageNo-1],
         theVotes:this.state.theVotes,
         pageNo: 1,
         thePageSetNumber:1
       });
-
-        $('.chart-viewer').removeClass('downslide').addClass('upslide');
-        $('.viewerClose').css('display','block');
   }
 
   selectResolution(e){
@@ -828,12 +714,7 @@ async checkForVotes(state){
     console.log("Analytics selected:",e);
     console.log("Original Chart Data: ", this.state.originalChartData);
     let analyticsType = e.toString();
-    /*let renewChartData = this.getChartsData(this.state.parse_resolution,this.state.theVotes); 
-        this.setState({
-            theVotes: this.state.originalChartData.theVotes,
-            parse_resolution:1
-        });
-    */
+  
   
     if(analyticsType === 'No Analytics'){
         console.log("Wanting No Analytics:", analyticsType);

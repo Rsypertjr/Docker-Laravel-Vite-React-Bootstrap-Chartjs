@@ -62,11 +62,6 @@ import {
 
 export default function VotesLineChart2(props) {
 
-    const handleClick = () => {
-        $('.chart-viewer').removeClass('upslide').addClass('downslide').addClass('hidden');
-        $('.viewerClose').css('display','none');
-        props.resetCharts();
-    }
 
     useEffect(() => {
         let ctx = document.getElementById('myChart').getContext('2d');
@@ -129,7 +124,7 @@ export default function VotesLineChart2(props) {
 
         const myChart = new Chart(ctx, {
                 type: type,
-                data: {
+                data: {                
                     labels: labels,
                     datasets: datasets
                 }
@@ -156,7 +151,7 @@ export default function VotesLineChart2(props) {
                 </Col>
             </Row>
           
-            <AnalyticsBar handleClick={handleClick} {...props} theResolutions={props.theResolutions} selectResolution={props.selectResolution} 
+            <AnalyticsBar handleCloseChart={props.handleCloseChart} {...props} theResolutions={props.theResolutions} selectResolution={props.selectResolution} 
                 selectAnalytics={props.selectAnalytics} chartData={props.chartData} chartType={'VotesLineChart2'}/>
             <Row>
                 <Col className="w-100 d-flex justify-content-center">

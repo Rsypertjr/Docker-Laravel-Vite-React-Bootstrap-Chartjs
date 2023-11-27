@@ -63,14 +63,6 @@ import {
 
 export default function SpikesLineChart(props) {
 
-
-    const handleClick = () => {
-        $('.chart-viewer').removeClass('upslide').addClass('downslide').addClass('hidden');
-        $('.viewerClose').css('display','none');
-        props.resetCharts();
-    }
-
-
     useEffect(() => {
         let ctx = document.getElementById('myChart').getContext('2d');
 
@@ -170,7 +162,7 @@ export default function SpikesLineChart(props) {
                 <h4>Vote Spikes Line Chart</h4>
                 </Col>
             </Row>
-            <AnalyticsBar handleClick={handleClick} {...props} theResolutions={props.theResolutions} selectResolution={props.selectResolution} 
+            <AnalyticsBar handleCloseChart={props.handleCloseChart} {...props} theResolutions={props.theResolutions} selectResolution={props.selectResolution} 
                 selectAnalytics={props.selectAnalytics} chartData={props.chartData} chartType={'SpikesLineChart'}/>
          
             <Row>

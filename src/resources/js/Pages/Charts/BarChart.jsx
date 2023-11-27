@@ -60,11 +60,7 @@ import { Container, Row, Col, Button } from 'react-bootstrap';
 
 
 export default function BarChart(props) {
-    const handleClick = () => {
-        $('.chart-viewer').removeClass('upslide').addClass('downslide').addClass('hidden');
-        $('.viewerClose').css('display','none');
-        props.resetCharts();
-    }
+    
 
 
 
@@ -123,9 +119,6 @@ export default function BarChart(props) {
 
 
 
-        datasets = [dataset1, dataset2, dataset3]
-        //alert(JSON.stringify(datasets));
-
 
         const myChart = new Chart(ctx, {
                 type: type,
@@ -155,7 +148,7 @@ export default function BarChart(props) {
                 </Col>
             </Row>
             
-            <AnalyticsBar handleClick={handleClick} {...props} theResolutions={props.theResolutions} selectResolution={props.selectResolution}
+            <AnalyticsBar handleCloseChart={props.handleCloseChart} {...props} theResolutions={props.theResolutions} selectResolution={props.selectResolution}
                selectAnalytics={props.selectAnalytics} chartData={props.chartData} chartType={'BarChart'} />
          
             <Row>

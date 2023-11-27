@@ -88,12 +88,6 @@ import {
 export default function PieChart(props) {
     const [title,setTitle] = useState('');
 
-    const handleClick = () => {
-      $('.chart-viewer').removeClass('upslide').addClass('downslide').addClass('hidden');
-      $('.viewerClose').css('display','none');
-      props.resetCharts();
-    }
-
     useEffect(() => {
         let ctx = document.getElementById('myChart').getContext('2d');
 
@@ -158,7 +152,7 @@ export default function PieChart(props) {
                     <h4>Votes Pie Chart</h4>
                 </Col>
             </Row>
-            <AnalyticsBar handleClick={handleClick} {...props} theResolutions={props.theResolutions} selectResolution={props.selectResolution} 
+            <AnalyticsBar handleCloseChart={props.handleCloseChart} {...props} theResolutions={props.theResolutions} selectResolution={props.selectResolution} 
               selectAnalytics={props.selectAnalytics} chartData={props.chartData} chartType={'PieChart'}/>
          
             <Row>
