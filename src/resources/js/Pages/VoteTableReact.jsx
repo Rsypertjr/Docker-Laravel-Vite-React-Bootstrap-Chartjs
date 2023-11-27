@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import ChartPager from './ChartPager';
-import { Container } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 
 
@@ -14,22 +14,27 @@ function AHeader(props){
 function OuterTable(props){
     const headers = ["Index","Biden %","Biden Votes","Trump %","Trump Votes","Other Votes","Time Stamps","Votes", "Votes Added","Trump Added","Biden Added","% of Remaining Biden","% of Remaining Trump"];
     //const headers = ['X','Y','Z']
-    return (
-            <div className="container">
-                <table className="table table-striped table-bordered table-responsive table-hover table-sm">
-                    <thead>
-                        <tr>
-                            {
-                                headers.map((header) => (
-                                    <AHeader key={header.toString()} header={header} />
-                                ))
-                            }
+    return (    
+        <Container>
+            <Row>
+                <Col className="w-100 d-flex justify-content-center">
+                    <table className="w-70 table table-striped table-bordered table-responsive table-hover table-sm">
+                        <thead>
+                            <tr>
+                                {
+                                    headers.map((header) => (
+                                        <AHeader key={header.toString()} header={header} />
+                                    ))
+                                }
 
-                        </tr>
-                    </thead>
-                   {props.children}
-                </table>
-            </div>
+                            </tr>
+                        </thead>
+                    {props.children}
+                    </table>
+                </Col>                    
+            </Row>     
+        </Container>
+               
     );
 }
 
@@ -51,37 +56,50 @@ export default function VoteTableReact(props)  {
         });
 
         return (
-        <div className="chart-viewer">
-            <Button variant="outline-success" onClick={handleClick} className="viewerClose">Close Chart</Button>{' '}
-            <Container className="h-10 d-flex justify-content-center">
-                <h4>2020 Presidential Election Votes</h4>
-            </Container>
-            <Container className="smaller justify-content-center">
-                <OuterTable>
-                    <tbody>
-                        { props.theCurrentPages !== 'undefined' && props.theCurrentPages.length > 0 && props.theCurrentPages[props.pageNo-1].map(row =>
-                            <tr  key={row.id.toString()}>
-                                <td>{ row.id }</td>
-                                <td>{ row.bidenj }</td>
-                                <td>{ row.biden_votes }</td>
-                                <td>{ row.trumpd }</td>
-                                <td>{ row.trump_votes }</td>
-                                <td>{ row.other_votes }</td>
-                                <td>{ row.timestamp }</td>
-                                <td>{ row.votes }</td>
-                                <td>{ row.total_vote_add }</td>
-                                <td>{ row.trump_added }</td>
-                                <td>{ row.biden_added }</td>
-                                <td>{ row.remaining_percent_biden }</td>
-                                <td>{ row.remaining_percent_trump }</td>
-                            </tr>
-                        )}
-                    </tbody>
-                </OuterTable>
-            </Container>
-            <Container className="h-100 d-flex justify-content-center">
+        <Container className="w-100 mt-3 chart-viewer">
+            
+            <Row className="h-10 d-flex justify-content-center">
+                <Button variant="outline-success" onClick={handleClick} className="viewerClose">Close Chart</Button>{' '}
+            </Row>
+            <Row className="mt-1">
+                <Col className="w-100 d-flex justify-content-center">
+                    <h3>{props.selectedState}</h3>
+                </Col>
+            </Row>
+            <Row>
+                <Col className="w-100 d-flex justify-content-center">
+                    <h4>2020 Presidential Election Votes</h4>
+                </Col>
+            </Row>      
+            <Row>
+                <Col style={{zoom:"80%"}}>
+                    <OuterTable>
+                        <tbody>
+                            { props.theCurrentPages !== 'undefined' && props.theCurrentPages.length > 0 && props.theCurrentPages[props.pageNo-1].map(row =>
+                                <tr  key={row.id.toString()}>
+                                    <td>{ row.id }</td>
+                                    <td>{ row.bidenj }</td>
+                                    <td>{ row.biden_votes }</td>
+                                    <td>{ row.trumpd }</td>
+                                    <td>{ row.trump_votes }</td>
+                                    <td>{ row.other_votes }</td>
+                                    <td>{ row.timestamp }</td>
+                                    <td>{ row.votes }</td>
+                                    <td>{ row.total_vote_add }</td>
+                                    <td>{ row.trump_added }</td>
+                                    <td>{ row.biden_added }</td>
+                                    <td>{ row.remaining_percent_biden }</td>
+                                    <td>{ row.remaining_percent_trump }</td>
+                                </tr>
+                            )}
+                        </tbody>
+                    </OuterTable>
+                </Col>
+            </Row>    
+            
+            <Row className="h-100 d-flex justify-content-center">
                 <ChartPager {...props} pageClick={props.getPageNumber} type={'line'} leftArrow={props.leftArrow} rightArrow={props.rightArrow}/>
-            </Container>
-        </div>
+            </Row>
+        </Container>
         );
 }

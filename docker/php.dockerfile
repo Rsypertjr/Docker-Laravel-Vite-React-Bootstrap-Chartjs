@@ -22,6 +22,8 @@ RUN sed -i "s/user = www-data/user = '${USER}'/g" /usr/local/etc/php-fpm.d/www.c
 RUN sed -i "s/group = www-data/group = '${USER}'/g" /usr/local/etc/php-fpm.d/www.conf  
 RUN echo "php_admin_flag[log_errors] = on" >> /usr/local/etc/php-fpm.d/www.conf 
 
+
+
 # Installing php extensions
 RUN apk update && apk upgrade
 RUN docker-php-ext-install pdo pdo_mysql bcmath
@@ -44,6 +46,8 @@ RUN echo "extension=mongodb.so" >> /usr/local/etc/php/php.ini
 # Installing PHP-mysql and required extensions
 RUN echo http://dl-cdn.alpinelinux.org/alpine/edge/main >> /etc/apk/repositories
 RUN echo http://dl-cdn.alpinelinux.org/alpine/edge/community/ >> /etc/apk/repositories
+
+
 
 # installing required extensions
 RUN apk update && \

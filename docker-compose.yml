@@ -13,7 +13,7 @@ services:
       args: 
         - UID=${UID:-1000}
         - GID=${GID:-1000} 
-        - USER=${USER:-laravel}
+        - USER=${USER:-rsypertjr}
     restart: unless-stopped
     container_name: nginx 
     ports:
@@ -21,6 +21,7 @@ services:
     volumes:
       - ./src:/var/www/html
       - .env:/var/www/html/.env 
+      - /etc/sysctl.conf:/etc/sysctl.conf
     depends_on: 
       - php 
       - redis 
