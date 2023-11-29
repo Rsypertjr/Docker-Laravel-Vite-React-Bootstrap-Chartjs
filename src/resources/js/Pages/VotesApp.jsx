@@ -758,6 +758,7 @@ async checkForVotes(state){
             tempData.Other = [];
             tempData.Total = [];
             tempData.theVotes = chartData.theVotes;
+            tempData.type = 'PerlineChart';
             
             AnalyzedData = this.doAnalytics(analyticsType,tempData);
             console.log("Analyzed Data 2", AnalyzedData);
@@ -782,6 +783,7 @@ async checkForVotes(state){
             tempData.Other = chartData.dateDataOtherAddStore;
             tempData.Total = chartData.dateDataTotalAddStore;
             tempData.theVotes = chartData.theVotes;
+            tempData.type = 'SpikesLineChart';
             
             AnalyzedData = this.doAnalytics(analyticsType,tempData);
             if(AnalyzedData != null) {
@@ -808,6 +810,7 @@ async checkForVotes(state){
             tempData.Other = [];
             tempData.Total = [];
             tempData.theVotes = chartData.theVotes;
+            tempData.type = 'DiffLineChart';
             
             AnalyzedData = this.doAnalytics(analyticsType,tempData);
             if(AnalyzedData != null) {
@@ -834,6 +837,7 @@ async checkForVotes(state){
             tempData.Other = [];
             tempData.Total = [];
             tempData.theVotes = chartData.theVotes;
+            tempData.type = 'VotesLineChart2';
             
             AnalyzedData = this.doAnalytics(analyticsType,tempData);
             if(AnalyzedData != null) {
@@ -860,6 +864,7 @@ async checkForVotes(state){
             tempData.Other = chartData.dateDataOtherStore;
             tempData.Total = [];
             tempData.theVotes = chartData.theVotes;
+            tempData.type = 'BarChart';
             
             AnalyzedData = this.doAnalytics(analyticsType,tempData);
             if(AnalyzedData != null) {
@@ -886,6 +891,7 @@ async checkForVotes(state){
             tempData.Other = chartData.dateDataOtherStore;
             tempData.Total = [];
             tempData.theVotes = chartData.theVotes;
+            tempData.type = 'BinStackedChart';
             
             AnalyzedData = this.doAnalytics(analyticsType,tempData);
             if(AnalyzedData != null) {
@@ -905,21 +911,35 @@ async checkForVotes(state){
             break;
 
         case 'PieChart':
-            tempData.dateHeadersStore = [];
-            tempData.Biden = [];
-            tempData.Trump = [];
-            tempData.Other = [];
+            console.log("chart data biden slices:",chartData.bidenSlices );
+            console.log("page no: ",this.state.pageNo);
+            console.log("Original Pie Chart Data data:",chartData.dateHeadersStore);
+            tempData.dateHeadersStore = chartData.dateHeadersStore;
+            tempData.Biden = chartData.bidenSlices;
+            tempData.Trump = chartData.trumpSlices;
+            tempData.Other = chartData.otherSlices;
             tempData.Total = [];
             tempData.theVotes = chartData.theVotes;
+            tempData.type = 'PieChart'
             
             AnalyzedData = this.doAnalytics(analyticsType,tempData);
             if(AnalyzedData != null) {
-                
-                chartData.theVotes = AnalyzedData.theVotes;
-                
-                let newChartData = this.getChartsData(chartData.theVotes,this.state.parse_resolution); 
+                chartData.dateHeadersStore = AnalyzedData.Date;
+                console.log("analyzed pie chart dates:",AnalyzedData.Date);
+                //chartData.theVotes = [];
+                //AnalyzedData.theVotes.map(lev1 => lev1.map(lev2 => {chartData.theVotes.push(lev2)}));
+                chartData.bidenSlices = [];
+                AnalyzedData.Biden.map(lev1 => lev1.map(lev2 => {chartData.bidenSlices.push(lev2)}));
+                console.log("analyzed biden slices:",chartData.bidenSlices);
+                chartData.trumpSlices = [];
+                AnalyzedData.Trump.map(lev1 => lev1.map(lev2 => {chartData.trumpSlices.push(lev2)}));
+                chartData.otherSlices = [];
+                AnalyzedData.Other.map(lev1 => lev1.map(lev2 => {chartData.otherSlices.push(lev2)}));
+                //let newChartData = this.getChartsData(chartData.theVotes,this.state.parse_resolution); 
                 this.setState({
-                    chartData: newChartData,
+                   // chartData: newChartData,
+                    chartData: chartData,                                  
+                    theVotes: chartData.theVotes,
                     analyticsChartData: chartData,
                     parse_resolution: 1
                 });
@@ -972,29 +992,44 @@ async checkForVotes(state){
   }
 
 
-
   analyticEngine(data,type){
+
     let tempBiden = [];
-    data.Biden.map(lev1 => lev1.map(lev2 => {tempBiden.push(lev2)}));
-    console.log("Temp Biden",tempBiden);
-
     let tempTrump = [];
-    data.Trump.map(lev1 => lev1.map(lev2 => {tempTrump.push(lev2)}));
-    console.log("Temp Trump",tempTrump);
-
     let tempOther = [];
-    data.Other.map(lev1 => lev1.map(lev2 => {tempOther.push(lev2)}));
-    console.log("Temp Other",tempOther);
-
     let tempTotal = [];
-    data.Total.map(lev1 => lev1.map(lev2 => {tempTotal.push(lev2)}));
-    console.log("Temp Total",tempTotal);
-
-
     let tempDate = [];
-    data.dateHeadersStore.map(lev1 => lev1.map(lev2 => {tempDate.push(lev2)}));
-    console.log("Temp Date",tempDate);
 
+    if(data.type != 'PieChart'){
+        tempBiden = [];
+        data.Biden.map(lev1 => lev1.map(lev2 => {tempBiden.push(lev2)}));
+        console.log("Temp Biden",tempBiden);
+
+        tempTrump = [];
+        data.Trump.map(lev1 => lev1.map(lev2 => {tempTrump.push(lev2)}));
+        console.log("Temp Trump",tempTrump);
+
+        tempOther = [];
+        data.Other.map(lev1 => lev1.map(lev2 => {tempOther.push(lev2)}));
+        console.log("Temp Other",tempOther);
+
+        tempTotal = [];
+        data.Total.map(lev1 => lev1.map(lev2 => {tempTotal.push(lev2)}));
+        console.log("Temp Total",tempTotal);
+
+        tempDate = [];
+        data.dateHeadersStore.map(lev1 => lev1.map(lev2 => {tempDate.push(lev2)}));
+        console.log("Temp Date",tempDate); 
+    }
+    else {
+        tempBiden = data.Biden;
+        tempTrump = data.Trump;
+        tempOther = data.Other;
+        tempTotal = data.Total;
+        data.dateHeadersStore.map(lev1 => lev1.map(lev2 => {tempDate.push(lev2)}));
+        console.log("Temp Date",tempDate); 
+    }
+    
     let tempCombined = [];
     tempBiden.forEach(function(item, index){
         tempCombined.push({"Trump":tempTrump[index],"Biden":tempBiden[index],"Other":tempOther[index],"Total":tempTotal[index],"Date":tempDate[index],
@@ -1026,16 +1061,20 @@ async checkForVotes(state){
         sortResult = Biden_plus_sort;
     }
     
+
+    console.log("Sort Result: ",sortResult);
     let reconChart = [];
     let arr = [];
     sortResult.forEach(function(item, index) {
        arr.push(item);
        
-       if(arr.length === 10) {
+       if(arr.length % 10 === 0) {
         reconChart.push(arr);
         arr = [];
        }
     });
+    if(sortResult.length % 10 != 0 )
+        reconChart.push(arr);
 
     console.log("Reconstituted Chart:", reconChart);
 
@@ -1064,10 +1103,16 @@ async checkForVotes(state){
         return lev2.Total;
       }));
     console.log("Analyzed Total Data", analyzedTotal);
-
-    let analyzedDate = reconChart.map(lev1 => lev1.map(lev2 => {
-        return lev2.Date;
-      }));
+    let analyzedDate;
+    if(data.type != 'PieChart'){
+        analyzedDate = reconChart.map(lev1 => lev1.map(lev2 => {
+            return lev2.Date;
+          }));
+    }
+    else{
+        analyzedDate = data.dateHeadersStore;
+    }
+   
     console.log("Analyzed Date Data", analyzedDate);
 
     let analyzedVotes = sortResult.map(lev1 =>  {
@@ -1208,33 +1253,36 @@ async checkForVotes(state){
 
   render() {
     return (
-      <div className="wrapper">
-        <Container fluid>
-            <div className="jumbotron text-center" >
-                <Row className="justify-content-md-center pb-2">
-                    <Col xs lg="2"/>
-                    <Col md="auto pt-2">
-                      <span>Select a State: </span>
-                    </Col>
-                    <Col md="auto"><Dropdown options={this.state.options} onChange={this.selectState} value={this.state.defaultOption} placeholder="Select an option" /></Col>
-                    <Col xs lg="2"/>
-                </Row>
-                <Row className="justify-content-center">
+     <>
+        <Container  className="w-100 text-center rounded mb-1" style={{backgroundColor:'lightGrey'}}>
+            <Row className="d-flex justify-content-center p-2" >
+                <Col xs lg="2"/>
+                <Col md="auto pt-2">
+                    <span>Select a State: </span>
+                </Col>
+                <Col md="auto">
+                    <Dropdown options={this.state.options} onChange={this.selectState} value={this.state.defaultOption} placeholder="Select an option" />
+                </Col>
+                <Col xs lg="2"/>
+            </Row>
+            <Row className="d-flex justify-content-center p-2">
+                <Col>
                     <h3>Laravel/React 2020 Presidential Election Parser</h3>
                     <h4>Race Data:</h4>
                     <p>{ this.state.raceId }</p>
                     <p>{ this.state.raceSlug }</p>
                     <p className="text-break">{ this.state.raceUrl }</p>
                     <p>State: { this.state.theState }</p>
-                </Row>
-
-
-            </div>
-            <AppRouter {...this.state} selectResolution={this.selectResolution} getChartsData={this.getChartsData} selectAnalytics={this.selectAnalytics} resetCharts={this.resetCharts}  
-                        getPageNumber={this.getPageNumber} rightArrow={this.rightArrow} leftArrow={this.leftArrow} />
+                </Col>               
+            </Row>
         </Container>
-
-      </div>
+        <Container  className="w-100 p-3 rounded" style={{backgroundColor:"gray", height:"auto", marginBottom:"10%"}}>
+                <AppRouter  {...this.state} selectResolution={this.selectResolution} getChartsData={this.getChartsData} selectAnalytics={this.selectAnalytics} resetCharts={this.resetCharts}  
+                        getPageNumber={this.getPageNumber} rightArrow={this.rightArrow} leftArrow={this.leftArrow} />    
+        </Container>
+        
+     </>
+        
 
 
     );

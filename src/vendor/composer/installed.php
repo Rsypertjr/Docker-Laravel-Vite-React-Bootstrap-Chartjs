@@ -1340,6 +1340,15 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'twbs/bootstrap-icons' => array(
+            'pretty_version' => 'v1.11.2',
+            'version' => '1.11.2.0',
+            'reference' => '108565f11f099f177b31929e3eafc2c8d497fcd1',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../twbs/bootstrap-icons',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'vlucas/phpdotenv' => array(
             'pretty_version' => 'v5.6.0',
             'version' => '5.6.0.0',

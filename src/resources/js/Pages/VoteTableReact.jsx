@@ -32,7 +32,7 @@ function OuterTable(props){
     return (    
         <Container>
             <Row>
-                <Col className="w-100 d-flex justify-content-center">
+                <Col className="w-100 d-flex justify-content-center" style={{zoom:"80%"}}>
                     <table className="w-70 table table-striped table-bordered table-responsive table-hover table-sm">
                         <thead>
                             <tr>

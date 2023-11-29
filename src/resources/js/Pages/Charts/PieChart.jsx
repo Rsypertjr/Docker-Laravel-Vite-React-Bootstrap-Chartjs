@@ -161,12 +161,17 @@ export default function PieChart(props) {
                 </Col>               
             </Row>
             <Row className="d-flex justify-content-center">
-                <div><canvas id="myChart" className="pie-chart" width="400px" height="400px" left="300px"></canvas></div>
+                <canvas id="myChart" className="pie-chart" width="400px" height="400px" left="300px"></canvas>
             </Row>
-            <Row className="h-100 p-1 mt-3 d-flex justify-content-center">
+            <Row className="w-100 p-1 mt-3">
                 <ChartPager {...props} getPageNumber={props.getPageNumber} type={'line'} leftArrow={props.leftArrow} rightArrow={props.rightArrow}/>
             </Row>
         </Container>
     );
 
-}
+}    
+
+
+
+
+

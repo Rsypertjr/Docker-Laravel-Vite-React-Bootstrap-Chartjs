@@ -114,7 +114,8 @@ services:
   mailhog:
     image: mailhog/mailhog:latest 
     container_name: mailhog 
-    logging: b0882c1ef374
+    logging: 
+      driver: 'none'
     ports: 
       - 1025:1025 
       - 8025:8025 
