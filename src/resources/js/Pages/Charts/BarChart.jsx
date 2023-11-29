@@ -118,7 +118,8 @@ export default function BarChart(props) {
         let dataset3 = data3;
 
 
-
+        datasets = [dataset1, dataset2, dataset3]
+        //alert(JSON.stringify(datasets));
 
         const myChart = new Chart(ctx, {
                 type: type,

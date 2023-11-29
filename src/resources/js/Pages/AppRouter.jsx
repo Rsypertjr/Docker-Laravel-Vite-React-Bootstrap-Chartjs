@@ -69,7 +69,7 @@ export default function AppRouter(props){
                   <Link onClick={setChartOpen} className="nav-link align-middle" href="#"  to="/"  style={linkStyle}>
                     <Container>
                       <Row className="text-center">Reset</Row>
-                      <Row className=""><i class="d-flex justify-content-center align-items-center bi bi-x-circle" style={{fontSize:"1.5rem",color:"orange"}}></i></Row>
+                      <Row className=""><i className="d-flex justify-content-center align-items-center bi bi-x-circle" style={{fontSize:"1.5rem",color:"orange"}}></i></Row>
                     </Container>              
                   </Link>                  
                 </li>
@@ -78,7 +78,7 @@ export default function AppRouter(props){
                       
                       <Container>
                         <Row className="text-center">Votes Table</Row>
-                        <Row className=""><i class="d-flex justify-content-center align-items-center bi bi-table" style={{fontSize:"1.5rem",color:"orange"}}></i></Row>
+                        <Row className=""><i className="d-flex justify-content-center align-items-center bi bi-table" style={{fontSize:"1.5rem",color:"orange"}}></i></Row>
                       </Container>   
                     </Link>
                     
@@ -87,7 +87,7 @@ export default function AppRouter(props){
                   <Link onClick={setChartOpen} className="nav-link align-middle" href="#"  to="/voteslinechart"  style={linkStyle}>
                     <Container>
                       <Row className="text-center">Votes Line Chart</Row>
-                      <Row className=""><i class="d-flex justify-content-center align-items-center bi bi-graph-up-arrow" style={{fontSize:"1.5rem",color:"orange"}}></i></Row>
+                      <Row className=""><i className="d-flex justify-content-center align-items-center bi bi-graph-up-arrow" style={{fontSize:"1.5rem",color:"orange"}}></i></Row>
                     </Container>              
                   </Link>
                   
@@ -112,7 +112,7 @@ export default function AppRouter(props){
                   <Link onClick={setChartOpen} className="nav-link align-middle" href="#"  to="/perlinechart" style={linkStyle}>
                     <Container className="w-100">
                         <Row className="text-center">Percent Line Chart</Row>
-                        <Row className=""><i class="d-flex justify-content-center align-items-center bi bi-graph-up-arrow" style={{fontSize:"1.5rem",color:"yellow"}}></i></Row>
+                        <Row className=""><i className="d-flex justify-content-center align-items-center bi bi-graph-up-arrow" style={{fontSize:"1.5rem",color:"yellow"}}></i></Row>
                     </Container>   
                   </Link>
                 </li>
@@ -120,7 +120,7 @@ export default function AppRouter(props){
                   <Link onClick={setChartOpen} className="nav-link align-middle" href="#" to="/piechart" style={linkStyle}>                    
                     <Container className="w-100">
                         <Row className="text-center">Votes Pie Chart</Row>
-                        <Row className=""><i class="d-flex justify-content-center align-items-center bi bi-pie-chart-fill" style={{fontSize:"1.5rem",color:"green"}}></i></Row>
+                        <Row className=""><i className="d-flex justify-content-center align-items-center bi bi-pie-chart-fill" style={{fontSize:"1.5rem",color:"green"}}></i></Row>
                     </Container>   
                   </Link>
                 </li>
@@ -128,7 +128,7 @@ export default function AppRouter(props){
                   <Link onClick={setChartOpen} className="nav-link align-middle" href="#"  to="/barchart" style={linkStyle}>            
                     <Container className="w-100">
                         <Row className="text-center">Votes Bar Chart</Row>
-                        <Row className=""><i class="d-flex justify-content-center align-items-center bi bi-bar-chart-line-fill" style={{fontSize:"1.5rem",color:"green"}}></i></Row>
+                        <Row className=""><i className="d-flex justify-content-center align-items-center bi bi-bar-chart-line-fill" style={{fontSize:"1.5rem",color:"green"}}></i></Row>
                     </Container>   
                   </Link>
                 </li>
@@ -136,7 +136,7 @@ export default function AppRouter(props){
                   <Link onClick={setChartOpen} className="nav-link align-middle" href="#"  to="/binstackedchart" style={linkStyle}>                    
                     <Container className="w-100">
                         <Row className="text-center">Bin Stacked Chart</Row>
-                        <Row className=""><i class="d-flex justify-content-center align-items-center bi bi-bar-chart-line-fill" style={{fontSize:"1.5rem",color:"darksalmon"}}></i></Row>
+                        <Row className=""><i className="d-flex justify-content-center align-items-center bi bi-bar-chart-line-fill" style={{fontSize:"1.5rem",color:"darksalmon"}}></i></Row>
                     </Container>   
                   </Link>
                 </li>
