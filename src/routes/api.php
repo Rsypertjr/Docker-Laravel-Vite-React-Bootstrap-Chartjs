@@ -86,7 +86,10 @@ Route::post('/create_election_data_mongo/', function (Request $request) {
             'bin_trump' => $request->input('bin_trump'),
             'numPages' => $request->input('numPages'),
             'chartArray' => $request->input('chartArray'),
-            'theVotes' => $request->input('theVotes')
+            'theVotes' => $request->input('theVotes'),
+            'raceId' => $request->input('raceId'),
+            'raceSlug' => $request->input('raceSlug'),
+            'raceUrl' => $request->input('raceUrl')
         ]);    
         return $success;
  

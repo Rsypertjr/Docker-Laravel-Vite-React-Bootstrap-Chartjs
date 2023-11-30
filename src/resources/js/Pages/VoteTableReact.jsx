@@ -80,7 +80,7 @@ export default function VoteTableReact(props)  {
             </Row>   
            <CloseButton handleCloseChart={props.handleCloseChart}/>
             <Row>
-                <Col style={{zoom:"80%"}}>
+                <Col >
                     <OuterTable>
                         <tbody>
                             { props.theCurrentPages !== 'undefined' && props.theCurrentPages.length > 0 && props.theCurrentPages[props.pageNo-1].map(row =>

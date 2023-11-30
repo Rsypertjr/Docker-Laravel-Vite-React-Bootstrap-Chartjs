@@ -79,7 +79,8 @@ export default class VotesApp extends React.Component {
           parse_resolution: 1,
           noOfChartPages:0,
           theChartArray:[],
-          theResolutions: resolutions
+          theResolutions: resolutions,
+          zoomFac:"105%"
       };
 
 
@@ -157,9 +158,10 @@ export default class VotesApp extends React.Component {
   }
 
  async storeVoteDataInMongo(chartData,currentState,theVotes){
-
+    
     const token = document.querySelector('head').querySelector('meta[name="csrf-token"]').content;
     console.log("Token",token);
+    console.log("ChartData before sending to Atlas:", chartData);
     await fetch('http://159.65.100.7:8000/api/create_election_data_mongo/', {
       method: 'POST',
       body: JSON.stringify({
@@ -190,7 +192,10 @@ export default class VotesApp extends React.Component {
           bin_trump : chartData.bin_trump,
           numPages : chartData.numPages,
           chartArray : chartData.chartArray,
-          theVotes : theVotes
+          theVotes : theVotes,
+          raceId: chartData.raceId.toString(), 
+          raceSlug: chartData.raceSlug.toString(), 
+          raceUrl: chartData.raceUrl.toString()
 
       }),
       headers: {
@@ -231,7 +236,7 @@ export default class VotesApp extends React.Component {
                     let numPages = Math.ceil(parseInt(theVotes.length)/pageSize);
                     let pagingArray = [];
     
-    
+                     
                     let result = this.setPages(pageSize,numPages,theVotes);
                     currentPages = JSON.parse(JSON.stringify(result.currentPages));
     
@@ -243,7 +248,7 @@ export default class VotesApp extends React.Component {
     
                     this.setState({
                         theVotes: theVotes,
-                        theOriginalVotes: theVotes,
+                        theOriginalVotes: theVotes,                        
                         DataisLoaded: true,
                         theCurrentPages: currentPages,
                         theCurrentPage: currentPages[this.state.pageNo-1],
@@ -267,13 +272,15 @@ export default class VotesApp extends React.Component {
                     noOfChartPages : chartData.numPages,
                     theChartArray: chartData.chartArray
                 });
+                setTimeout(() => {
+                    $('#top-header').removeClass('turntopheader');
+                },1000);
                 return;
-                //return theVotes;
             });
         }
         else{
             console.log("Chartdata already available",json[0]);
-
+            
             let theVotes = json[0].theVotes;
             let currentPages = [];
             let pageSize = 10;
@@ -301,11 +308,17 @@ export default class VotesApp extends React.Component {
                 thePageSize: pageSize,
                 defaultOption: this.state.theState,
                 chartData: json[0],
+                raceSlug: json[0].raceSlug,
+                raceId: json[0].raceId,
+                raceUrl: json[0].raceUrl,
                 originalChartData: json[0],
                 selectedState: currentState,
                 noOfChartPages : json[0].numPages,
                 theChartArray: json[0].chartArray
             });
+            setTimeout(() => {
+                $('#top-header').removeClass('turntopheader');
+            },1000);
             return;
         }
         
@@ -326,6 +339,7 @@ async votesFromServer(state){
 async checkForVotes(state){
     const result = await fetch("http://159.65.100.7:8000/api/check_election_data_mongo/" + state);
     console.log('Result', result);
+    
     return result;
   }
 
@@ -636,7 +650,10 @@ async checkForVotes(state){
       "bin_trump": bin_trump,
       "numPages": numPages,
       "chartArray": chartArray,
-      "theVotes":this.state.theVotes
+      "theVotes":this.state.theVotes,
+      "raceId":this.state.raceId,
+      "raceSlug":this.state.raceSlug,
+      "raceUrl":this.state.raceUrl
     }
 
     return dataLoad;
@@ -686,14 +703,16 @@ async checkForVotes(state){
   }
 
   selectState(e){
+    $('#top-header').addClass('turntopheader');
     this.getStateData(e.value);
-
     this.setState({
         theState: e.value,
         theVotes:this.state.theVotes,
         pageNo: 1,
         thePageSetNumber:1
       });
+
+    
   }
 
   selectResolution(e){
@@ -1143,10 +1162,13 @@ async checkForVotes(state){
       let jobj = res;
 
       let timeseries = jobj.data.races[0].timeseries;
-      this.setState({
-          raceId: jobj.data.races[0].race_id,
-          raceSlug: jobj.data.races[0].race_slug,
-          raceUrl: jobj.data.races[0].url
+      let raceId = jobj.data.races[0].race_id;
+      let raceSlug = jobj.data.races[0].race_slug;
+      let raceUrl = jobj.data.races[0].url;
+      this.setState({ 
+          raceId: raceId,
+          raceSlug: raceSlug,
+          raceUrl: raceUrl
       });
 
 
@@ -1254,7 +1276,7 @@ async checkForVotes(state){
   render() {
     return (
      <>
-        <Container  className="w-100 text-center rounded mb-1" style={{backgroundColor:'lightGrey'}}>
+        <Container id="top-header" className="w-100 text-center rounded mb-1" style={{backgroundColor:'lightGrey', borderStyle:"groove",borderWidth:"15px",zoom:this.state.zoomFac}}>
             <Row className="d-flex justify-content-center p-2" >
                 <Col xs lg="2"/>
                 <Col md="auto pt-2">
@@ -1276,7 +1298,7 @@ async checkForVotes(state){
                 </Col>               
             </Row>
         </Container>
-        <Container  className="w-100 p-3 rounded" style={{backgroundColor:"gray", height:"auto", marginBottom:"10%"}}>
+        <Container  className="w-100 p-3 rounded" style={{backgroundColor:"gray", height:"auto", marginBottom:"10%",zoom:this.state.zoomFac}}>
                 <AppRouter  {...this.state} selectResolution={this.selectResolution} getChartsData={this.getChartsData} selectAnalytics={this.selectAnalytics} resetCharts={this.resetCharts}  
                         getPageNumber={this.getPageNumber} rightArrow={this.rightArrow} leftArrow={this.leftArrow} />    
         </Container>

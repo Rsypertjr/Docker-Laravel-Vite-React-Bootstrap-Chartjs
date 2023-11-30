@@ -50,7 +50,6 @@ export default function AppRouter(props){
 
    const handleCloseChart = () => {
     $('.chart-viewer').removeClass('upslide').addClass('downslide').addClass('hidden');
-    $('.chart-viewer').addClass('downslide');
     setIsChartClosed(true);
     props.resetCharts();
    }
@@ -61,7 +60,7 @@ export default function AppRouter(props){
           <BrowserRouter>
           <Navbar collapseOnSelect expand="lg" className="bg-info navbar navbar-expand-lg navbar-dark bg-dark">
               <Navbar.Brand href="#home" className="navbar-brand align-middle" style={{float:"left"}}>
-                <span>Charts</span><i class="bi bi-arrow-90deg-right" style={{fontSize:"1.5rem",color:"darkgray",marginLeft:"0.25em"}}></i>
+                <span>Charts</span><i className="bi bi-arrow-90deg-right" style={{fontSize:"1.5rem",color:"darkgray",marginLeft:"0.25em"}}></i>
               </Navbar.Brand>
 
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />

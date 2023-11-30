@@ -4,7 +4,6 @@ networks:
   laravel:
     driver: bridge
 
-
 services:
   nginx:
     build:
@@ -25,7 +24,7 @@ services:
     depends_on: 
       - php 
       - redis 
-      - mysql 
+      - db 
       - laravel-queue 
       - phpmyadmin 
       - mailhog 
@@ -49,20 +48,23 @@ services:
     networks:
       - laravel 
 
-  mysql: 
-    image: mariadb:latest
-    restart: always
-    environment:
-      MARIADB_USER: ${DB_USERNAME}
-      MARIADB_PASSWORD: ${DB_PASSWORD}
-      MARIADB_DATABASE: ${DB_DATABASE}
-      MARIADB_ROOT_PASSWORD: 
+  #MySQL Service
+  db:
+    image: mysql:5.7.22
+    container_name: db
+    restart: unless-stopped
+    tty: true
     ports:
-      - "6033:3306"
-    volumes:
-      - ./docker/mysql:/var/lib/mysql 
-    networks:
-      - laravel 
+      - "3306:3306"
+    #volumes:
+     # - ./docker/mysql:/var/lib/mysql  
+    environment:
+      MYSQL_DATABASE: laravel
+      MYSQL_ROOT_PASSWORD: your_mysql_root_password
+      SERVICE_TAGS: dev
+      SERVICE_NAME: db
+    networks: 
+     - laravel 
 
   redis:
     image: redis:alpine 
@@ -86,7 +88,7 @@ services:
       - ./src:/var/www/html 
       - .env:/var/www/html/.env 
     depends_on: 
-      - mysql 
+      - db 
     working_dir: /var/www/html 
     entrypoint: ['php', '/var/www/html/artisan', 'schedule:work']
     networks:
@@ -105,7 +107,7 @@ services:
       - ./src:/var/www/html 
       - .env:/var/www/html/.env 
     depends_on: 
-      - mysql 
+      - db
     working_dir: /var/www/html 
     entrypoint: ['php', '/var/www/html/artisan', 'queue:work'] 
     networks: 
@@ -136,7 +138,7 @@ services:
       - ./src:/var/www/html 
       - .env:/var/www/html/.env 
     depends_on: 
-      - mysql
+      - db
     working_dir: /var/www/html
     entrypoint: ["/bin/sh","-c"]
     command:
@@ -181,7 +183,7 @@ services:
       - ./src:/var/www/html 
       - .env:/var/www/html/.env 
     depends_on:
-      - mysql 
+      - db
     working_dir: /var/www/html 
     entrypoint: ['php', '/var/www/html/artisan']
     networks:
@@ -208,10 +210,10 @@ services:
     container_name: phpmyadmin 
     environment: 
       PMA_ARBITRARY: 1 
-      PMA_HOST: mysql
-      PMA_PORT: 3306
+      PMA_HOST: db
+      PMA_PORT: 6033
     depends_on: 
-      - mysql 
+      - db 
     ports: 
       - 8888:80 
     networks: 
