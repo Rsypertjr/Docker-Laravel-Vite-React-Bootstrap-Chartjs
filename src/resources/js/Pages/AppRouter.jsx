@@ -8,7 +8,8 @@ import PieChart from './Charts/PieChart';
 import BarChart from './Charts/BarChart';
 import BinStackedChart from './Charts/BinStackedChart';
 import VoteTableReact from './VoteTableReact';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Nav, Navbar } from 'react-bootstrap';
+import {LinkContainer} from 'react-router-bootstrap';
 
 
 
@@ -58,91 +59,110 @@ export default function AppRouter(props){
       <>
       
           <BrowserRouter>
-          <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a className="navbar-brand align-middle" href="#">Select Table/Chart</a>
+          <Navbar collapseOnSelect expand="lg" className="bg-info navbar navbar-expand-lg navbar-dark bg-dark">
+              <Navbar.Brand href="#home" className="navbar-brand align-middle">Charts<a></a></Navbar.Brand>
+            
+            {/*
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
               <span className="navbar-toggler-icon"></span>
-            </button>
-            <div className="collapse navbar-collapse" id="navbarNav">
-              <ul className="navbar-nav">
-                <li className="nav-item">
-                  <Link onClick={setChartOpen} className="nav-link align-middle" href="#"  to="/"  style={linkStyle}>
+            </button> 
+          */}
+
+            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+            <Navbar.Collapse id="responsive-navbar-nav">
+              <Nav className="navbar-nav">
+                <LinkContainer to="/">
+                  <Nav.Link onClick={openViewer} className="d-flex justify-content-center align-items-center text-white" href="#" style={linkStyle}>
                     <Container>
-                      <Row className="text-center">Reset</Row>
-                      <Row className=""><i className="d-flex justify-content-center align-items-center bi bi-x-circle" style={{fontSize:"1.5rem",color:"orange"}}></i></Row>
-                    </Container>              
-                  </Link>                  
-                </li>
-                <li className="nav-item">
-                    <Link onClick={openViewer} className="nav-link align-middle" href="#"  to="/" style={linkStyle} >
-                      
+                      <Row className="w-20 text-center" style={{float:"left"}}>
+                        <span>Reset Tables</span><i className="bi bi-x-circle" style={{fontSize:"1.5rem",color:"tomato"}}></i>
+                      </Row>
+                    </Container>           
+                  </Nav.Link>
+                </LinkContainer>
+                <LinkContainer to="/">
+                  <Nav.Link onClick={openViewer} className="d-flex justify-content-center align-items-center text-white" href="#" style={linkStyle}> 
+                    <Container>
+                      <Row className="w-20 text-center" style={{float:"left"}}>
+                        <span>Votes Tables</span><i className="bi bi-table" style={{fontSize:"1.5rem",color:"dodgerblue"}}></i>
+                      </Row>
+                    </Container>        
+                  </Nav.Link>
+                </LinkContainer>
+                
+                <LinkContainer to="/voteslinechart">
+                  <Nav.Link onClick={openViewer} className="d-flex justify-content-center align-items-center text-white" href="#" style={linkStyle}>
+                    <Container>
+                      <Row className="w-20 text-center" style={{float:"left"}}>
+                        <span>Votes Lines Chart</span><i className="bi bi-graph-up-arrow" style={{fontSize:"1.5rem",color:"slateblue"}}></i>
+                      </Row>
+                    </Container>
+                  </Nav.Link>
+                </LinkContainer>
+                
+                <LinkContainer to="/spikeslinechart" >
+                  <Nav.Link onClick={openViewer} className="d-flex justify-content-center align-items-center text-white" href="#" style={linkStyle}> 
+                    <Container>
+                      <Row className="w-20 text-center" style={{float:"left"}}>
+                        <span>Spike Line Chart</span><i className="bi bi-graph-up-arrow" style={{fontSize:"1.5rem",color:"lightgray"}}></i>
+                      </Row>
+                    </Container>
+                  </Nav.Link>
+                </LinkContainer>
+                
+                <LinkContainer to="/difflinechart" >
+                  <Nav.Link onClick={openViewer} className="d-flex justify-content-center align-items-center text-white" href="#" style={linkStyle}>  
+                    <Container>
+                      <Row className="w-20 text-center" style={{float:"left"}}>
+                        <span>Diff Line Chart</span><i className="bi bi-graph-up-arrow" style={{fontSize:"1.5rem",color:"orange"}}></i>
+                      </Row>
+                    </Container>
+                  </Nav.Link>
+                </LinkContainer>
+                
+                <LinkContainer to="/perlinechart">
+                  <Nav.Link onClick={openViewer} className="d-flex justify-content-center align-items-center text-white" href="#" style={linkStyle}>
+                    <Container>
+                      <Row className="w-20 text-center" style={{float:"left"}}>
+                        <span>Percent Line Chart</span><i className="bi bi-graph-up-arrow" style={{fontSize:"1.5rem",color:"violet"}}></i>
+                      </Row>
+                    </Container> 
+                  </Nav.Link>
+                </LinkContainer>
+               
+                <LinkContainer to="/piechart">
+                  <Nav.Link onClick={openViewer} className="d-flex justify-content-center align-items-center text-white" href="#" style={linkStyle}> 
                       <Container>
-                        <Row className="text-center">Votes Table</Row>
-                        <Row className=""><i className="d-flex justify-content-center align-items-center bi bi-table" style={{fontSize:"1.5rem",color:"orange"}}></i></Row>
-                      </Container>   
-                    </Link>
-                    
-                  </li>
-                <li className="nav-item">
-                  <Link onClick={setChartOpen} className="nav-link align-middle" href="#"  to="/voteslinechart"  style={linkStyle}>
+                        <Row className="w-20 text-center" style={{float:"left"}}>
+                          <span>Votes Pie Chart</span><i className="bi bi-pie-chart-fill" style={{fontSize:"1.5rem",color:"green"}}></i>
+                        </Row>
+                      </Container>                   
+                    </Nav.Link>
+                </LinkContainer>
+                
+                <LinkContainer to="/barchart">
+                  <Nav.Link onClick={openViewer} className="d-flex justify-content-center align-items-center text-white" href="#" style={linkStyle}> 
                     <Container>
-                      <Row className="text-center">Votes Line Chart</Row>
-                      <Row className=""><i className="d-flex justify-content-center align-items-center bi bi-graph-up-arrow" style={{fontSize:"1.5rem",color:"orange"}}></i></Row>
-                    </Container>              
-                  </Link>
-                  
-                </li>
-                <li className="nav-item">
-                  <Link onClick={setChartOpen} className="nav-link align-middle" href="#"  to="/spikeslinechart" style={linkStyle}>                    
+                      <Row className="w-20 text-center" style={{float:"left"}}>
+                        <span>Votes Bar Chart</span><i className="bi bi-bar-chart-line-fill" style={{fontSize:"1.5rem",color:"azure"}}></i>
+                      </Row>
+                    </Container>
+                  </Nav.Link>
+                </LinkContainer>
+                
+                <LinkContainer to="/binstackedchart">
+                  <Nav.Link onClick={openViewer} className="d-flex justify-content-center align-items-center text-white" href="#"  style={linkStyle}>  
                     <Container>
-                      <Row className="text-center">Spikes Line Chart</Row>
-                      <Row className=""><i className="d-flex justify-content-center align-items-center bi bi-graph-up-arrow" style={{fontSize:"1.5rem",color:"cornflowerblue"}}></i></Row>
-                    </Container>       
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link onClick={setChartOpen} className="nav-link align-middle" href="#"  to="/difflinechart" style={linkStyle}>                    
-                    <Container className="w-100">
-                      <Row className="text-center">Diff Line Chart</Row>
-                      <Row className=""><i className="d-flex justify-content-center align-items-center bi bi-graph-up-arrow" style={{fontSize:"1.5rem",color:"purple"}}></i></Row>
-                    </Container>    
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link onClick={setChartOpen} className="nav-link align-middle" href="#"  to="/perlinechart" style={linkStyle}>
-                    <Container className="w-100">
-                        <Row className="text-center">Percent Line Chart</Row>
-                        <Row className=""><i className="d-flex justify-content-center align-items-center bi bi-graph-up-arrow" style={{fontSize:"1.5rem",color:"yellow"}}></i></Row>
-                    </Container>   
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link onClick={setChartOpen} className="nav-link align-middle" href="#" to="/piechart" style={linkStyle}>                    
-                    <Container className="w-100">
-                        <Row className="text-center">Votes Pie Chart</Row>
-                        <Row className=""><i className="d-flex justify-content-center align-items-center bi bi-pie-chart-fill" style={{fontSize:"1.5rem",color:"green"}}></i></Row>
-                    </Container>   
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link onClick={setChartOpen} className="nav-link align-middle" href="#"  to="/barchart" style={linkStyle}>            
-                    <Container className="w-100">
-                        <Row className="text-center">Votes Bar Chart</Row>
-                        <Row className=""><i className="d-flex justify-content-center align-items-center bi bi-bar-chart-line-fill" style={{fontSize:"1.5rem",color:"green"}}></i></Row>
-                    </Container>   
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link onClick={setChartOpen} className="nav-link align-middle" href="#"  to="/binstackedchart" style={linkStyle}>                    
-                    <Container className="w-100">
-                        <Row className="text-center">Bin Stacked Chart</Row>
-                        <Row className=""><i className="d-flex justify-content-center align-items-center bi bi-bar-chart-line-fill" style={{fontSize:"1.5rem",color:"darksalmon"}}></i></Row>
-                    </Container>   
-                  </Link>
-                </li>
-              </ul>
-            </div>
-          </nav>
+                      <Row className="w-20 text-center" style={{float:"left"}}>
+                        <span>Bin Stacked Chart</span><i className="bi bi-bar-chart-line-fill" style={{fontSize:"1.5rem",color:"darksalmon"}}></i>
+                      </Row>
+                    </Container>
+                  </Nav.Link>
+                </LinkContainer>
+              
+              </Nav>
+            </Navbar.Collapse>
+          </Navbar>
           <Routes>
               <Route path='/home'/>
               <Route exact path="/" element={<VoteTableReact {...props} resetCharts={props.resetCharts}  getPageNumber={props.getPageNumber} type={'table'} rightArrow={props.rightArrow} leftArrow={props.leftArrow} handleCloseChart={handleCloseChart}/>}/>
