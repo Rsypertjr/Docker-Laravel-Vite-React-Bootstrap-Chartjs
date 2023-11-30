@@ -60,13 +60,9 @@ export default function AppRouter(props){
       
           <BrowserRouter>
           <Navbar collapseOnSelect expand="lg" className="bg-info navbar navbar-expand-lg navbar-dark bg-dark">
-              <Navbar.Brand href="#home" className="navbar-brand align-middle">Charts<a></a></Navbar.Brand>
-            
-            {/*
-            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-              <span className="navbar-toggler-icon"></span>
-            </button> 
-          */}
+              <Navbar.Brand href="#home" className="navbar-brand align-middle" style={{float:"left"}}>
+                <span>Charts</span><i class="bi bi-arrow-90deg-right" style={{fontSize:"1.5rem",color:"darkgray",marginLeft:"0.25em"}}></i>
+              </Navbar.Brand>
 
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
@@ -177,7 +173,11 @@ export default function AppRouter(props){
       </BrowserRouter>
         { isChartClosed &&
           <Container className="w-100 d-flex justify-content-center p-2 pt-3" style={{backgroundColor:"lightgray"}}>
-            <h4>Please select Chart Type above and the chart will appear here</h4>
+            <h4 style={{float:"left"}}>
+              <span>Please select a Chart Type above</span>
+              <i className="bi bi-arrow-up-square-fill" style={{marginLeft:"0.25em",marginRight:"0.25em"}}></i>
+              <span>and the chart will appear here below</span><i className="bi bi-file-arrow-down-fill" style={{marginLeft:"0.25em"}}></i>
+            </h4>
           </Container>
         }
       </>
