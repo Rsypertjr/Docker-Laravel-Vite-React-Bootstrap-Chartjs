@@ -55,7 +55,7 @@ services:
     restart: unless-stopped
     tty: true
     ports:
-      - "3306:3306"
+      - "6033:3306"
     #volumes:
      # - ./docker/mysql:/var/lib/mysql  
     environment:
