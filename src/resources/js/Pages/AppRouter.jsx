@@ -58,100 +58,61 @@ export default function AppRouter(props){
       <>
       
           <BrowserRouter>
-          <Navbar collapseOnSelect expand="lg" className="bg-info navbar navbar-expand-lg navbar-dark bg-dark">
-              <Navbar.Brand href="#home" className="navbar-brand align-middle" style={{float:"left"}}>
-                <span>Charts</span><i className="bi bi-arrow-90deg-right" style={{fontSize:"1.5rem",color:"darkgray",marginLeft:"0.25em"}}></i>
-              </Navbar.Brand>
+          <Navbar collapseOnSelect expand="lg" className="bg-info navbar navbar-expand-lg navbar-dark bg-dark w-100">              
 
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-            <Navbar.Collapse id="responsive-navbar-nav">
-              <Nav className="navbar-nav">
-                <LinkContainer to="/">
-                  <Nav.Link onClick={openViewer} className="d-flex justify-content-center align-items-center text-white" href="#" style={linkStyle}>
-                    <Container>
-                      <Row className="w-20 text-center" style={{float:"left"}}>
-                        <span>Reset Tables</span><i className="bi bi-x-circle" style={{fontSize:"1.5rem",color:"tomato"}}></i>
-                      </Row>
-                    </Container>           
+            <Navbar.Collapse id="responsive-navbar-nav" className="w-100">
+              <Nav className="navbar-nav w-100">
+                <LinkContainer to="/" >
+                  <Nav.Link onClick={openViewer} className="text-white" href="#" style={linkStyle}>                   
+                      <i className="bi bi-x-circle" style={{color:"tomato"}}><p className="text-secondary">Reset<br/>Tables</p></i>
                   </Nav.Link>
                 </LinkContainer>
-                <LinkContainer to="/">
-                  <Nav.Link onClick={openViewer} className="d-flex justify-content-center align-items-center text-white" href="#" style={linkStyle}> 
-                    <Container>
-                      <Row className="w-20 text-center" style={{float:"left"}}>
-                        <span>Votes Tables</span><i className="bi bi-table" style={{fontSize:"1.5rem",color:"dodgerblue"}}></i>
-                      </Row>
-                    </Container>        
+                <LinkContainer to="/" >
+                  <Nav.Link onClick={openViewer} className="text-white" href="#" style={linkStyle}>                    
+                      <i className="bi bi-table" style={{color:"dodgerblue"}}><p className="text-secondary">Votes<br/>Tables</p></i>
                   </Nav.Link>
                 </LinkContainer>
                 
-                <LinkContainer to="/voteslinechart">
-                  <Nav.Link onClick={openViewer} className="d-flex justify-content-center align-items-center text-white" href="#" style={linkStyle}>
-                    <Container>
-                      <Row className="w-20 text-center" style={{float:"left"}}>
-                        <span>Votes Lines Chart</span><i className="bi bi-graph-up-arrow" style={{fontSize:"1.5rem",color:"slateblue"}}></i>
-                      </Row>
-                    </Container>
+                <LinkContainer to="/voteslinechart" >
+                  <Nav.Link onClick={openViewer} className="text-white" href="#" style={linkStyle}>
+                      <i className="bi bi-graph-up-arrow" style={{color:"slateblue"}}><p className="text-secondary">Votes<br/>Lines Chart</p></i>
                   </Nav.Link>
                 </LinkContainer>
                 
                 <LinkContainer to="/spikeslinechart" >
-                  <Nav.Link onClick={openViewer} className="d-flex justify-content-center align-items-center text-white" href="#" style={linkStyle}> 
-                    <Container>
-                      <Row className="w-20 text-center" style={{float:"left"}}>
-                        <span>Spike Line Chart</span><i className="bi bi-graph-up-arrow" style={{fontSize:"1.5rem",color:"lightgray"}}></i>
-                      </Row>
-                    </Container>
+                  <Nav.Link onClick={openViewer} className="text-white" href="#" style={linkStyle}>                     
+                      <i className="bi bi-graph-up-arrow" style={{color:"lightgray"}}><p className="text-secondary">Spike<br/>Line Chart</p></i>
                   </Nav.Link>
                 </LinkContainer>
                 
-                <LinkContainer to="/difflinechart" >
-                  <Nav.Link onClick={openViewer} className="d-flex justify-content-center align-items-center text-white" href="#" style={linkStyle}>  
-                    <Container>
-                      <Row className="w-20 text-center" style={{float:"left"}}>
-                        <span>Diff Line Chart</span><i className="bi bi-graph-up-arrow" style={{fontSize:"1.5rem",color:"orange"}}></i>
-                      </Row>
-                    </Container>
+                <LinkContainer to="/difflinechart">
+                  <Nav.Link onClick={openViewer} className="text-white" href="#" style={linkStyle}>  
+                      <i className="bi bi-graph-up-arrow" style={{color:"orange"}}><p className="text-secondary">Diff<br/>Line Chart</p></i>
                   </Nav.Link>
                 </LinkContainer>
                 
                 <LinkContainer to="/perlinechart">
-                  <Nav.Link onClick={openViewer} className="d-flex justify-content-center align-items-center text-white" href="#" style={linkStyle}>
-                    <Container>
-                      <Row className="w-20 text-center" style={{float:"left"}}>
-                        <span>Percent Line Chart</span><i className="bi bi-graph-up-arrow" style={{fontSize:"1.5rem",color:"violet"}}></i>
-                      </Row>
-                    </Container> 
+                  <Nav.Link onClick={openViewer} className="text-white" href="#" style={linkStyle}>                    
+                      <i className="bi bi-graph-up-arrow" style={{color:"violet"}}><p className="text-secondary">Percent<br/>Line Chart</p></i>
                   </Nav.Link>
                 </LinkContainer>
                
-                <LinkContainer to="/piechart">
-                  <Nav.Link onClick={openViewer} className="d-flex justify-content-center align-items-center text-white" href="#" style={linkStyle}> 
-                      <Container>
-                        <Row className="w-20 text-center" style={{float:"left"}}>
-                          <span>Votes Pie Chart</span><i className="bi bi-pie-chart-fill" style={{fontSize:"1.5rem",color:"green"}}></i>
-                        </Row>
-                      </Container>                   
-                    </Nav.Link>
-                </LinkContainer>
-                
-                <LinkContainer to="/barchart">
-                  <Nav.Link onClick={openViewer} className="d-flex justify-content-center align-items-center text-white" href="#" style={linkStyle}> 
-                    <Container>
-                      <Row className="w-20 text-center" style={{float:"left"}}>
-                        <span>Votes Bar Chart</span><i className="bi bi-bar-chart-line-fill" style={{fontSize:"1.5rem",color:"azure"}}></i>
-                      </Row>
-                    </Container>
+                <LinkContainer to="/piechart" >
+                  <Nav.Link onClick={openViewer} className="text-white" href="#" style={linkStyle}>                       
+                      <i className="bi bi-pie-chart-fill" style={{color:"green"}}><p className="text-secondary">Votes<br/>Pie Chart</p></i>
                   </Nav.Link>
                 </LinkContainer>
                 
-                <LinkContainer to="/binstackedchart">
-                  <Nav.Link onClick={openViewer} className="d-flex justify-content-center align-items-center text-white" href="#"  style={linkStyle}>  
-                    <Container>
-                      <Row className="w-20 text-center" style={{float:"left"}}>
-                        <span>Bin Stacked Chart</span><i className="bi bi-bar-chart-line-fill" style={{fontSize:"1.5rem",color:"darksalmon"}}></i>
-                      </Row>
-                    </Container>
+                <LinkContainer to="/barchart" >
+                  <Nav.Link onClick={openViewer} className="text-white" href="#" style={linkStyle}>                     
+                      <i className="bi bi-bar-chart-line-fill" style={{color:"azure"}}><p className="text-secondary">Votes<br/>Bar Chart</p></i>
+                  </Nav.Link>
+                </LinkContainer>
+                
+                <LinkContainer to="/binstackedchart" >
+                  <Nav.Link onClick={openViewer} className="text-white" href="#"  style={linkStyle}>                     
+                    <i className="bi bi-bar-chart-line-fill" style={{color:"darksalmon"}}><p className="text-secondary">Bin<br/>Stacked Chart</p></i>
                   </Nav.Link>
                 </LinkContainer>
               
