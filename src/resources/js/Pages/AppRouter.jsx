@@ -62,60 +62,61 @@ export default function AppRouter(props){
 
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav" className="w-100">
-              <Nav className="navbar-nav w-100">
-                <LinkContainer to="/" >
-                  <Nav.Link onClick={openViewer} className="text-white" href="#" style={linkStyle}>                   
-                      <i className="bi bi-x-circle" style={{color:"tomato"}}><p className="text-secondary">Reset<br/>Tables</p></i>
-                  </Nav.Link>
-                </LinkContainer>
-                <LinkContainer to="/" >
-                  <Nav.Link onClick={openViewer} className="text-white" href="#" style={linkStyle}>                    
-                      <i className="bi bi-table" style={{color:"dodgerblue"}}><p className="text-secondary">Votes<br/>Tables</p></i>
-                  </Nav.Link>
-                </LinkContainer>
+              <Nav className="navbar-nav w-100 d-flex justify-content-center">
+                <Row>
+                  <LinkContainer to="/" className="col-1 m-2">
+                    <Nav.Link onClick={openViewer} className="text-white " href="#" style={linkStyle}>                   
+                        <i className="bi bi-x-circle" style={{color:"tomato",paddingLeft:"1rem"}}><p className="text-secondary mr-2">Reset<br/>Tables</p></i>
+                    </Nav.Link>
+                  </LinkContainer>
+                  <LinkContainer to="/" className="col-1 m-2">
+                    <Nav.Link onClick={openViewer} className="text-white" href="#" style={linkStyle}>                    
+                        <i className="bi bi-table" style={{color:"dodgerblue",paddingLeft:"1rem"}}><p className="text-secondary">Votes<br/>Tables</p></i>
+                    </Nav.Link>
+                  </LinkContainer>
+                  
+                  <LinkContainer to="/voteslinechart" className="col-1 m-2" >
+                    <Nav.Link onClick={openViewer} className="text-white" href="#" style={linkStyle}>
+                        <i className="bi bi-graph-up-arrow" style={{color:"slateblue",paddingLeft:"1rem"}}><p className="text-secondary">Votes<br/>Lines<br/>Chart</p></i>
+                    </Nav.Link>
+                  </LinkContainer>
+                  
+                  <LinkContainer to="/spikeslinechart" className="col-1 m-2">
+                    <Nav.Link onClick={openViewer} className="text-white" href="#" style={linkStyle}>                     
+                        <i className="bi bi-graph-up-arrow" style={{color:"lightgray",paddingLeft:"1rem"}}><p className="text-secondary">Spike<br/>Line<br/>Chart</p></i>
+                    </Nav.Link>
+                  </LinkContainer>
+                  
+                  <LinkContainer to="/difflinechart" className="col-1 m-2">
+                    <Nav.Link onClick={openViewer} className="text-white" href="#" style={linkStyle}>  
+                        <i className="bi bi-graph-up-arrow" style={{color:"orange",paddingLeft:"1rem"}}><p className="text-secondary">Diff<br/>Line<br/>Chart</p></i>
+                    </Nav.Link>
+                  </LinkContainer>
+                  
+                  <LinkContainer to="/perlinechart" className="col-1 m-2">
+                    <Nav.Link onClick={openViewer} className="text-white" href="#" style={linkStyle}>                    
+                        <i className="bi bi-graph-up-arrow" style={{color:"violet",paddingLeft:"1rem"}}><p className="text-secondary">Percent<br/>Line<br/>Chart</p></i>
+                    </Nav.Link>
+                  </LinkContainer>
                 
-                <LinkContainer to="/voteslinechart" >
-                  <Nav.Link onClick={openViewer} className="text-white" href="#" style={linkStyle}>
-                      <i className="bi bi-graph-up-arrow" style={{color:"slateblue"}}><p className="text-secondary">Votes<br/>Lines Chart</p></i>
-                  </Nav.Link>
-                </LinkContainer>
-                
-                <LinkContainer to="/spikeslinechart" >
-                  <Nav.Link onClick={openViewer} className="text-white" href="#" style={linkStyle}>                     
-                      <i className="bi bi-graph-up-arrow" style={{color:"lightgray"}}><p className="text-secondary">Spike<br/>Line Chart</p></i>
-                  </Nav.Link>
-                </LinkContainer>
-                
-                <LinkContainer to="/difflinechart">
-                  <Nav.Link onClick={openViewer} className="text-white" href="#" style={linkStyle}>  
-                      <i className="bi bi-graph-up-arrow" style={{color:"orange"}}><p className="text-secondary">Diff<br/>Line Chart</p></i>
-                  </Nav.Link>
-                </LinkContainer>
-                
-                <LinkContainer to="/perlinechart">
-                  <Nav.Link onClick={openViewer} className="text-white" href="#" style={linkStyle}>                    
-                      <i className="bi bi-graph-up-arrow" style={{color:"violet"}}><p className="text-secondary">Percent<br/>Line Chart</p></i>
-                  </Nav.Link>
-                </LinkContainer>
-               
-                <LinkContainer to="/piechart" >
-                  <Nav.Link onClick={openViewer} className="text-white" href="#" style={linkStyle}>                       
-                      <i className="bi bi-pie-chart-fill" style={{color:"green"}}><p className="text-secondary">Votes<br/>Pie Chart</p></i>
-                  </Nav.Link>
-                </LinkContainer>
-                
-                <LinkContainer to="/barchart" >
-                  <Nav.Link onClick={openViewer} className="text-white" href="#" style={linkStyle}>                     
-                      <i className="bi bi-bar-chart-line-fill" style={{color:"azure"}}><p className="text-secondary">Votes<br/>Bar Chart</p></i>
-                  </Nav.Link>
-                </LinkContainer>
-                
-                <LinkContainer to="/binstackedchart" >
-                  <Nav.Link onClick={openViewer} className="text-white" href="#"  style={linkStyle}>                     
-                    <i className="bi bi-bar-chart-line-fill" style={{color:"darksalmon"}}><p className="text-secondary">Bin<br/>Stacked Chart</p></i>
-                  </Nav.Link>
-                </LinkContainer>
-              
+                  <LinkContainer to="/piechart" className="col-1 m-2">
+                    <Nav.Link onClick={openViewer} className="text-white" href="#" style={linkStyle}>                       
+                        <i className="bi bi-pie-chart-fill" style={{color:"green",paddingLeft:"1rem"}}><p className="text-secondary">Votes<br/>Pie<br/>Chart</p></i>
+                    </Nav.Link>
+                  </LinkContainer>
+                  
+                  <LinkContainer to="/barchart" className="col-1 m-2">
+                    <Nav.Link onClick={openViewer} className="text-white" href="#" style={linkStyle}>                     
+                        <i className="bi bi-bar-chart-line-fill" style={{color:"azure",paddingLeft:"1rem"}}><p className="text-secondary">Votes<br/>Bar<br/>Chart</p></i>
+                    </Nav.Link>
+                  </LinkContainer>
+                  
+                  <LinkContainer to="/binstackedchart" className="col-1 m-2" >
+                    <Nav.Link onClick={openViewer} className="text-white" href="#"  style={linkStyle}>                     
+                      <i className="bi bi-bar-chart-line-fill" style={{color:"darksalmon",paddingLeft:"1rem"}}><p className="text-secondary">Bin<br/>Stacked Chart</p></i>
+                    </Nav.Link>
+                  </LinkContainer>
+                </Row> 
               </Nav>
             </Navbar.Collapse>
           </Navbar>
