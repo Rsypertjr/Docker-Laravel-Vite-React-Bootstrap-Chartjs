@@ -1,4 +1,4 @@
-import {React, useEffect} from 'react';
+import {React, useEffect, useState} from 'react';
 import ChartPager from '../ChartPager';
 import ResolutionDropdown from '../ResolutionDropdown';
 import AnalyticsBar from './AnalyticsBar';
@@ -79,35 +79,154 @@ import {
   };
 
 export default function DiffLineChart(props) {
+    const [myLineChart,setMyLineChart] = useState(null);
+    const [pageNo, setPageNo] = useState(props.pageNo);
+    const [thePageSetNumber, setThePageSetNumber ] = useState(parseInt(props.thePageSetNumber));
+    const [thePageSize,setThePageSize ] = useState(props.thePageSize);
+    const [thePagingArray,setThePagingArray] = useState(props.thePagingArray);
+    const [theChartArray,setTheChartArray] = useState(props.theChartArray);
+    const [chartData, setChartData] = useState(props.chartData);
+    const [theVotes, setTheVotes] = useState(props.theVotes);
+    const [parseResolution, setParseResolution ] = useState(props.parse_resolution);
 
 
     useEffect(() => {
+        console.log("Parse Resolution",parseResolution);
+        console.log("Chart Data:", chartData);
+
         let ctx = document.getElementById('myChart').getContext('2d');
 
         $('.page').css('background-color','rgb(239, 239, 239').css('border-color','rgb(255, 255, 255').css('border-width','3px');
-        $('#page-'+ props.pageNo).css('background-color','#ffc107');
+        $('#page-'+ pageNo).css('background-color','#ffc107');
 
-       // let data = [65, 59, 80, 81, 56, 55, 40];
+        // let data = [65, 59, 80, 81, 56, 55, 40];
         let label =  '# of Votes';
         let type = props.type;
-        let selected_index = props.pageNo;
+        let cdata = getDatasets(chartData,pageNo,type,label);
+        let labels = cdata.labels;
+        let datasets = cdata.datasets;      
 
+        const lineChart = new Chart(ctx, {
+            type: type,
+            data: {
+                labels: labels,
+                datasets: datasets
+            }
+        });
+
+        return () => {
+        lineChart.destroy()
+        }
+
+
+      },[]);
+
+    const getDatasets = (chartData,selected_index,type,label) => {
+      
+        if((selected_index - 1) < chartData.dateDataBidenAddDiffStore.length) {
+                // Select Data set from Chart Data to make chart   
+                let data = getDataSetPerIndex(selected_index - 1,chartData);
+                return data;
+         }
+        else {
+             // Set resolution bound for selecting a dataset from Chart data
+            let last_index = chartData.dateDataBidenAddDiffStore.length - 1;
+            let data = getDataSetPerIndex(last_index, chartData);
+            return data;      
+        }        
+    };
+
+
+    useEffect(() => {
+
+        $('.page').css('background-color','rgb(239, 239, 239').css('border-color','rgb(255, 255, 255').css('border-width','3px');
+        $('#page-'+pageNo).css('background-color','#ffc107');
+
+    },[pageNo]);
+
+
+    useEffect(() => {
+        function resetChartData(){
+            console.log("new chart data: ",props.chartData);
+            setChartData(props.chartData);
+            let pageNum;
+            if(pageNo === 1){
+                pageNum = 1;
+                setPageNo(pageNum);
+            }               
+            else{
+                pageNum = pageNo - 1;
+                setPageNo(pageNum);
+            }        
+            updateChart(pageNum,props.chartData);            
+        }
+        console.log("new parse res: ",props.parse_resolution);
+        resetChartData();
+
+    },[props.chartData]);
+
+    const getPageNumber = (obj) =>
+    {
+      console.log("page num: ",obj.num);
+       let num = obj.num;     
+       setPageNo(num);
+       updateChart(num,null);
+    };
+  
+  
+    const rightArrow = (obj) => {
+        console.log(obj);
+        let num = obj.num;
+        let nxpagenum = obj.nxpagenum
+        let type = obj.type;
+
+        let highest_page = parseInt(thePageSetNumber)*parseInt(thePageSize);
+        console.log("highest page:", highest_page);
+  
+        if(num > highest_page){
+            setThePageSetNumber(thePageSetNumber+1);
+            setPageNo(num);
+           
+        }
+   
+        
+    };
+  
+    const leftArrow = (obj) => {
+        console.log(obj);
+  
+        let num = obj.num;
+        let newNum = parseInt(thePageSetNumber-1)*thePageSize;
+        let lowest_page = newNum + 1;
+        console.log("Lowest Page:", lowest_page);
+        if(num != 0 && num < lowest_page) {
+            setThePageSetNumber(thePageSetNumber - 1);
+            setPageNo(num);
+        }
+        else if( num == 0 && lowest_page <= 1) {
+            setThePageSetNumber(thePageSetNumber);
+            setPageNo(1);
+        }
+      
+    };
+  
+
+
+    const getDataSetPerIndex = (index,chartData) => {
         let bgColors = ['red','orange','yellow','lime','green','teal','blue','purple'];
         let bdColors =  ['black'];
-
-        let chartData =   props.chartData;
-        let date_headers =    chartData.dateHeadersStore;
+        let date_headers = chartData.dateHeadersStore;
         let datedata_biden_diff_add = chartData.dateDataBidenAddDiffStore;
         let datedata_trump_diff_add = chartData.dateDataTrumpAddDiffStore;
-        let datasets = [];
-        let labels = date_headers[selected_index-1];
 
+        let labels = date_headers[index];
+      
         var data1= {};
         data1.label = "Biden Gain/Loss";
         data1.backgroundColor = bgColors[0];
         data1.borderColor = bgColors[0];
         data1.data = [];
-        datedata_biden_diff_add[selected_index-1].map((data) => {
+        datedata_biden_diff_add[index].map((data) => {
             data1.data.push(data);
         });
         let dataset1 = data1;
@@ -118,33 +237,41 @@ export default function DiffLineChart(props) {
         data2.backgroundColor = bgColors[1];
         data2.borderColor = bgColors[1];
         data2.data = [];
-        datedata_trump_diff_add[selected_index-1].map((data) => {
+        datedata_trump_diff_add[index].map((data) => {
             data2.data.push(data);
         });
         let dataset2 = data2;
         //alert(JSON.stringify(dataset2));
+        let datasets = [dataset1, dataset2 ]
+        return { "labels": labels, "datasets": datasets };
+    };
+
+    const updateChart = (num,chart_data=null) => {
+        if(chart_data === null)
+            chart_data = chartData;
 
 
+        console.log("entering updateChart with page no: ",num);
+       
+        let ctx = document.getElementById('myChart').getContext('2d');
+        $('.page').css('background-color','rgb(239, 239, 239').css('border-color','rgb(255, 255, 255').css('border-width','3px');
+        $('#page-'+ num).css('background-color','#ffc107');
 
-        datasets = [dataset1, dataset2]
-        //alert(JSON.stringify(datasets));
+       // let data = [65, 59, 80, 81, 56, 55, 40];
+        let label =  '# of Votes';
+        let type = props.type;       
 
+        let cdata = getDatasets(chart_data,num,type,label);
+        let labels = cdata.labels;
+        let datasets = cdata.datasets;
 
-        const myChart = new Chart(ctx, {
-                type: type,
-                data: {
-                    labels: labels,
-                    datasets: datasets
-                }
-            });
-
-        return () => {
-          myChart.destroy()
-        }
-
-      });
-
-
+        let chart = Chart.getChart('myChart');
+        chart.data.labels = labels;        
+        datasets.forEach((dataset,index) => {
+            chart.data.datasets[index].data = dataset.data;
+        });
+        chart.update();
+    };
 
 
 
@@ -172,7 +299,9 @@ export default function DiffLineChart(props) {
                 <div><canvas id="myChart"></canvas></div>
             </Row>
             <Row className="h-100 p-1 mt-3 d-flex justify-content-center">
-                <ChartPager {...props} getPageNumber={props.getPageNumber} type={'line'} leftArrow={props.leftArrow} rightArrow={props.rightArrow}/>
+                <ChartPager  getPageNumber={getPageNumber} type={'line'} leftArrow={leftArrow} rightArrow={rightArrow} pageNo={pageNo}
+                    thePagingArray={thePagingArray} thePageSetNumber={thePageSetNumber} chartData={chartData} thePageSize={thePageSize}
+                    theChartArray={theChartArray} />
             </Row>
         </Container>
     );

@@ -189,6 +189,16 @@ nav.navbar {
      background-color: grey;
  }
 
+.page {
+    width:3em;
+    height:3em;
+}
+
+.page-arrow {
+    width:3em;
+}
+
+
  .carousel-indicators{
      top:13em;
  }
@@ -199,11 +209,13 @@ nav.navbar {
  }
 
  nav.navbar{
-    padding-left:2em;
+    padding-left:5em;
  }
 
-
-
+ .nav-link, .nav-item.dropdown{
+    margin-right:2em;
+    height:75%;
+ }
  #basic-navbar-nav > div > div:nth-child(3) > a,#basic-navbar-nav > div > div:nth-child(4) > a, a.nav-link > a   {
      color:white;
  }
