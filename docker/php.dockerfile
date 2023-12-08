@@ -48,6 +48,7 @@ RUN echo http://dl-cdn.alpinelinux.org/alpine/edge/main >> /etc/apk/repositories
 RUN echo http://dl-cdn.alpinelinux.org/alpine/edge/community/ >> /etc/apk/repositories
 
 
+RUN echo "fs.inotify.max_user_watches=655350" >> /etc/sysctl.conf
 
 # installing required extensions
 RUN apk update && \
@@ -61,5 +62,6 @@ RUN pecl install mcrypt && \
     docker-php-ext-enable mcrypt
 
 RUN docker-php-ext-install pdo pdo_mysql mysqli
+
 
 CMD ["php-fpm", "-y", "/usr/local/etc/php-fpm.conf", "-R"]

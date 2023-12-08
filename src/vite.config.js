@@ -13,7 +13,8 @@ export default defineConfig({
     ],
     server: {
         hmr: {
-          host: '159.65.100.7',
+          host: '137.184.92.95',
         },
+        watch: null,
       }
 });

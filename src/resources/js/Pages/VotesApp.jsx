@@ -162,7 +162,7 @@ export default class VotesApp extends React.Component {
     const token = document.querySelector('head').querySelector('meta[name="csrf-token"]').content;
     console.log("Token",token);
     console.log("ChartData before sending to Atlas:", chartData);
-    await fetch('http://159.65.100.7:8000/api/create_election_data_mongo/', {
+    await fetch('http://137.184.92.95:8000/api/create_election_data_mongo/', {
       method: 'POST',
       body: JSON.stringify({
           guid : currentState.toString(),
@@ -337,7 +337,7 @@ async votesFromServer(state){
   }
 
 async checkForVotes(state){
-    const result = await fetch("http://159.65.100.7:8000/api/check_election_data_mongo/" + state);
+    const result = await fetch("http://137.184.92.95:8000/api/check_election_data_mongo/" + state);
     console.log('Result', result);
     
     return result;

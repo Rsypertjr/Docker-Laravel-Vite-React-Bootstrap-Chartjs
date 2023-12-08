@@ -189,6 +189,16 @@ nav.navbar {
      background-color: grey;
  }
 
+.page {
+    width:3em;
+    height:3em;
+}
+
+.page-arrow {
+    width:3em;
+}
+
+
  .carousel-indicators{
      top:13em;
  }

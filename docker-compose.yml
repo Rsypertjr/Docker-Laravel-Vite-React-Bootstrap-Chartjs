@@ -27,9 +27,9 @@ services:
       - db 
       - laravel-queue 
       - phpmyadmin 
-      - mailhog 
+      - mailhog   
     networks:
-      - laravel
+    - laravel
 
   php:
     build:
@@ -203,6 +203,7 @@ services:
     entrypoint: ['npm'] 
     networks: 
       - laravel
+    
 
   
   phpmyadmin:
