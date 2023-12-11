@@ -80,7 +80,7 @@ export default class VotesApp extends React.Component {
           noOfChartPages:0,
           theChartArray:[],
           theResolutions: resolutions,
-          zoomFac:"105%"
+          zoomFac:"95%"
       };
 
 
@@ -91,6 +91,7 @@ export default class VotesApp extends React.Component {
 
   getPageNumber(obj)
   {
+    console.log("page num: ",obj.num);
      let num = obj.num;
      this.setState({
          pageNo: num
@@ -717,7 +718,13 @@ async checkForVotes(state){
 
   selectResolution(e){
      
-    let chartData = this.getChartsData(parseInt(e));
+    let chartData;
+    // Without Analytics reset normal voting order
+    if(!this.state.analyticsIsOn)
+        chartData = this.getChartsData(parseInt(e), this.state.theOriginalVotes);
+    else    
+        chartData = this.getChartsData(parseInt(e));  // Keep Analyzed voting order
+    
  
     this.setState({
         parse_resolution:parseInt(e),
@@ -737,6 +744,7 @@ async checkForVotes(state){
   
     if(analyticsType === 'No Analytics'){
         console.log("Wanting No Analytics:", analyticsType);
+        // Restore original voting order
         let renewChartData = this.getChartsData(1,this.state.originalChartData.theVotes); 
         this.setState({
             analyticsIsOn: false,
@@ -751,7 +759,7 @@ async checkForVotes(state){
         console.log("Analytics Type:",analyticsType);
         console.log("prior Analytics: ", this.state.priorAnalytics);       
       
-        this.selectChartForAnalytics(analyticsType,chartOrigin,chartData);
+        this.selectChartForAnalytics(analyticsType,chartOrigin,this.state.originalChartData);
     }
     
     

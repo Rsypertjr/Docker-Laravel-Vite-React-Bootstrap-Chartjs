@@ -16,7 +16,7 @@ services:
     restart: unless-stopped
     container_name: nginx 
     ports:
-      - 8000:8000
+      - 8000:8000     
     volumes:
       - ./src:/var/www/html
       - .env:/var/www/html/.env 
@@ -38,7 +38,7 @@ services:
       args: 
         - UID=${UID:-1000} 
         - GID=${GID:-1000} 
-        - USER=${USER:-laravel}
+        - USER=${USER:-rsypertjr}
     container_name: php
     ports:
       - 9000:9000
@@ -47,8 +47,8 @@ services:
       - .env:/var/www/html/.env 
     networks:
       - laravel 
-
-  #MySQL Service
+      
+ #MySQL Service
   db:
     image: mysql:5.7.22
     container_name: db

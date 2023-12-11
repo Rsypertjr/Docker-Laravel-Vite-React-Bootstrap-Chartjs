@@ -146,19 +146,19 @@ export default function ResolutionDropdown(props){
                                 </Col>
                             </Row>
                             
-                            {typeof(props.analytics) === "undefined" && <Row className="rounded" style={{backgroundColor:"lightgray"}}>
+                            {typeof(props.analytics) === "undefined" && <Row className="" style={{backgroundColor:"lightgray"}}>
                                 <Col className="col-12 p-1 d-flex justify-content-center align-middle">                        
                                     <p>Resolution (data point multiplier) is {selectOption} </p>
                                 </Col>
                             </Row>}
-                            {props.analytics === 'analytics' && <Row className="rounded" style={{backgroundColor:"lightgray"}}>
-                                <Col className="col-12 p-1 d-flex justify-content-center align-middle">  
+                            {props.analytics === 'analytics' && <Row className="" style={{backgroundColor:"lightgray"}}>
+                                <Col className="col-12 d-flex justify-content-center align-middle">  
                                      <p>Analytics Type is <font color="blue">{analyticsType}</font></p>
                                 </Col>
                             </Row>}     
                                                 
-                            { props.analyticsIsOn && <Row className="rounded" style={{backgroundColor:"lightgray"}}>
-                                <Col className="col-12 p-1 d-flex justify-content-center align-middle">                   
+                            { props.analyticsIsOn && <Row className="" style={{backgroundColor:"lightgray"}}>
+                                <Col className="col-12 d-flex justify-content-center align-middle">                   
                                     <p>Analytics is Now On!</p>  
                                 </Col>
                             </Row>}
