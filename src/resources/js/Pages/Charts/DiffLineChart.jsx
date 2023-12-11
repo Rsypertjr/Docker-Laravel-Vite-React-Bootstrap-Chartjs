@@ -1,5 +1,6 @@
 import {React, useEffect, useState} from 'react';
 import ChartPager from '../ChartPager';
+import { getRelativePosition } from 'chart.js/helpers';
 import ResolutionDropdown from '../ResolutionDropdown';
 import AnalyticsBar from './AnalyticsBar';
 import { Container, Row, Col, Button } from 'react-bootstrap';
@@ -111,8 +112,88 @@ export default function DiffLineChart(props) {
             data: {
                 labels: labels,
                 datasets: datasets
-            }
+            },
+            options: {     
+                // All of these (default) events trigger a hover and are passed to all plugins,
+              // unless limited at plugin options
+              events: ['mousemove', 'mouseout', 'click', 'touchstart', 'touchmove'],
+              plugins: {
+                  tooltip: {
+                      // Tooltip will only receive click events
+                      events: ['click'],
+                      position:'nearest',
+                      enabled:true,
+                      caretSize: 15,
+                      interaction: {
+                          mode:'index',
+                          intersect:'false'
+                      },
+                      titleFont: {
+                          size: 35
+                      },
+                      bodyFont: {
+                          size: 30
+                      },
+                      footerFont: {
+                          size: 30 // there is no footer by default
+                      }
+    
+                  
+                  }
+              },
+              onHover: (e) => {
+                  const canvasPosition = getRelativePosition(e);
+      
+                  // Substitute the appropriate scale IDs
+                  const dataX = e.chart.scales.x.getValueForPixel(canvasPosition.x);
+                  const dataY = e.chart.scales.y.getValueForPixel(canvasPosition.y);
+                  console.log("Data X",dataX);
+                  console.log("Data Y",dataY)
+                  console.log("Event", e);
+                  console.log("Active Elements: ", e.chart.tooltip.getActiveElements());     
+                 
+                  let chartRight = Math.ceil(e.chart.chartArea.right);
+                  let chartLeft = Math.floor(e.chart.chartArea.left);
+                  let chartWidth = chartRight - chartLeft;
+                  console.log("Chart start: ",chartLeft);
+                  console.log("Chart Width: ",chartWidth);
+                  console.log("Chart end: ",chartRight); 
+                  let elementWidth = Math.floor((chartRight - chartLeft)/e.chart.data.datasets[0].data.length );
+                  console.log("Element width: ",elementWidth);
+                  console.log("Click X position: ", e.x);
+                  let column_index = 0;
+                  let selected_index = 0;
+                  let last_index;
+                  let i = parseFloat(e.chart.chartArea.left);
+                  let fudgeFac = 1.2;
+                 
+    
+                  selected_index = Math.ceil((e.x-chartLeft)/(elementWidth)*fudgeFac);
+                  console.log("Floored Selected Index: ", selected_index);
+                  //alert(selected_index);
+                  let activeElArray = [];
+                  let element;
+                
+                  e.chart.data.datasets.map((d,index) => {
+                      element = {
+                          datasetIndex:index,
+                          index: selected_index - 1
+                      };
+                      activeElArray.push(element);
+                  });
+    
+                  console.log("Active Elements Array: ", activeElArray);
+                  e.chart.tooltip.setActiveElements(
+                    activeElArray,
+                    {
+                      x: dataX,
+                      y: dataY,
+                    });
+                  e.chart.update();               
+              }
+          }
         });
+
 
         return () => {
         lineChart.destroy()

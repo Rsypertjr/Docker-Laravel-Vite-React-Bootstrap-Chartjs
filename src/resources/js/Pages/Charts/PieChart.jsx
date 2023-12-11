@@ -1,5 +1,7 @@
 import {React, useEffect, useState} from 'react';
 import ChartPager from '../ChartPager';
+import { getRelativePosition } from 'chart.js/helpers';
+import { Interaction } from 'chart.js';
 import ResolutionDropdown from '../ResolutionDropdown';
 import AnalyticsBar from './AnalyticsBar';
 import { Container, Row, Col, Button } from 'react-bootstrap';
@@ -63,7 +65,6 @@ import {
   const dataLoad = {
     dateHeadersStore: [],
     dateDataBidenStore: [],
-    dateDataBidenAddStore: [],
     dateDataBidenAddDiffStore: [],
     dateDataTrumpStore: [],
     dateDataTrumpAddStore: [],
@@ -117,17 +118,96 @@ export default function PieChart(props) {
              
         let data = getDatasets(chartData,pageNo,type,label);      
 
-        const pieChart = new Chart(ctx, {
-                type: type,
-                data: {
-                    labels: data.labels,
-                    datasets: [data.datasets]
-                },
-                options: {
-                  responsive:false,
-                }
+        let selected;
+        Interaction.modes.pointSelected = function(chart, e, options, useFinalPosition) {
+          const activeElements = [];
+          if (selected) {
+            activeElements.push(selected);
+          }
+         const pointItems = Interaction.modes.point(chart, e, {intersect: true}, useFinalPosition);
+        
+         if (pointItems.length) {
+           if (selected) {
+             activeElements.push(...pointItems.filter(e => e.index !== selected.index));
+           } else {
+             activeElements.push(...pointItems);
+           }
+         }
+       
+         return activeElements;
+       };
 
-            });
+
+
+
+        const plugin = {
+          id: 'hl',
+          afterEvent(chart, args) {
+            const event = args.event;
+            if (event.type === 'mouseout' && selected) {
+              chart.setActiveElements([selected]);
+              chart.tooltip.setActiveElements([selected]);
+              chart.update();
+            }
+          }
+        };
+        
+        const pieChart = new Chart(ctx, {
+          type: type,
+          data: {
+              labels: data.labels,
+              datasets: [data.datasets]
+          },
+          options: {     
+            // All of these (default) events trigger a hover and are passed to all plugins,
+            // unless limited at plugin options
+            responsive: false,
+            interaction: {
+              mode:'pointSelected',
+              intersect:true
+            },
+            
+            onHover(event, el, chart) {
+              const elements = chart.getElementsAtEventForMode(event, 'point', {intersect: true}, true);
+              if (elements.length) {
+                selected = elements[0];
+              }
+            },
+            plugins: {
+              
+              titleFont: {
+                  size: 50
+              },
+              bodyFont: {
+                  size: 40
+              },
+              footerFont: {
+                  size: 40 // there is no footer by default
+              },
+              tooltip: {
+                caretSize: 15,
+                titleFont: {
+                    size: 20
+                },
+                bodyFont: {
+                    size: 20
+                },
+                callbacks: {
+                  title(items) {
+                    return items.map(e => e.label).join(' and ');
+                  },
+                  label(item) {
+                    return item.label +': '+item.formattedValue;
+                  }
+                }
+              }
+            }
+          
+        },
+        plugins: [plugin]
+
+        });
+
 
         return () => {
           pieChart.destroy()
