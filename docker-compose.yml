@@ -38,7 +38,7 @@ services:
       args: 
         - UID=${UID:-1000} 
         - GID=${GID:-1000} 
-        - USER=${USER:-laravel}
+        - USER=${USER:-rsypertjr}
     container_name: php
     ports:
       - 9000:9000
@@ -82,7 +82,7 @@ services:
       args: 
         - UID=${UID:-1000} 
         - GID=${GID:-1000}
-        - USER=${USER:-laravel}
+        - USER=${USER:-rsypertjr}
     container_name: laravel-cron 
     volumes: 
       - ./src:/var/www/html 
@@ -101,7 +101,7 @@ services:
       args: 
         - UID=${UID:-1000} 
         - GID=${GID:-1000} 
-        - USER=${USER:-laravel} 
+        - USER=${USER:-rsypertjr} 
     container_name: laravel-queue 
     volumes: 
       - ./src:/var/www/html 
@@ -132,7 +132,7 @@ services:
       args: 
         - UID=${UID:-1000} 
         - GID=${GID:-1000}
-        - USER=${USER:-laravel} 
+        - USER=${USER:-rsypertjr} 
     container_name: laravel-migrate-seed 
     volumes: 
       - ./src:/var/www/html 
@@ -156,7 +156,7 @@ services:
       args: 
         - UID=${UID:-1000} 
         - GID=${GID:-1000} 
-        - USER=${USER:-laravel}
+        - USER=${USER:-rsypertjr}
     container_name: composer 
     volumes: 
       - ./src:/var/www/html 
@@ -164,7 +164,7 @@ services:
     working_dir: /var/www/html 
     depends_on:
       - php 
-    user: ${USER:-laravel} #system user 
+    user: ${USER:-rsypertjr} #system user 
     entrypoint: ['composer', '--ignore-platform-reqs']
     networks: 
       - laravel 
@@ -177,13 +177,13 @@ services:
       args:
        - UID=${UID:-1000} 
        - GID=${GID:-1000} 
-       - USER=${USER:-laravel}
+       - USER=${USER:-rsypertjr}
     container_name: artisan 
     volumes:
       - ./src:/var/www/html 
       - .env:/var/www/html/.env 
     depends_on:
-      - db
+      - db   
     working_dir: /var/www/html 
     entrypoint: ['php', '/var/www/html/artisan']
     networks:
@@ -199,7 +199,8 @@ services:
     ports: 
       - 3000:3000
       - 3001:3001 
-    working_dir: /var/www/html 
+
+    #working_dir: /var/www/html 
     entrypoint: ['npm'] 
     networks: 
       - laravel

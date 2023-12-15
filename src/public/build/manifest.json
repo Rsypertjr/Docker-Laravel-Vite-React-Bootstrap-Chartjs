@@ -1,0 +1,291 @@
+{
+  "ResolutionDropdown.css": {
+    "file": "assets/ResolutionDropdown-9d7de7aa.css",
+    "src": "ResolutionDropdown.css"
+  },
+  "_AnalyticsBar-62a31e14.js": {
+    "file": "assets/AnalyticsBar-62a31e14.js",
+    "imports": [
+      "resources/js/app.jsx",
+      "_ResolutionDropdown-498d0d0b.js",
+      "_Row-fb1f9ce4.js",
+      "_Button-95edad04.js",
+      "_Col-c3c577e8.js"
+    ],
+    "isDynamicEntry": true
+  },
+  "_Button-95edad04.js": {
+    "file": "assets/Button-95edad04.js",
+    "imports": [
+      "_Col-c3c577e8.js",
+      "resources/js/app.jsx"
+    ]
+  },
+  "_Col-c3c577e8.js": {
+    "file": "assets/Col-c3c577e8.js",
+    "imports": [
+      "resources/js/app.jsx"
+    ]
+  },
+  "_ResolutionDropdown-498d0d0b.js": {
+    "css": [
+      "assets/ResolutionDropdown-9d7de7aa.css"
+    ],
+    "file": "assets/ResolutionDropdown-498d0d0b.js",
+    "imports": [
+      "resources/js/app.jsx",
+      "_Col-c3c577e8.js",
+      "_Row-fb1f9ce4.js"
+    ],
+    "isDynamicEntry": true
+  },
+  "_Row-fb1f9ce4.js": {
+    "file": "assets/Row-fb1f9ce4.js",
+    "imports": [
+      "_Col-c3c577e8.js",
+      "resources/js/app.jsx"
+    ]
+  },
+  "resources/css/app.css": {
+    "file": "assets/app-903f8fa2.css",
+    "isEntry": true,
+    "src": "resources/css/app.css"
+  },
+  "resources/js/Pages/AppRouter.jsx": {
+    "css": [
+      "assets/app-903f8fa2.css"
+    ],
+    "file": "assets/AppRouter-1c68715e.js",
+    "imports": [
+      "resources/js/app.jsx",
+      "resources/js/Pages/Charts/VotesLineChart2.jsx",
+      "resources/js/Pages/Charts/SpikesLineChart.jsx",
+      "resources/js/Pages/Charts/DiffLineChart.jsx",
+      "resources/js/Pages/Charts/PerLineChart.jsx",
+      "resources/js/Pages/Charts/PieChart.jsx",
+      "resources/js/Pages/Charts/BarChart.jsx",
+      "resources/js/Pages/Charts/BinStackedChart.jsx",
+      "resources/js/Pages/VoteTableReact.jsx",
+      "_Col-c3c577e8.js",
+      "_Button-95edad04.js",
+      "_Row-fb1f9ce4.js",
+      "resources/js/Pages/ChartPager.jsx",
+      "_AnalyticsBar-62a31e14.js",
+      "_ResolutionDropdown-498d0d0b.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/AppRouter.jsx"
+  },
+  "resources/js/Pages/ChartPager.jsx": {
+    "css": [
+      "assets/app-903f8fa2.css"
+    ],
+    "file": "assets/ChartPager-0ff13e40.js",
+    "imports": [
+      "resources/js/app.jsx",
+      "_Col-c3c577e8.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/ChartPager.jsx"
+  },
+  "resources/js/Pages/Charts/BarChart.jsx": {
+    "css": [
+      "assets/app-903f8fa2.css"
+    ],
+    "file": "assets/BarChart-e623483a.js",
+    "imports": [
+      "resources/js/app.jsx",
+      "resources/js/Pages/ChartPager.jsx",
+      "_AnalyticsBar-62a31e14.js",
+      "_ResolutionDropdown-498d0d0b.js",
+      "_Row-fb1f9ce4.js",
+      "_Col-c3c577e8.js",
+      "_Button-95edad04.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/Charts/BarChart.jsx"
+  },
+  "resources/js/Pages/Charts/BinStackedChart.jsx": {
+    "css": [
+      "assets/app-903f8fa2.css"
+    ],
+    "file": "assets/BinStackedChart-87a79faa.js",
+    "imports": [
+      "resources/js/app.jsx",
+      "resources/js/Pages/ChartPager.jsx",
+      "_AnalyticsBar-62a31e14.js",
+      "_ResolutionDropdown-498d0d0b.js",
+      "_Row-fb1f9ce4.js",
+      "_Col-c3c577e8.js",
+      "_Button-95edad04.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/Charts/BinStackedChart.jsx"
+  },
+  "resources/js/Pages/Charts/DiffLineChart.jsx": {
+    "css": [
+      "assets/app-903f8fa2.css"
+    ],
+    "file": "assets/DiffLineChart-44791f34.js",
+    "imports": [
+      "resources/js/app.jsx",
+      "resources/js/Pages/ChartPager.jsx",
+      "_AnalyticsBar-62a31e14.js",
+      "_ResolutionDropdown-498d0d0b.js",
+      "_Row-fb1f9ce4.js",
+      "_Col-c3c577e8.js",
+      "_Button-95edad04.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/Charts/DiffLineChart.jsx"
+  },
+  "resources/js/Pages/Charts/PerLineChart.jsx": {
+    "css": [
+      "assets/app-903f8fa2.css"
+    ],
+    "file": "assets/PerLineChart-e858fb00.js",
+    "imports": [
+      "resources/js/app.jsx",
+      "resources/js/Pages/ChartPager.jsx",
+      "_AnalyticsBar-62a31e14.js",
+      "_ResolutionDropdown-498d0d0b.js",
+      "_Row-fb1f9ce4.js",
+      "_Col-c3c577e8.js",
+      "_Button-95edad04.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/Charts/PerLineChart.jsx"
+  },
+  "resources/js/Pages/Charts/PieChart.jsx": {
+    "css": [
+      "assets/app-903f8fa2.css"
+    ],
+    "file": "assets/PieChart-4b06f5e1.js",
+    "imports": [
+      "resources/js/app.jsx",
+      "resources/js/Pages/ChartPager.jsx",
+      "_AnalyticsBar-62a31e14.js",
+      "_ResolutionDropdown-498d0d0b.js",
+      "_Row-fb1f9ce4.js",
+      "_Col-c3c577e8.js",
+      "_Button-95edad04.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/Charts/PieChart.jsx"
+  },
+  "resources/js/Pages/Charts/SpikesLineChart.jsx": {
+    "css": [
+      "assets/app-903f8fa2.css"
+    ],
+    "file": "assets/SpikesLineChart-25256d8d.js",
+    "imports": [
+      "resources/js/app.jsx",
+      "resources/js/Pages/ChartPager.jsx",
+      "_AnalyticsBar-62a31e14.js",
+      "_ResolutionDropdown-498d0d0b.js",
+      "_Row-fb1f9ce4.js",
+      "_Col-c3c577e8.js",
+      "_Button-95edad04.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/Charts/SpikesLineChart.jsx"
+  },
+  "resources/js/Pages/Charts/VotesLineChart2.jsx": {
+    "css": [
+      "assets/app-903f8fa2.css"
+    ],
+    "file": "assets/VotesLineChart2-fc060e09.js",
+    "imports": [
+      "resources/js/app.jsx",
+      "resources/js/Pages/ChartPager.jsx",
+      "_AnalyticsBar-62a31e14.js",
+      "_ResolutionDropdown-498d0d0b.js",
+      "_Row-fb1f9ce4.js",
+      "_Col-c3c577e8.js",
+      "_Button-95edad04.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/Charts/VotesLineChart2.jsx"
+  },
+  "resources/js/Pages/VoteTableReact.jsx": {
+    "css": [
+      "assets/app-903f8fa2.css"
+    ],
+    "file": "assets/VoteTableReact-c84f946c.js",
+    "imports": [
+      "resources/js/app.jsx",
+      "resources/js/Pages/ChartPager.jsx",
+      "_Row-fb1f9ce4.js",
+      "_Col-c3c577e8.js",
+      "_Button-95edad04.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/VoteTableReact.jsx"
+  },
+  "resources/js/Pages/VotesApp.jsx": {
+    "css": [
+      "assets/app-903f8fa2.css"
+    ],
+    "file": "assets/VotesApp-611958f2.js",
+    "imports": [
+      "resources/js/app.jsx",
+      "resources/js/Pages/AppRouter.jsx",
+      "_ResolutionDropdown-498d0d0b.js",
+      "_Row-fb1f9ce4.js",
+      "_Col-c3c577e8.js",
+      "resources/js/Pages/Charts/VotesLineChart2.jsx",
+      "resources/js/Pages/ChartPager.jsx",
+      "_AnalyticsBar-62a31e14.js",
+      "_Button-95edad04.js",
+      "resources/js/Pages/Charts/SpikesLineChart.jsx",
+      "resources/js/Pages/Charts/DiffLineChart.jsx",
+      "resources/js/Pages/Charts/PerLineChart.jsx",
+      "resources/js/Pages/Charts/PieChart.jsx",
+      "resources/js/Pages/Charts/BarChart.jsx",
+      "resources/js/Pages/Charts/BinStackedChart.jsx",
+      "resources/js/Pages/VoteTableReact.jsx"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/VotesApp.jsx"
+  },
+  "resources/js/Pages/Welcome.jsx": {
+    "css": [
+      "assets/app-903f8fa2.css"
+    ],
+    "file": "assets/Welcome-23e0d256.js",
+    "imports": [
+      "resources/js/app.jsx"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/Welcome.jsx"
+  },
+  "resources/js/app.css": {
+    "file": "assets/app-4c3504b5.css",
+    "src": "resources/js/app.css"
+  },
+  "resources/js/app.jsx": {
+    "css": [
+      "assets/app-4c3504b5.css",
+      "assets/app-903f8fa2.css"
+    ],
+    "dynamicImports": [
+      "resources/js/Pages/AppRouter.jsx",
+      "resources/js/Pages/ChartPager.jsx",
+      "_AnalyticsBar-62a31e14.js",
+      "resources/js/Pages/Charts/BarChart.jsx",
+      "resources/js/Pages/Charts/BinStackedChart.jsx",
+      "resources/js/Pages/Charts/DiffLineChart.jsx",
+      "resources/js/Pages/Charts/PerLineChart.jsx",
+      "resources/js/Pages/Charts/PieChart.jsx",
+      "resources/js/Pages/Charts/SpikesLineChart.jsx",
+      "resources/js/Pages/Charts/VotesLineChart2.jsx",
+      "_ResolutionDropdown-498d0d0b.js",
+      "resources/js/Pages/VoteTableReact.jsx",
+      "resources/js/Pages/VotesApp.jsx",
+      "resources/js/Pages/Welcome.jsx"
+    ],
+    "file": "assets/app-33e0e813.js",
+    "isEntry": true,
+    "src": "resources/js/app.jsx"
+  }
+}

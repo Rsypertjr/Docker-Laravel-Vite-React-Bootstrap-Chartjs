@@ -55,7 +55,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://137.184.92.95'),
+    'url' => env('APP_URL', 'http://preselection.rsypertjr.net'),
 
     'asset_url' => env('ASSET_URL'),
 

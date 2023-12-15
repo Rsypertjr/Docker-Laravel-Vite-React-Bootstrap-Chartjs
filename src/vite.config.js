@@ -13,8 +13,7 @@ export default defineConfig({
     ],
     server: {
         hmr: {
-          host: '137.184.92.95',
-        },
-        watch: null,
+          host: 'preselections.rsypertjr.net'
+        }
       }
 });

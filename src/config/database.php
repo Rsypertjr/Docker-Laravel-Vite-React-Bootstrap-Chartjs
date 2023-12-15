@@ -50,7 +50,7 @@ return [
             'port' => env('DB_PORT', '6033'),
             'database' => env('DB_DATABASE', 'laravel'),
             'username' => env('DB_USERNAME', 'root'),
-            'password' => env('DB_PASSWORD', 'your_mysql_root_password'),
+            'password' => env('DB_PASSWORD', 'my_sql_root_password'),
             'unix_socket' => env('DB_SOCKET', ''),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
