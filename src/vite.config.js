@@ -12,8 +12,10 @@ export default defineConfig({
         react(),
     ],
     server: {
+        host: true,
+        https: true,
         hmr: {
           host: 'preselections.rsypertjr.net'
         }
-      }
+      },
 });

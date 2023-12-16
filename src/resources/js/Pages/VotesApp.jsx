@@ -162,7 +162,7 @@ export default class VotesApp extends React.Component {
     const token = document.querySelector('head').querySelector('meta[name="csrf-token"]').content;
     console.log("Token",token);
     console.log("ChartData before sending to Atlas:", chartData);
-    await fetch('localhost:8000/api/create_election_data_mongo/', {
+    await fetch('https://preselections.rsypertjr.net/api/create_election_data_mongo/', {
       method: 'POST',
       body: JSON.stringify({
           guid : currentState.toString(),
@@ -336,7 +336,7 @@ async votesFromServer(state){
   }
 
 async checkForVotes(state){
-    const result = await fetch("http://preselections.rsypertjr.net/api/check_election_data_mongo/" + state);
+    const result = await fetch("https://preselections.rsypertjr.net/api/check_election_data_mongo/" + state);
     console.log('Result', result);
     
     return result;
