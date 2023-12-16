@@ -3,46 +3,46 @@
     "file": "assets/ResolutionDropdown-9d7de7aa.css",
     "src": "ResolutionDropdown.css"
   },
-  "_AnalyticsBar-7101e15f.js": {
-    "file": "assets/AnalyticsBar-7101e15f.js",
+  "_AnalyticsBar-3b336f4d.js": {
+    "file": "assets/AnalyticsBar-3b336f4d.js",
     "imports": [
       "resources/js/app.jsx",
-      "_ResolutionDropdown-2d80e47b.js",
-      "_Row-50e19a91.js",
-      "_Button-24cd0bf7.js",
-      "_Col-2e73e1de.js"
+      "_ResolutionDropdown-cd4208df.js",
+      "_Row-f19154cc.js",
+      "_Button-b5b07935.js",
+      "_Col-d94a558c.js"
     ],
     "isDynamicEntry": true
   },
-  "_Button-24cd0bf7.js": {
-    "file": "assets/Button-24cd0bf7.js",
+  "_Button-b5b07935.js": {
+    "file": "assets/Button-b5b07935.js",
     "imports": [
-      "_Col-2e73e1de.js",
+      "_Col-d94a558c.js",
       "resources/js/app.jsx"
     ]
   },
-  "_Col-2e73e1de.js": {
-    "file": "assets/Col-2e73e1de.js",
+  "_Col-d94a558c.js": {
+    "file": "assets/Col-d94a558c.js",
     "imports": [
       "resources/js/app.jsx"
     ]
   },
-  "_ResolutionDropdown-2d80e47b.js": {
+  "_ResolutionDropdown-cd4208df.js": {
     "css": [
       "assets/ResolutionDropdown-9d7de7aa.css"
     ],
-    "file": "assets/ResolutionDropdown-2d80e47b.js",
+    "file": "assets/ResolutionDropdown-cd4208df.js",
     "imports": [
       "resources/js/app.jsx",
-      "_Col-2e73e1de.js",
-      "_Row-50e19a91.js"
+      "_Col-d94a558c.js",
+      "_Row-f19154cc.js"
     ],
     "isDynamicEntry": true
   },
-  "_Row-50e19a91.js": {
-    "file": "assets/Row-50e19a91.js",
+  "_Row-f19154cc.js": {
+    "file": "assets/Row-f19154cc.js",
     "imports": [
-      "_Col-2e73e1de.js",
+      "_Col-d94a558c.js",
       "resources/js/app.jsx"
     ]
   },
@@ -55,7 +55,7 @@
     "css": [
       "assets/app-903f8fa2.css"
     ],
-    "file": "assets/AppRouter-3b71e16d.js",
+    "file": "assets/AppRouter-da805edb.js",
     "imports": [
       "resources/js/app.jsx",
       "resources/js/Pages/Charts/VotesLineChart2.jsx",
@@ -66,91 +66,91 @@
       "resources/js/Pages/Charts/BarChart.jsx",
       "resources/js/Pages/Charts/BinStackedChart.jsx",
       "resources/js/Pages/VoteTableReact.jsx",
-      "_Col-2e73e1de.js",
-      "_Button-24cd0bf7.js",
-      "_Row-50e19a91.js",
+      "_Col-d94a558c.js",
+      "_Button-b5b07935.js",
+      "_Row-f19154cc.js",
       "resources/js/Pages/ChartPager.jsx",
-      "_AnalyticsBar-7101e15f.js",
-      "_ResolutionDropdown-2d80e47b.js"
+      "_AnalyticsBar-3b336f4d.js",
+      "_ResolutionDropdown-cd4208df.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/AppRouter.jsx"
   },
   "resources/js/Pages/ChartPager.jsx": {
-    "file": "assets/ChartPager-13df2cce.js",
+    "file": "assets/ChartPager-e6cfdd40.js",
     "imports": [
       "resources/js/app.jsx",
-      "_Col-2e73e1de.js"
+      "_Col-d94a558c.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/ChartPager.jsx"
   },
   "resources/js/Pages/Charts/BarChart.jsx": {
-    "file": "assets/BarChart-83998056.js",
+    "file": "assets/BarChart-3289a00c.js",
     "imports": [
       "resources/js/app.jsx",
       "resources/js/Pages/ChartPager.jsx",
-      "_AnalyticsBar-7101e15f.js",
-      "_ResolutionDropdown-2d80e47b.js",
-      "_Row-50e19a91.js",
-      "_Col-2e73e1de.js",
-      "_Button-24cd0bf7.js"
+      "_AnalyticsBar-3b336f4d.js",
+      "_ResolutionDropdown-cd4208df.js",
+      "_Row-f19154cc.js",
+      "_Col-d94a558c.js",
+      "_Button-b5b07935.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Charts/BarChart.jsx"
   },
   "resources/js/Pages/Charts/BinStackedChart.jsx": {
-    "file": "assets/BinStackedChart-644a78bd.js",
+    "file": "assets/BinStackedChart-f14fc244.js",
     "imports": [
       "resources/js/app.jsx",
       "resources/js/Pages/ChartPager.jsx",
-      "_AnalyticsBar-7101e15f.js",
-      "_ResolutionDropdown-2d80e47b.js",
-      "_Row-50e19a91.js",
-      "_Col-2e73e1de.js",
-      "_Button-24cd0bf7.js"
+      "_AnalyticsBar-3b336f4d.js",
+      "_ResolutionDropdown-cd4208df.js",
+      "_Row-f19154cc.js",
+      "_Col-d94a558c.js",
+      "_Button-b5b07935.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Charts/BinStackedChart.jsx"
   },
   "resources/js/Pages/Charts/DiffLineChart.jsx": {
-    "file": "assets/DiffLineChart-c7f9cd14.js",
+    "file": "assets/DiffLineChart-fde9289d.js",
     "imports": [
       "resources/js/app.jsx",
       "resources/js/Pages/ChartPager.jsx",
-      "_AnalyticsBar-7101e15f.js",
-      "_ResolutionDropdown-2d80e47b.js",
-      "_Row-50e19a91.js",
-      "_Col-2e73e1de.js",
-      "_Button-24cd0bf7.js"
+      "_AnalyticsBar-3b336f4d.js",
+      "_ResolutionDropdown-cd4208df.js",
+      "_Row-f19154cc.js",
+      "_Col-d94a558c.js",
+      "_Button-b5b07935.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Charts/DiffLineChart.jsx"
   },
   "resources/js/Pages/Charts/PerLineChart.jsx": {
-    "file": "assets/PerLineChart-c809c1cb.js",
+    "file": "assets/PerLineChart-8b8e3038.js",
     "imports": [
       "resources/js/app.jsx",
       "resources/js/Pages/ChartPager.jsx",
-      "_AnalyticsBar-7101e15f.js",
-      "_ResolutionDropdown-2d80e47b.js",
-      "_Row-50e19a91.js",
-      "_Col-2e73e1de.js",
-      "_Button-24cd0bf7.js"
+      "_AnalyticsBar-3b336f4d.js",
+      "_ResolutionDropdown-cd4208df.js",
+      "_Row-f19154cc.js",
+      "_Col-d94a558c.js",
+      "_Button-b5b07935.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Charts/PerLineChart.jsx"
   },
   "resources/js/Pages/Charts/PieChart.jsx": {
-    "file": "assets/PieChart-75e62282.js",
+    "file": "assets/PieChart-857d4fb9.js",
     "imports": [
       "resources/js/app.jsx",
       "resources/js/Pages/ChartPager.jsx",
-      "_AnalyticsBar-7101e15f.js",
-      "_ResolutionDropdown-2d80e47b.js",
-      "_Row-50e19a91.js",
-      "_Col-2e73e1de.js",
-      "_Button-24cd0bf7.js"
+      "_AnalyticsBar-3b336f4d.js",
+      "_ResolutionDropdown-cd4208df.js",
+      "_Row-f19154cc.js",
+      "_Col-d94a558c.js",
+      "_Button-b5b07935.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Charts/PieChart.jsx"
@@ -159,41 +159,41 @@
     "css": [
       "assets/app-903f8fa2.css"
     ],
-    "file": "assets/SpikesLineChart-92717048.js",
+    "file": "assets/SpikesLineChart-bed82b1c.js",
     "imports": [
       "resources/js/app.jsx",
       "resources/js/Pages/ChartPager.jsx",
-      "_AnalyticsBar-7101e15f.js",
-      "_ResolutionDropdown-2d80e47b.js",
-      "_Row-50e19a91.js",
-      "_Col-2e73e1de.js",
-      "_Button-24cd0bf7.js"
+      "_AnalyticsBar-3b336f4d.js",
+      "_ResolutionDropdown-cd4208df.js",
+      "_Row-f19154cc.js",
+      "_Col-d94a558c.js",
+      "_Button-b5b07935.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Charts/SpikesLineChart.jsx"
   },
   "resources/js/Pages/Charts/VotesLineChart2.jsx": {
-    "file": "assets/VotesLineChart2-53ea3a6d.js",
+    "file": "assets/VotesLineChart2-43c4a82e.js",
     "imports": [
       "resources/js/app.jsx",
       "resources/js/Pages/ChartPager.jsx",
-      "_AnalyticsBar-7101e15f.js",
-      "_ResolutionDropdown-2d80e47b.js",
-      "_Row-50e19a91.js",
-      "_Col-2e73e1de.js",
-      "_Button-24cd0bf7.js"
+      "_AnalyticsBar-3b336f4d.js",
+      "_ResolutionDropdown-cd4208df.js",
+      "_Row-f19154cc.js",
+      "_Col-d94a558c.js",
+      "_Button-b5b07935.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Charts/VotesLineChart2.jsx"
   },
   "resources/js/Pages/VoteTableReact.jsx": {
-    "file": "assets/VoteTableReact-dd9bddff.js",
+    "file": "assets/VoteTableReact-1c79789d.js",
     "imports": [
       "resources/js/app.jsx",
       "resources/js/Pages/ChartPager.jsx",
-      "_Row-50e19a91.js",
-      "_Col-2e73e1de.js",
-      "_Button-24cd0bf7.js"
+      "_Row-f19154cc.js",
+      "_Col-d94a558c.js",
+      "_Button-b5b07935.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/VoteTableReact.jsx"
@@ -202,17 +202,17 @@
     "css": [
       "assets/app-903f8fa2.css"
     ],
-    "file": "assets/VotesApp-cbc64515.js",
+    "file": "assets/VotesApp-3ea5ad5b.js",
     "imports": [
       "resources/js/app.jsx",
       "resources/js/Pages/AppRouter.jsx",
-      "_ResolutionDropdown-2d80e47b.js",
-      "_Row-50e19a91.js",
-      "_Col-2e73e1de.js",
+      "_ResolutionDropdown-cd4208df.js",
+      "_Row-f19154cc.js",
+      "_Col-d94a558c.js",
       "resources/js/Pages/Charts/VotesLineChart2.jsx",
       "resources/js/Pages/ChartPager.jsx",
-      "_AnalyticsBar-7101e15f.js",
-      "_Button-24cd0bf7.js",
+      "_AnalyticsBar-3b336f4d.js",
+      "_Button-b5b07935.js",
       "resources/js/Pages/Charts/SpikesLineChart.jsx",
       "resources/js/Pages/Charts/DiffLineChart.jsx",
       "resources/js/Pages/Charts/PerLineChart.jsx",
@@ -225,7 +225,7 @@
     "src": "resources/js/Pages/VotesApp.jsx"
   },
   "resources/js/Pages/Welcome.jsx": {
-    "file": "assets/Welcome-e695639b.js",
+    "file": "assets/Welcome-cc3ea6fd.js",
     "imports": [
       "resources/js/app.jsx"
     ],
@@ -236,7 +236,7 @@
     "dynamicImports": [
       "resources/js/Pages/AppRouter.jsx",
       "resources/js/Pages/ChartPager.jsx",
-      "_AnalyticsBar-7101e15f.js",
+      "_AnalyticsBar-3b336f4d.js",
       "resources/js/Pages/Charts/BarChart.jsx",
       "resources/js/Pages/Charts/BinStackedChart.jsx",
       "resources/js/Pages/Charts/DiffLineChart.jsx",
@@ -244,12 +244,12 @@
       "resources/js/Pages/Charts/PieChart.jsx",
       "resources/js/Pages/Charts/SpikesLineChart.jsx",
       "resources/js/Pages/Charts/VotesLineChart2.jsx",
-      "_ResolutionDropdown-2d80e47b.js",
+      "_ResolutionDropdown-cd4208df.js",
       "resources/js/Pages/VoteTableReact.jsx",
       "resources/js/Pages/VotesApp.jsx",
       "resources/js/Pages/Welcome.jsx"
     ],
-    "file": "assets/app-d3013fbc.js",
+    "file": "assets/app-c0cd6908.js",
     "isEntry": true,
     "src": "resources/js/app.jsx"
   }

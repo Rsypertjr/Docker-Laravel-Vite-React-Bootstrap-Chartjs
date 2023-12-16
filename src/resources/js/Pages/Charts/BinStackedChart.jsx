@@ -94,98 +94,91 @@ export default function BinStackedChart(props) {
         
             
         const barChart = new Chart(ctx, {
-          type: type,
-          data: {
-              labels: labels,
-              datasets: datasets
-          },
-          options: {     
+            type: type,
+            data: {
+                labels: labels,
+                datasets: datasets,                
+            },
+            options: {     
             // All of these (default) events trigger a hover and are passed to all plugins,
-          // unless limited at plugin options
-          events: ['mousemove', 'mouseout', 'click', 'touchstart', 'touchmove'],
-          plugins: {
-              tooltip: {
-                  // Tooltip will only receive click events
-                  events: ['click'],
-                  position:'average',
-                  enabled:true,
-                  interaction: {
-                      mode:'index',
-                      axis:'xy',
-                      intersect:'false'
-                  },
-                  titleFont: {
-                      size: 35
-                  },
-                  bodyFont: {
-                      size: 30
-                  },
-                  footerFont: {
-                      size: 30 // there is no footer by default
-                  }
+            // unless limited at plugin options
+            events: ['mousemove', 'mouseout', 'click', 'touchstart', 'touchmove'],
+            plugins: {
+                tooltip: {
+                    // Tooltip will only receive click events
+                    events: ['click'],
+                    position:'average',
+                    enabled:true,
+                    caretSize: 15,
+                    interaction: {
+                        mode:'index',
+                        axis:'xy',
+                        intersect:'false'
+                    },
+                    titleFont: {
+                        size: 35
+                    },
+                    bodyFont: {
+                        size: 30
+                    },
+                    footerFont: {
+                        size: 30 // there is no footer by default
+                    }
 
-              
-              }
-          },
-          onHover: (e) => {
-              const canvasPosition = getRelativePosition(e);
-  
-              // Substitute the appropriate scale IDs
-              const dataX = e.chart.scales.x.getValueForPixel(canvasPosition.x);
-              const dataY = e.chart.scales.y.getValueForPixel(canvasPosition.y);
-              console.log("Data X",dataX);
-              console.log("Data Y",dataY)
-              console.log("Event", e);
-              console.log("Active Elements: ", e.chart.tooltip.getActiveElements());
-           
-              let chartWidth = e.chart.chartArea.right - e.chart.chartArea.left;
-              console.log("Chart start: ",e.chart.chartArea.left);
-              console.log("Chart Width: ",chartWidth);
-              console.log("Chart end: ",e.chart.chartArea.right);
-              let chartRight = parseFloat(e.chart.chartArea.right);
-              let chartLeft = parseFloat(e.chart.chartArea.left);
-              let elementWidth = (chartRight - chartLeft)/11;
-              console.log("Element width: ",elementWidth);
-              console.log("Click X position: ", e.x);
-              let column_index = 0;
-              let selected_index = 0;
-              let i = parseFloat(e.chart.chartArea.left);
+                
+                }
+            },
+            onHover: (e) => {
+                const canvasPosition = getRelativePosition(e);
+    
+                // Substitute the appropriate scale IDs
+                const dataX = e.chart.scales.x.getValueForPixel(canvasPosition.x);
+                const dataY = e.chart.scales.y.getValueForPixel(canvasPosition.y);
+                console.log("Data X",dataX);
+                console.log("Data Y",dataY)
+                console.log("Event", e);
+                console.log("Active Elements: ", e.chart.tooltip.getActiveElements());     
+            
+                let chartRight = Math.ceil(e.chart.chartArea.right);
+                let chartLeft = Math.floor(e.chart.chartArea.left);
+                let chartWidth = chartRight - chartLeft;
+                console.log("Chart start: ",chartLeft);
+                console.log("Chart Width: ",chartWidth);
+                console.log("Chart end: ",chartRight); 
+                let elementWidth = Math.floor((chartRight - chartLeft)/e.chart.data.datasets[0].data.length );
+                console.log("Element width: ",elementWidth);
+                console.log("Click X position: ", e.x);
+                let column_index = 0;
+                let selected_index = 0;
+                let last_index;
+                let i = parseFloat(e.chart.chartArea.left);
+                let fudgeFac = 1.2;
+            
+                selected_index = Math.ceil((e.x-chartLeft)/(elementWidth)*fudgeFac);
+                console.log("Floored Selected Index: ", selected_index);
+                //alert(selected_index);
+                let activeElArray = [];
+                let element;
+            
+                e.chart.data.datasets.map((d,index) => {
+                    element = {
+                        datasetIndex:index,
+                        index: selected_index - 1
+                    };
+                    activeElArray.push(element);
+                });
 
-
-              while(i <= e.chart.chartArea.right){                          
-
-                     if( i <= e.x && e.x < (i+ elementWidth) ){
-                          selected_index++;
-                          break;
-                     }
-                    
-                          i += (elementWidth);
-                          selected_index++; 
-                   
-              }
-              console.log("Selected Index: ", selected_index);
-              //alert(selected_index);
-              let activeElArray = [];
-              let element;
-              e.chart.data.datasets.map((d,index) => {
-                  element = {
-                      datasetIndex:index,
-                      index: selected_index - 1
-                  };
-                  activeElArray.push(element);
-              });
-
-              console.log("Active Elements Array: ", activeElArray);
-              e.chart.tooltip.setActiveElements(
+                console.log("Active Elements Array: ", activeElArray);
+                e.chart.tooltip.setActiveElements(
                 activeElArray,
                 {
-                  x: dataX,
-                  y: dataY,
+                    x: dataX,
+                    y: dataY,
                 });
-              e.chart.update();               
-          }
-      }
-      });
+                e.chart.update();               
+                }
+            }
+        });
 
       return () => {
         barChart.destroy()

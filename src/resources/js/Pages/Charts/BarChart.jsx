@@ -90,7 +90,7 @@ export default function BarChart(props) {
                 datasets: datasets,                
             },
             options: {     
-              // All of these (default) events trigger a hover and are passed to all plugins,
+            // All of these (default) events trigger a hover and are passed to all plugins,
             // unless limited at plugin options
             events: ['mousemove', 'mouseout', 'click', 'touchstart', 'touchmove'],
             plugins: {
@@ -99,6 +99,7 @@ export default function BarChart(props) {
                     events: ['click'],
                     position:'average',
                     enabled:true,
+                    caretSize: 15,
                     interaction: {
                         mode:'index',
                         axis:'xy',
@@ -126,37 +127,29 @@ export default function BarChart(props) {
                 console.log("Data X",dataX);
                 console.log("Data Y",dataY)
                 console.log("Event", e);
-                console.log("Active Elements: ", e.chart.tooltip.getActiveElements());
-             
-                let chartWidth = e.chart.chartArea.right - e.chart.chartArea.left;
-                console.log("Chart start: ",e.chart.chartArea.left);
+                console.log("Active Elements: ", e.chart.tooltip.getActiveElements());     
+            
+                let chartRight = Math.ceil(e.chart.chartArea.right);
+                let chartLeft = Math.floor(e.chart.chartArea.left);
+                let chartWidth = chartRight - chartLeft;
+                console.log("Chart start: ",chartLeft);
                 console.log("Chart Width: ",chartWidth);
-                console.log("Chart end: ",e.chart.chartArea.right);
-                let chartRight = parseFloat(e.chart.chartArea.right);
-                let chartLeft = parseFloat(e.chart.chartArea.left);
-                let elementWidth = (chartRight - chartLeft)/11;
+                console.log("Chart end: ",chartRight); 
+                let elementWidth = Math.floor((chartRight - chartLeft)/e.chart.data.datasets[0].data.length );
                 console.log("Element width: ",elementWidth);
                 console.log("Click X position: ", e.x);
                 let column_index = 0;
                 let selected_index = 0;
+                let last_index;
                 let i = parseFloat(e.chart.chartArea.left);
-
-
-                while(i <= e.chart.chartArea.right){                          
-
-                       if( i <= e.x && e.x < (i+ elementWidth) ){
-                            selected_index++;
-                            break;
-                       }
-                      
-                            i += (elementWidth);
-                            selected_index++; 
-                     
-                }
-                console.log("Selected Index: ", selected_index);
+                let fudgeFac = 1.2;
+            
+                selected_index = Math.ceil((e.x-chartLeft)/(elementWidth)*fudgeFac);
+                console.log("Floored Selected Index: ", selected_index);
                 //alert(selected_index);
                 let activeElArray = [];
                 let element;
+            
                 e.chart.data.datasets.map((d,index) => {
                     element = {
                         datasetIndex:index,
@@ -167,15 +160,16 @@ export default function BarChart(props) {
 
                 console.log("Active Elements Array: ", activeElArray);
                 e.chart.tooltip.setActiveElements(
-                  activeElArray,
-                  {
+                activeElArray,
+                {
                     x: dataX,
                     y: dataY,
-                  });
+                });
                 e.chart.update();               
             }
         }
         });
+
 
         return () => {
             barChart.destroy()

@@ -150,62 +150,64 @@ export default function PieChart(props) {
             }
           };
     
-            const pieChart = new Chart(ctx, {
-                    type: type,
-                    data: {
-                        labels: data.labels,
-                        datasets: [data.datasets]
-                    },
-                    options: {     
-                      // All of these (default) events trigger a hover and are passed to all plugins,
-                      // unless limited at plugin options
-                      responsive: false,
-                      interaction: {
-                        mode:'pointSelected',
-                        intersect:true
-                      },
-                     
-                      onHover(event, el, chart) {
-                        const elements = chart.getElementsAtEventForMode(event, 'point', {intersect: true}, true);
-                        if (elements.length) {
-                          selected = elements[0];
-                        }
-                      },
-                      plugins: {
-                       
-                        titleFont: {
-                            size: 50
-                        },
-                        bodyFont: {
-                            size: 40
-                        },
-                        footerFont: {
-                            size: 40 // there is no footer by default
-                        },
-                        tooltip: {
-                          titleFont: {
-                              size: 20
-                          },
-                          bodyFont: {
-                              size: 20
-                          },
-                          callbacks: {
-                            title(items) {
-                              return items.map(e => e.label).join(' and ');
-                            },
-                            label(item) {
-                              return item.label +': '+item.formattedValue;
-                            }
-                          }
-                        }
-                      }
-                    
+          const pieChart = new Chart(ctx, {
+            type: type,
+            data: {
+                labels: data.labels,
+                datasets: [data.datasets]
+            },
+            options: {     
+              // All of these (default) events trigger a hover and are passed to all plugins,
+              // unless limited at plugin options
+              responsive: false,
+              interaction: {
+                mode:'pointSelected',
+                intersect:true
+              },
+              
+              onHover(event, el, chart) {
+                const elements = chart.getElementsAtEventForMode(event, 'point', {intersect: true}, true);
+                if (elements.length) {
+                  selected = elements[0];
+                }
+              },
+              plugins: {
+                
+                titleFont: {
+                    size: 50
+                },
+                bodyFont: {
+                    size: 40
+                },
+                footerFont: {
+                    size: 40 // there is no footer by default
+                },
+                tooltip: {
+                  caretSize: 15,
+                  titleFont: {
+                      size: 20
                   },
-                  plugins: [plugin]
-    
-                });
-    
-    
+                  bodyFont: {
+                      size: 20
+                  },
+                  callbacks: {
+                    title(items) {
+                      return items.map(e => e.label).join(' and ');
+                    },
+                    label(item) {
+                      return item.label +': '+item.formattedValue;
+                    }
+                  }
+                }
+              }
+            
+          },
+          plugins: [plugin]
+
+        });
+
+
+
 
 
 
