@@ -708,7 +708,8 @@ async checkForVotes(state){
         theState: e.value,
         theVotes:this.state.theVotes,
         pageNo: 1,
-        thePageSetNumber:1
+        thePageSetNumber:1,
+        analyticsIsOn:false
       });
 
     
