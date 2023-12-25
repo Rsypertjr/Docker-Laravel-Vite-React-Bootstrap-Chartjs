@@ -277,12 +277,13 @@ nav.navbar {
     text-align: center;
 }
 
-  /*
-  .col-sm-12:nth-child(2n+1) {
-      background: green;
-  }
+ 
+.tooltip-arrow {
+    display: none !important;
+}
 
-  .col-sm-12:nth-child(2n+2) {
-      background: black;
+.tooltip .tooltip-inner {
+    width: 40em;
+    font-size:2em;
+    white-space: normal;
   }
-  */

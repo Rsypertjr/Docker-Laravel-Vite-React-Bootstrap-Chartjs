@@ -256,7 +256,8 @@ export default class VotesApp extends React.Component {
                         thePagingArray: pagingArray,
                         thePageSize: pageSize,
                         selectedState: currentState,
-                        defaultOption: this.state.theState
+                        defaultOption: this.state.theState,
+                        analyticsIsOn:false
                     });
     
     
@@ -314,7 +315,8 @@ export default class VotesApp extends React.Component {
                 originalChartData: json[0],
                 selectedState: currentState,
                 noOfChartPages : json[0].numPages,
-                theChartArray: json[0].chartArray
+                theChartArray: json[0].chartArray,
+                analyticsIsOn:false
             });
             setTimeout(() => {
                 $('#top-header').removeClass('turntopheader');
