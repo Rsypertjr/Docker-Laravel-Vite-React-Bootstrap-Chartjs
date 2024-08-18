@@ -85,6 +85,7 @@ export default class VotesApp extends React.Component {
 
 
     let state = this.state.defaultOption;
+    
     this.getStateData(state);
   }
 

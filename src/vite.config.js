@@ -1,21 +1,20 @@
-import { defineConfig } from 'vite';
+import { defineConfig } from "vite";
+import react from '@vitejs/plugin-react';
 import laravel from 'laravel-vite-plugin';
-import react from "@vitejs/plugin-react";
-import path from 'path';
+
 
 export default defineConfig({
     plugins: [
         laravel({
-            input: ['resources/css/app.css', 'resources/js/app.jsx'],
+            input: [
+               'resources/css/app.css', 'resources/js/app.jsx'
+            ],
             refresh: true,
         }),
-        react(),
+        react()
     ],
     server: {
-        host: true,
-        https: true,
-        hmr: {
-          host: 'preselections.rsypertjr.net'
-        }
-      },
+        hmr: { host: 'localhost' },
+        https: false
+    },
 });

@@ -54,9 +54,9 @@ RUN echo "fs.inotify.max_user_watches=655350" >> /etc/sysctl.conf
 RUN apk update && \
     apk add bash build-base gcc wget git autoconf libmcrypt-dev libzip-dev zip \
     g++ make openssl-dev \
-    php81-openssl \
-    php81-pdo_mysql \
-    php81-mbstring
+    php-openssl \
+    php-pdo_mysql \
+    php-mbstring
 
 RUN pecl install mcrypt && \
     docker-php-ext-enable mcrypt

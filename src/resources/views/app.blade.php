@@ -11,7 +11,7 @@
             {{ config('app.name', 'Laravel') }}
         </title>
         <!-- Scripts -->
-        @routes
+        @routes()
         @viteReactRefresh
         @vite(['resources/css/app.css', 'resources/js/app.jsx'])
         @inertiaHead

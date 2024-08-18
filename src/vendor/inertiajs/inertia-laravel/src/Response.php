@@ -4,6 +4,8 @@ namespace Inertia;
 
 use Closure;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
+use Inertia\Support\Header;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\App;
@@ -28,7 +30,7 @@ class Response implements Responsable
     /**
      * @param array|Arrayable $props
      */
-    public function __construct(string $component, $props, string $rootView = 'app', string $version = '')
+    public function __construct(string $component, array $props, string $rootView = 'app', string $version = '')
     {
         $this->component = $component;
         $this->props = $props instanceof Arrayable ? $props->toArray() : $props;
@@ -38,7 +40,6 @@ class Response implements Responsable
 
     /**
      * @param string|array $key
-     * @param mixed        $value
      *
      * @return $this
      */
@@ -55,7 +56,6 @@ class Response implements Responsable
 
     /**
      * @param string|array $key
-     * @param mixed        $value
      *
      * @return $this
      */
@@ -86,34 +86,69 @@ class Response implements Responsable
      */
     public function toResponse($request)
     {
-        $only = array_filter(explode(',', $request->header('X-Inertia-Partial-Data', '')));
-
-        $props = ($only && $request->header('X-Inertia-Partial-Component') === $this->component)
-            ? Arr::only($this->props, $only)
-            : array_filter($this->props, static function ($prop) {
-                return ! ($prop instanceof LazyProp);
-            });
-
-        $props = $this->resolvePropertyInstances($props, $request);
+        $props = $this->resolvePartialProps($request, $this->props);
+        $props = $this->resolveAlwaysProps($props);
+        $props = $this->evaluateProps($props, $request);
 
         $page = [
             'component' => $this->component,
             'props' => $props,
-            'url' => $request->getBaseUrl().$request->getRequestUri(),
+            'url' => Str::start(Str::after($request->fullUrl(), $request->getSchemeAndHttpHost()), '/'),
             'version' => $this->version,
         ];
 
-        if ($request->header('X-Inertia')) {
-            return new JsonResponse($page, 200, ['X-Inertia' => 'true']);
+        if ($request->header(Header::INERTIA)) {
+            return new JsonResponse($page, 200, [Header::INERTIA => 'true']);
         }
 
         return ResponseFactory::view($this->rootView, $this->viewData + ['page' => $page]);
     }
 
     /**
+     * Resolve the `only` and `except` partial request props.
+     */
+    public function resolvePartialProps(Request $request, array $props): array
+    {
+        $isPartial = $request->header(Header::PARTIAL_COMPONENT) === $this->component;
+
+        if (! $isPartial) {
+            return array_filter($props, static function ($prop) {
+                return ! ($prop instanceof LazyProp);
+            });
+        }
+
+        $only = array_filter(explode(',', $request->header(Header::PARTIAL_ONLY, '')));
+        $except = array_filter(explode(',', $request->header(Header::PARTIAL_EXCEPT, '')));
+
+        $props = $only ? Arr::only($props, $only) : $props;
+
+        if ($except) {
+            Arr::forget($props, $except);
+        }
+
+        return $props;
+    }
+
+    /**
+     * Resolve `always` properties that should always be included on all visits,
+     * regardless of "only" or "except" requests.
+     */
+    public function resolveAlwaysProps(array $props): array
+    {
+        $always = array_filter($this->props, static function ($prop) {
+            return $prop instanceof AlwaysProp;
+        });
+
+        return array_merge(
+            $always,
+            $props
+        );
+    }
+
+    /**
      * Resolve all necessary class instances in the given props.
      */
-    public function resolvePropertyInstances(array $props, Request $request, bool $unpackDotProps = true): array
+    public function evaluateProps(array $props, Request $request, bool $unpackDotProps = true): array
     {
         foreach ($props as $key => $value) {
             if ($value instanceof Closure) {
@@ -121,6 +156,10 @@ class Response implements Responsable
             }
 
             if ($value instanceof LazyProp) {
+                $value = App::call($value);
+            }
+
+            if ($value instanceof AlwaysProp) {
                 $value = App::call($value);
             }
 
@@ -137,7 +176,7 @@ class Response implements Responsable
             }
 
             if (is_array($value)) {
-                $value = $this->resolvePropertyInstances($value, $request, false);
+                $value = $this->evaluateProps($value, $request, false);
             }
 
             if ($unpackDotProps && str_contains($key, '.')) {

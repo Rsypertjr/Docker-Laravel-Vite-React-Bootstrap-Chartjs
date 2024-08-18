@@ -56,8 +56,8 @@ services:
     tty: true
     ports:
       - "6033:3306"
-    #volumes:
-     # - ./docker/mysql:/var/lib/mysql  
+    volumes:
+      - ./docker/mysql:/var/lib/mysql  
     environment:
       MYSQL_DATABASE: laravel
       MYSQL_ROOT_PASSWORD: your_mysql_root_password
@@ -200,7 +200,7 @@ services:
       - 3000:3000
       - 3001:3001 
 
-    #working_dir: /var/www/html 
+    working_dir: /var/www/html 
     entrypoint: ['npm'] 
     networks: 
       - laravel
@@ -220,4 +220,3 @@ services:
       - 8888:80 
     networks: 
       - laravel
-
