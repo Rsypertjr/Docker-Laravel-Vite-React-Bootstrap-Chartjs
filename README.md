@@ -1,7 +1,7 @@
 
-># Vote Parsing Application
->- This app parses available voting data of the 2020 Presidential election.  It use a Laravel backend that includes an API for using ***[Atlas Cloud MongoDB](https://account.mongodb.com/account/login?signedOut=true)*** for storing voting data after initial retrieval.
->- It shows a table and different analytical charts and features.  The charts are arrived at using ***[ChartJS](https://www.chartjs.org/)*** software package within React components.
+># ***[Vote Parsing Application](https://preselections.rsypertjr.net/)***
+>- This app parses available voting data of the 2020 Presidential election.  It use a Laravel backend that includes an API for using ***[Atlas Cloud MongoDB](https://account.mongodb.com/account/login?signedOut=true)*** for storing ***Parsed-Voting-Data*** after initial retrieval of raw voting data.  The ***Parsed-Voting-Data*** is available for future access and retrieval thru API for analytical processing in the App.
+>- The App presents a ***Votes-Table*** and different ***Analytical Charts and Features***.  The charts are arrived at using ***[ChartJS](https://www.chartjs.org/)*** software package within React components.
 >- This app also uses ***[Vite](https://vitejs.dev/)*** and ***[InertiaJS](https://inertiajs.com/)*** technologies work together to allow routing to ***[React](https://react.dev/)*** Components through use of a PHP/Blade entry page and a React (.jsx) entry page
 
 
