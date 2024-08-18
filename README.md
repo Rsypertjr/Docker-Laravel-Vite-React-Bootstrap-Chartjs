@@ -1,10 +1,4 @@
-<style>
-    ctitle {
-        color:green;
-        font-weight:700;
-        font-size:20px;
-    }
-</style>
+
 ># Vote Parsing Application
 >- This app parses available voting data of the 2020 Presidential election.  It use a Laravel backend that includes an API for using ***[Atlas Cloud MongoDB](https://account.mongodb.com/account/login?signedOut=true)*** for storing voting data after initial retrieval.
 >- It shows a table and different analytical charts and features.  The charts are arrived at using ***[ChartJS](https://www.chartjs.org/)*** software package within React components.
@@ -63,10 +57,10 @@
 >> - which removes a container after running it.
 
 
-> ## <ctitle>***composer container/service***</ctitle>
+> ## ***composer container/service***
 >> - The **Composer** software package is a dependency manager for PHP, 
->> - and the <ctitle>***composer container/service***</ctitle> defined in ***[docker-compose.yml](https://github.com/Rsypertjr/Docker-Laravel-Vite-React-Bootstrap-Chartjs/blob/remote-docker-laravel-vite-votes/docker-compose.yml)*** is used for running Composer commands.
->> - These are <ctitle>***composer container/service***</ctitle> commands:
+>> - and the ***composer container/service*** defined in ***[docker-compose.yml](https://github.com/Rsypertjr/Docker-Laravel-Vite-React-Bootstrap-Chartjs/blob/remote-docker-laravel-vite-votes/docker-compose.yml)*** is used for running Composer commands.
+>> - These are ***composer container/service*** commands:
 >>   - docker-compose run --rm composer create-project laravel/laravel project-name
 >>   - docker-compose run --rm composer install
 >>   - docker-compose run --rm composer update
@@ -77,8 +71,8 @@
 ># Artisan - Laravel application development CLI
 >> ## **Artisan** is a command line interface that comes with Laravel that provides a variety of commands useful for application development **[See Artisan for more info](https://laravel.com/docs/11.x/artisan)**.
 >
->## <ctitle>***artisan container/service***</ctitle> 
->> ### There is also an <ctitle>***artisan container/service***</ctitle> defined in ***[docker-compose.yml](https://github.com/Rsypertjr/Docker-Laravel-Vite-React-Bootstrap-Chartjs/blob/remote-docker-laravel-vite-votes/docker-compose.yml)*** which is useful for many things such as:
+>## ***artisan container/service*** 
+>> ### There is also an ***artisan container/service*** defined in ***[docker-compose.yml](https://github.com/Rsypertjr/Docker-Laravel-Vite-React-Bootstrap-Chartjs/blob/remote-docker-laravel-vite-votes/docker-compose.yml)*** which is useful for many things such as:
 >   - **docker-compose run --rm artisan config:cache**
 >     - setting/storing cache
 >   - **docker-compose run --rm artisan cache:clear**
@@ -103,9 +97,9 @@
 >     - Helps running applications on the PHP development server.
 
 
-># <ctitle>***npm container/service***</ctitle>
->>>> ## There is an <ctitle>***npm container/service***</ctitle> defined in ***[docker-compose.yml](https://github.com/Rsypertjr/Docker-Laravel-Vite-React-Bootstrap-Chartjs/blob/remote-docker-laravel-vite-votes/docker-compose.yml)*** for using the **Node Package Manager (NPM)** for installing and managing Javascript code packages.
->>## Here are example <ctitle>***npm container/service***</ctitle> commands:
+># ***npm container/service***
+>>>> ## There is an ***npm container/service*** defined in ***[docker-compose.yml](https://github.com/Rsypertjr/Docker-Laravel-Vite-React-Bootstrap-Chartjs/blob/remote-docker-laravel-vite-votes/docker-compose.yml)*** for using the **Node Package Manager (NPM)** for installing and managing Javascript code packages.
+>>## Here are example ***npm container/service*** commands:
 > - docker-compose run --rm npm install
 > - docker-compose run --rm npm install @myorg/privatepackage
 > - docker-compose run --rm npm run build
@@ -115,7 +109,7 @@
 
 ## 
 
-># Use <ctitle>***composer service***</ctitle>, <ctitle>***artisan service***</ctitle>, and <ctitle>***npm service***</ctitle> to set up ***'Vite'*** and ***'InertiaJS'*** software packages.
+># Use ***composer service***, ***artisan service***, and ***npm service*** to set up ***'Vite'*** and ***'InertiaJS'*** software packages.
 >>>>> ## ***'Vite'*** is a front-end asset bundler, and ***'InertialJS'*** allows React and Laravel stacks in one project such that both Laravel Views and React Components can be routed to.
 >
 >>## ***docker-compose run --rm composer require inertiajs/inertia-laravel*** 
@@ -152,18 +146,15 @@
 >   - ***docker-compose run --rm artisan optimize***
 
 > # Running the React frontend
-> Run React frontend in development mode with hot-reloading with the following:
-> - ***docker-compose run --rm  --service-ports npm run dev***>
+> Run React frontend in development mode with hot-reloading:
+> - This is the format:
+>   - ***docker-compose run --rm  --service-ports npm run dev***
+> - Use as actual command:
+>   - ***docker-compose run --rm --publish 5173:5173 npm run dev -- --host***
+>   - ***--publish 5173:5173*** allows Browser to access at port published by NPM 
+>   - ***-- --host*** exposes app to local area network
 
-## Other Utilities Services
-**Mailhog** Service dashboard is available at:  **host:8025**
-**PhpMyAdmin** Service is available at:  **host:8025**
-
-
-
-
-
-
-# docker-compose run -p 5173:5173 --rm npm run dev -- --host
-# docker-compose up --build nginx 
-# docker-compose run --rm --publish 5173:5173 npm run dev -- --host
+># Other Utilities Services
+>>## The following services are initialized as Main Containers with the described web address:
+>> - ***Mailhog Service*** dashboard is available at:  ***host:8025***
+>> - ***PhpMyAdmin Service*** is available at:  ***host:8888***
