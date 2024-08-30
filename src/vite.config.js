@@ -14,7 +14,8 @@ export default defineConfig({
         react()
     ],
     server: {
-        hmr: { host: 'localhost' },
-        https: false
+        hmr: { 
+            host: 'localhost'
+        },
     },
 });
